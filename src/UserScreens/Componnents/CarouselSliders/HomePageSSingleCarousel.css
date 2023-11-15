@@ -1,0 +1,19 @@
+/* HomePageSSingleCarousel.css */
+
+.carousel-container {
+    width: 70%;
+    
+    padding: 20px; /* Adjust the padding value as needed */
+    /* box-sizing: border-box; Include padding in the total width */
+    overflow: hidden; /* Ensure content overflows are hidden */
+  }
+  
+  .carousel-item {
+    text-align: center;
+  }
+  
+  .carousel-item img {
+    /* max-width: 100%; Ensure images don't exceed the width of their container */
+    height: auto;
+  }
+  
