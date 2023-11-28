@@ -1,0 +1,78 @@
+.order-summary {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+  .order-summary h2 {
+    color: #333;
+  }
+  
+  .order-items {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-items li {
+    margin-bottom: 8px;
+  }
+  
+  .price-details {
+    margin-top: 20px;
+  }
+  
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .discount {
+    color: 707070;
+    text-decoration: line-through;
+  }
+  
+  .total {
+    font-weight: bold;
+    color: green;
+  }
+  .delivery{
+    color: green;
+    font-weight: bold;
+  }
+  
+  .order-button {
+    text-align: center;
+    background-color: #002244; 
+    color: white; 
+    padding: 10px 20px; 
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%; 
+    align-items: center;
+   
+    display: flex;
+  
+   
+    &:hover {
+      background-color: rgb(15, 67, 93);
+    }
+  }
+  .divider {
+    border: 1px solid #ddd;
+    margin: 10px 0; 
+  }
+  
+.button-text{
+   
+    margin: 0;
+}
+.button-container{
+text-align: center;
+
+}

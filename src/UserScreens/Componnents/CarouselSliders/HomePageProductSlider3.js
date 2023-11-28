@@ -2,7 +2,8 @@ import React from 'react'
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
 import ProductCard from '../HomePageComponents/ProductCard';
-import './HomePageSSingleCarousel.css'
+import './HomePageProductSlider.css'
+
 import ProductCard3 from '../HomePageComponents/ProductCard3';
 
 const HomePageProductSlider3 = () => {
@@ -19,13 +20,15 @@ const items=[1,1,1,1,1,1,1,1,1,].map((i)=><ProductCard3/>)
         items={items}
         responsive={responsive}
         controlsStrategy="alternate"
+
         autoPlay
         autoPlayInterval={2000}
         infinite
         keyboardNavigation
-        disableButtonsControls
+      
         touchTracking
         touchMoveDefaultEvents
+        disableDotsControls
     />
     </div>
   )

@@ -3,6 +3,10 @@ import HomeCarousel from '../../Componnents/CarouselSliders/HomePageSSingleCarou
 import HomePageProductSlider from '../../Componnents/CarouselSliders/HomePageProductSlider'
 import HomePageProductSlider2 from '../../Componnents/CarouselSliders/HomePageProductSliderSecond'
 import HomePageProductSlider3 from '../../Componnents/CarouselSliders/HomePageProductSlider3'
+import ResponsiveAppBar from '../../Componnents/NavigationBar/ResponsiveAppBar'
+import Footer from '../../Componnents/Footer/Footer'
+import CheckoutForm from '../../Componnents/Cart/Checkout/CheckoutForm.js'
+import OrderHistory from '../../Componnents/Cart/OrderHistory/OrderHistory.js'
 
 const HomePage = () => {
   // const [data, setData] = useState([]);
@@ -22,20 +26,26 @@ const HomePage = () => {
   // }, []);
   return (
     <div>
+     
     <div className="">
-    
-    <HomeCarousel/>
+{/*     
+    <HomeCarousel/> */}
     
     </div>
     <div className=''>
     <div className='text-center'>
-    <h2 className='text-4xl font-extrabold text-gray-900 mb-8'>New Arrivals</h2>
-    </div>
-    <HomePageProductSlider2/>
+    {/* <h2 className='text-4xl font-extrabold text-gray-900 mb-8'>New Arrivals</h2> */}
+    </div> 
+     {/* <HomePageProductSlider2/>
     <HomePageProductSlider/>
+    <HomePageProductSlider/>
+     */}
+     {/* <CheckoutForm/> */}
+     <OrderHistory/>
 
-    <HomePageProductSlider3/>
+ 
     </div>
+    {/* <Footer/> */}
     </div>
   )
 }

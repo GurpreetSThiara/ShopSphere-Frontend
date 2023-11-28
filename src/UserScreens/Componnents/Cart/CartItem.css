@@ -1,0 +1,125 @@
+
+
+.cart-image{
+    
+    width: 100%;
+    max-width: 150px;
+}
+
+@media screen and (max-width:600px){
+    .cart-image{
+    
+        width: 100%;
+        max-width: 70px;
+        align-self: flex-start;
+    }
+}
+
+.inline-container{
+    display: inline-flex;
+    align-items: center;
+}
+.product-type{
+    color: gray;
+    font-size: small;
+    padding-left: 10px;
+}
+.product-title{
+    font-size: large;
+    font-weight: bold;
+
+    color: black;
+    padding-left: 10px;
+    
+}
+.Cart-itemBox{
+     padding: 16px;
+     border-radius: 8px; /* Optional: Add border-radius for a rounded appearance */
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     align-items: center;
+     display: flex;
+     margin: 10px;
+}
+.product-price-container {
+    display: flex;
+    align-items: center;
+}
+
+.product-price {
+    font-weight: bold;
+    font-size: medium;
+    padding-left: 10px;
+    color: #707070;
+}
+
+.discount {
+    font-weight:500;
+    font-size: medium;
+    padding-left: 10px;
+    color: #9a9a9a; 
+    text-decoration: line-through;
+    
+}
+.discount-percent{
+    font-weight:600;
+    font-size: medium;
+    padding-left: 10px;
+    color: green; 
+
+}
+.delete-button{
+    color: black;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-bottom: 110px;
+   
+}
+.arrow-button-box{
+    display: inline-flex;
+    margin-left: 10px;
+
+}
+@media screen and (max-width:600px){
+    .arrow-button-box{
+        display: inline-flex;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+
+}
+.middle-cart{
+    margin-left: 20px;
+}
+.remove-button{
+ 
+  color:white;
+  align-self: center;
+  font-size:"small";
+    
+    
+    
+}
+
+
+
+  .box-remove{
+    height: 35px;
+    width: 35px;
+  
+    background-color: #002244;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+  }
+  .box-add{
+    height: 35px;
+    width: 35px;
+  
+    background-color: 	#e9e9e9;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+
+  }

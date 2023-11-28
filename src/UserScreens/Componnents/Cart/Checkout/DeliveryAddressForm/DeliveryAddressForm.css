@@ -1,0 +1,30 @@
+.grid-container{
+    padding-top: 8px;
+}
+
+.box{
+    width: 100%;
+    height: 100%;
+    color:green;
+    background-color: #F0F8FF;
+}
+
+.form-container {
+  
+    margin: auto;
+    color:green;
+    background-color: white;
+    padding: 20px; 
+  }
+  .submit-button{
+    
+    background-color: #002244;
+    color: white;
+    margin-top: 16px;
+}
+.box-card{
+    margin: 16px;
+    background-color: #F0F8FF;
+    display : flex;
+    
+}

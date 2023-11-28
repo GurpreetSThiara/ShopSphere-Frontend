@@ -1,0 +1,41 @@
+
+.order-title{
+    font-size: medium;
+    font-weight: bold;
+ }
+ .order-description{
+     font-size: medium;
+     color: gray;
+ }
+ .order-container{
+     display:flex;
+     width: 95%;
+    margin: 0 auto;
+ }
+ 
+ .product-buttons{
+     display: inline-flex;
+ }
+ .order-screen-title{
+     text-align: center;
+ }
+ .order-butons{
+     background-color: #002244;
+     color: white;
+     padding: 8px;
+ }
+ .order-card{
+   
+     padding: 20px;
+     border-radius: 8px;
+     margin: 0 auto;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.2);
+     width: 78%;
+ }
+ .status-of-order{
+    font-size: medium;
+    font-weight: bold;
+ }
+ .status-of-order-value{
+    font-size: medium;
+ }

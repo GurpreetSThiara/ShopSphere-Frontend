@@ -1,33 +1,57 @@
-// HomeCarousel.jsx
-
 import React from 'react';
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import './HomePageSSingleCarousel.css';
 
-const items = [
-  <div className='carousel-item'>
-    <img src='https://github.com/leandrowd/react-responsive-carousel/blob/master/src/assets/1.jpeg?raw=true' alt='' />
-  </div>,
-  <div className='carousel-item'>
-    <img src='https://cdn.pixabay.com/photo/2017/03/13/17/26/ecommerce-2140603_1280.jpg' alt='' />
-  </div>,
-];
+const Carousel = () => {
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
 
-const HomeCarousel = () => (
-  <div className='carousel-container'>
-    <AliceCarousel
-      mouseTracking
-      items={items}
-      disableButtonsControls
-      autoPlay
-      animationDuration={2000}
-      infinite
-    />
-      <>hhhhhhhhh</>
-  
-  </div>
+  const carouselItems = [
+    {
+      id: 1,
+      image: 'https://via.placeholder.com/1500x600',
+      title: 'Stylish Product',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    },
+    {
+      id: 2,
+      image: 'https://via.placeholder.com/1500x600',
+      title: 'Elegant Item',
+      description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 3,
+      image: 'https://via.placeholder.com/1500x600',
+      title: 'Modern Design',
+      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    },
+    // Add more items as needed
+  ];
 
-);
+  return (
+    <div className="carousel-container">
+      <Slider {...sliderSettings}>
+        {carouselItems.map((item) => (
+          <div key={item.id} className="carousel-item">
+            <img src={item.image} alt={item.title} />
+            <div className="carousel-content">
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
+};
 
-export default HomeCarousel;
+export default Carousel;

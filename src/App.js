@@ -1,29 +1,19 @@
-
-
-
-
-import Footer from './UserScreens/Componnents/Footer/Footer';
-
-import HomePage from './UserScreens/Views/HomePage/HomePage';
-import ResponsiveAppBar from './UserScreens/Componnents/NavigationBar/ResponsiveAppBar';
-import ProductPage from './UserScreens/Componnents/ProductPages/ProductPage';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./UserScreens/Views/HomePage/HomePage";
+import ProductDetailsPage from "./UserScreens/Componnents/ProductPages/ProductDetailsPage/ProductDetailsPage";
+import ResponsiveAppBar from "./UserScreens/Componnents/NavigationBar/ResponsiveAppBar";
+import Cart from "./UserScreens/Componnents/Cart/Cart";
 
 function App() {
   return (
-    <div >
-     
-      <div>
-      <ResponsiveAppBar/>
-      </div>
-      <br/>  <br/>
-   
-  
-  
-      <ProductPage/>
-      <div>
-        <Footer/>
-      </div>
-     
+    <div>
+      <ResponsiveAppBar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/ProductDetailsPage" element={<ProductDetailsPage />} />
+        <Route path="/Cart" element={<Cart/>} />
+      </Routes>
     </div>
   );
 }

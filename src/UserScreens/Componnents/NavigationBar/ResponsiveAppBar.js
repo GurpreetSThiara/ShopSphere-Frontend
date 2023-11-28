@@ -13,6 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { colors } from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 // import { ColorLens } from '@mui/icons-material';
 
 const pages = ["Men", "Women", "Sports", "Children","offer"];
@@ -43,6 +45,26 @@ function ResponsiveAppBar() {
     // Additional logic or actions you want to perform when a button is clicked
     handleCloseNavMenu();
   };
+  const CartButton=()=>{
+    const handleCartClick=()=>{
+
+    }
+    return <Link to={`/Cart`}>
+                  <IconButton
+      color="inherit"
+      aria-label="Open shopping cart"
+      sx={{
+        '&:hover': {
+          backgroundColor: 'transparent', // Remove the default hover background
+        },
+      }}
+    >
+      <ShoppingCart />
+      
+    </IconButton>
+    </Link>
+
+  }
 
   return (
     <AppBar position="static" color="transparent" elevation={0}>
@@ -104,6 +126,7 @@ function ResponsiveAppBar() {
                 </MenuItem>
               ))}
             </Menu>
+            <CartButton/>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -134,7 +157,7 @@ function ResponsiveAppBar() {
               {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton> */}
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } ,alignItems:"center"}}>
                 {pages.map((page) => (
                   <Button
                     key={page}
@@ -153,6 +176,7 @@ function ResponsiveAppBar() {
                     {page}
                   </Button>
                 ))}
+                  <CartButton/>
               </Box>
             </Tooltip>
             <Menu

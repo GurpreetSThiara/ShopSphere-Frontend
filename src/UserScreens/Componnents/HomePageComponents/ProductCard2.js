@@ -1,22 +1,21 @@
 import React from 'react';
+import './ProductCard2.css';
 
-const ProductCard2 = () => {
+const ProductCard2 = ({ product }) => {
   return (
-    <div className='cursor-pointer flex flex-col items-center rounded-lg overflow-hidden sm:w-[20rem] md:w-[25rem] mx-4 transition transform hover:scale-105'>
-      <br />
-      <div className='overflow-hidden rounded-t-lg'>
+    <div className='product-card'>
+      <div className='product-image-container'>
         <img
           className='product-image'
           alt='Product'
-          src='https://media.istockphoto.com/id/1064924442/photo/young-confident-brunette-woman-in-white-elegant-shirt-smiling-portrait-against-white.jpg?s=1024x1024&w=is&k=20&c=oIzYtObbbYJLRhxvtmWd2YAdXl3BtPMN3-gHDUv33Ww='
+          src={product.image || 'https://via.placeholder.com/400x400'}
         />
       </div>
       <div className='product-details'>
-        <h3 className='product-title'>NoFilter Blouse</h3>
+        <h3 className='product-title'>{product.title || 'Product Title'}</h3>
         <p className='product-description'>
-          Elevate your style with this perfect for any occasion.
+          {product.description || 'Product Description'}
         </p>
-        <br />
       </div>
     </div>
   );
