@@ -4,16 +4,10 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import './DeliveryAddressForm.css'
 import { Box, Card, CardContent, Typography } from '@mui/material';
+import AddressCard from './AddressCard/AddressCard';
 
 const DeliveryAddressForm = () => {
-    const address={
-        fullName: 'Guri',
-        streetAddress: 'vpo ghjkk',
-        city: 'new york',
-        state: 'panjab',
-        zipCode: '333333',
-        phone:'999999999'
-    }
+
   const [formData, setFormData] = useState({
     fullName: '',
     streetAddress: '',
@@ -46,25 +40,11 @@ const DeliveryAddressForm = () => {
   return (
 <Grid container lg={12} className='grid-container'>
     <Grid item lg={4.5}>
-        <Box className='box'>
-        <Card className='box-card'>
-      <CardContent>
-        <Typography variant="h5" gutterBottom>
-          {address.fullName}
-        </Typography>
-        <Typography variant="body1" paragraph>
-          <strong>Street Address:</strong> {address.streetAddress}
-        </Typography>
-        <Typography variant="body1" paragraph>
-          <strong>City:</strong> {address.city}
-        </Typography>
-    
-        <Button className="submit-button" variant="contained" size='medium'>
-        Deliver Here
-      </Button>
-      </CardContent>
-    </Card>
-        </Box>
+       <AddressCard/>
+       
+    <Button className="submit-button" variant="contained" size='medium' sx={{backgroundColor:"#002244",color:"white"}}>
+    Deliver Here
+  </Button>
         
     </Grid>
     <Grid item lg={7.5}>

@@ -18,7 +18,7 @@ const Carousel = () => {
   const carouselItems = [
     {
       id: 1,
-      image: 'https://via.placeholder.com/1500x600',
+      image: 'https://img.freepik.com/premium-photo/usa-pawn-chess-alone-standing-chessboard-with-dark-background-memorial-day-4th-july-united-america-is-main-country-economic-power-military-by-3d-render_50039-4288.jpg?w=1380',
       title: 'Stylish Product',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     },
