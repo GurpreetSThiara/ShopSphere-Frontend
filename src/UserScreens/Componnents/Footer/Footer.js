@@ -1,25 +1,38 @@
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import React from 'react';
 
 const Footer = () => {
-  const columnItems = [
-    ['About Us', 'Services', 'Contact Us'],
-    ['Blog', 'Careers', 'Privacy Policy'],
-    ['Terms of Service', 'FAQ', 'Sitemap'],
-    ['Follow Us', 'Twitter', 'Facebook'],
+  const columnData = [
+    {
+      title: 'Company',
+      items: ['About Us', 'Services', 'Contact Us'],
+    },
+    {
+      title: 'Resources',
+      items: ['Blog', 'Careers', 'Privacy Policy'],
+    },
+    {
+      title: 'Support',
+      items: ['Terms of Service', 'FAQ', 'Sitemap'],
+    },
+    {
+      title: 'Connect',
+      items: ['Follow Us', 'Twitter', 'Facebook'],
+    },
   ];
 
   return (
-    <div>
-      <Grid className='bg-black text-white text-center mt-10' container sx={{ py: 3 }}>
-        {columnItems.map((items, index) => (
-          <Grid key={index} item xs={3} lg={3} sx={{ textAlign: 'center' }}>
-            {items.map((item, itemIndex) => (
-              <div key={itemIndex}>
-                <Button className='pb-2' variant='h6' gutterBottom>
-                  {item}
-                </Button>
-              </div>
+    <div style={{ backgroundColor: '#333', color: '#fff', padding: '30px 0' }}>
+      <Grid container spacing={4} justifyContent="center">
+        {columnData.map((column, columnIndex) => (
+          <Grid key={columnIndex} item xs={12} sm={6} md={3} sx={{ textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: 'white', marginBottom: 2, fontWeight: 'bold' }}>
+              {column.title}
+            </Typography>
+            {column.items.map((item, itemIndex) => (
+              <Button key={itemIndex} className='pb-2' variant='text' sx={{ color: 'lightgray', textTransform: 'none' }}>
+                {item}
+              </Button>
             ))}
           </Grid>
         ))}

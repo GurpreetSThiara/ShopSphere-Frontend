@@ -8,8 +8,8 @@ import './HomePageProductSlider.css'
 const HomePageProductSlider2 = () => {
     const responsive = {
         0: { items: 1 },
-        568: { items: 1.7 },
-        768: { items: 2 },
+        568: { items: 1 },
+        768: { items: 1 },
         998: { items: 2.5 },
         1424: { items: 2.9 },
     };
@@ -48,7 +48,7 @@ const HomePageProductSlider2 = () => {
           keyboardNavigation
           disableButtonsControls
           touchTracking
-          touchMoveDefaultEvents
+          
           disableDotsControls
     />
     </div>

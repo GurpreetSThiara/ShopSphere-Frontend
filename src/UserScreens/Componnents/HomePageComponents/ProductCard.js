@@ -1,6 +1,8 @@
 import { Box, Grid, Typography, Button } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { productDetailsActions } from '../../../store/productDetails-slice';
 
 const ProductCard = ({ product }) => {
   const descriptionRef = useRef(null);
@@ -15,13 +17,32 @@ const ProductCard = ({ product }) => {
   }, [product.description]);
 
   const styles = {
+    imgCard:{
+      position: 'relative',
+      border: '0.00001px solid #ddd',
+      borderRadius: '8px',
+      overflow: 'hidden',
+      width: '250px',
+      height: '330px', // Set a fixed height for the card
+     
+    
+      display: 'inline-flex',
+      flexDirection: 'column',
+      transition: 'transform 0.2s',
+      objectFit: 'contain',
+      justifyContent: 'center',
+      alignItems:'center',
+      margin: '0 auto',
+      marginTop:'8px'
+
+    },
     card: {
       position: 'relative',
       border: '1px solid #ddd',
       borderRadius: '8px',
       overflow: 'hidden',
       width: '300px',
-      height: '400px', // Set a fixed height for the card
+      height: '450px', // Set a fixed height for the card
       margin: '0 10px',
       boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
       display: 'flex',
@@ -33,8 +54,10 @@ const ProductCard = ({ product }) => {
     },
     image: {
       width: '100%',
-      height: '200px',
-      objectFit: 'cover',
+      height: '100%',
+      objectFit: 'contain',
+      margin: '0 auto'
+
     },
     details: {
       position: 'relative',
@@ -79,15 +102,25 @@ const ProductCard = ({ product }) => {
     },
   };
   const navigate = useNavigate();
+  const dispatch= useDispatch();
 
   const handleClick = () => {
-    navigate(`/ProductDetailsPage`, { state: { product } });
+    dispatch(productDetailsActions.updateProduct(product))
+    
+
+    navigate(`/ProductDetailsPage`, );
+    // { state: { product } }
   };
+  const handleAddToCart= ()=>{
+    
+  }
 
   return (
   
      <Box sx={styles.card} onClick={handleClick} >
-      <img src={product.thumbnail} alt={product.title} style={styles.image} />
+     <Box sx={styles.imgCard}>
+     <img src={product.imageUrl} alt={product.title} style={styles.image} />
+     </Box>
       <Box sx={styles.details}>
         <Typography variant='h6' sx={styles.title}>
           {product.title}
@@ -102,7 +135,7 @@ const ProductCard = ({ product }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <Button variant="contained" sx={styles.button}>
+            <Button variant="contained" sx={styles.button} onClick={handleAddToCart}>
               Add to Cart
             </Button>
           </Grid>

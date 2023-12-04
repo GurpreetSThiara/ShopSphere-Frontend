@@ -1,0 +1,29 @@
+
+
+.price-container {
+    display: flex;
+    align-items: center;
+}
+
+.discount-price {
+    font-weight: bold;
+    font-size: large;
+    padding-left: 10px;
+    color: #707070;
+}
+
+.price {
+    font-weight:500;
+    font-size: large;
+   
+    color: #9a9a9a; 
+    text-decoration: line-through;
+    
+}
+.percent-discount{
+    font-weight:600;
+    font-size: large;
+    padding-left: 10px;
+    color: green; 
+
+}

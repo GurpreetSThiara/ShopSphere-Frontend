@@ -4,63 +4,10 @@ import { Box, Grid, LinearProgress, Rating, Typography } from "@mui/material";
 import ReviewCard from "./ReviewCard";
 import { useLocation } from "react-router";
 import HomePageProductSlider from "../../CarouselSliders/HomePageProductSlider";
+import './ProductDetailsPage.css'
+import { useSelector } from 'react-redux';
 
-// const product = {
-//   name: "Premium Sneakers",
-//   price: "$149.99",
-//   href: "#",
-//   breadcrumbs: [
-//     { id: 1, name: "Men", href: "#" },
-//     { id: 2, name: "Shoes", href: "#" },
-//   ],
-//   images: [
-//     {
-//       src: "https://placekitten.com/800/600",
-//       alt: "High-quality sneakers from various angles.",
-//     },
-//     {
-//       src: "https://placekitten.com/800/601",
-//       alt: "Close-up view of the sneaker's sole.",
-//     },
-//     {
-//       src: "https://placekitten.com/800/602",
-//       alt: "Model wearing Premium Sneakers.",
-//     },
-//     {
-//       src: "https://placekitten.com/800/600",
-//       alt: "High-quality sneakers from various angles.",
-//     },
-//     {
-//       src: "https://placekitten.com/800/601",
-//       alt: "Close-up view of the sneaker's sole.",
-//     },
-//     {
-//       src: "https://placekitten.com/800/602",
-//       alt: "Model wearing Premium Sneakers.",
-//     },
-//   ],
-//   colors: [
-//     { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-//     { name: "Black", class: "bg-black", selectedClass: "ring-gray-900" },
-//     { name: "Blue", class: "bg-blue-500", selectedClass: "ring-blue-500" },
-//   ],
-//   sizes:  [
-//     { name: " S  ", inStock: true },
-//     { name: " L  ", inStock: true },
-//     { name: "XL  ", inStock: true },
-//     { name: "XXL ", inStock: true },
-//     { name: "XXXL", inStock: true },
 
-//   ],
-//   description:
-//     'Step into style with our Premium Sneakers. These high-quality shoes are designed for comfort and durability. Whether you\'re hitting the gym or going for a casual stroll, these sneakers have you covered.',
-//   highlights: [
-//     "Premium materials for lasting comfort",
-//     "Sleek and modern design",
-//     "Available in multiple colors",
-//     "Versatile for various occasions",
-//   ],
-// };
 const sizes = [
   { name: " S  ", inStock: true },
   { name: " L  ", inStock: true },
@@ -113,9 +60,10 @@ const comments = [
 ];
 
 const ProductDetailsPage = () => {
-  const location = useLocation();
-  const { state } = location;
-  const { product } = state;
+  const product= useSelector((state)=>state.product.productDetails);
+  // const location = useLocation();
+  // const { state } = location;
+  // const { product } = state;
   console.log("dddddddddddd");
   console.log(product);
   console.log("dddddddddddd");
@@ -177,7 +125,7 @@ const ProductDetailsPage = () => {
     <div className="bg-gray-100 min-h-screen">
       <div className="container mx-auto py-8 flex flex-col lg:flex-row">
         {/* Product Image */}
-        <ImageGallery images={product.images} />
+        <ImageGallery images={[product.imageUrl]} />
 
         {/* Product Details */}
         <div className="lg:w-1/2 pl-4 lg:pl-8">
@@ -187,6 +135,13 @@ const ProductDetailsPage = () => {
           <p className="text-xl font-semibold text-indigo-600 mb-4">
             {product.price}
           </p>
+          <div className="price-container">
+          <h5 className="price">$500</h5>
+          <span className="discount-price">$450</span>
+           
+            <h5 className="percent-discount">45% off</h5>
+           
+          </div>
 
           {/* Reviews */}
           <div className="flex items-center mb-4">

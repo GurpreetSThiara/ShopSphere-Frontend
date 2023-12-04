@@ -59,7 +59,13 @@ function ResponsiveAppBar() {
         },
       }}
     >
-      <ShoppingCart />
+      <Button sx={{backgroundColor:"black",'&:hover': {
+          backgroundColor: 'black', // Remove the default hover background
+        },}}>
+        <ShoppingCart sx={{color:"white"}} />
+        <Typography sx={{color:"white"}}>O</Typography>
+        
+        </Button>
       
     </IconButton>
     </Link>
@@ -156,7 +162,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip >
              
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } ,alignItems:"center"}}>
                 {pages.map((page) => (
@@ -172,7 +178,10 @@ function ResponsiveAppBar() {
                      
                        display: "block", 
 
-                       mx: 1.5 }}
+                       mx: 1.5,
+                       '&:hover': {
+                        backgroundColor: 'gray', // Remove the default hover background
+                      }, }}
                   >
                     {page}
                   </Button>

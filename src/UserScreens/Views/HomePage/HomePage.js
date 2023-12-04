@@ -14,6 +14,9 @@ import SignUp from "../../Authentication/SignUp/SignUp.js";
 import HomePageImage from "./../../../images/HomePage.jpg";
 import { Button, Typography } from "@mui/material";
 import LandingPageHero from "../../Componnents/HomePageComponents/LandingPageHero/LandingPageHero.js";
+import CategoryCarousel from "../../Componnents/CarouselSliders/CategoryCarousal/CategoryCarousal.js";
+import FilterComponent from "../../Componnents/ProductPages/CategoriesComponent/FilterComponent.js";
+import ComponentHeader from "../../Componnents/ProductPages/CategoriesComponent/ComponentHeader/ComponentHeader.js";
 
 const HomePage = () => {
   // const [data, setData] = useState([]);
@@ -33,11 +36,18 @@ const HomePage = () => {
   // }, []);
   return (
     <div>
-    
-      <LandingPageHero/>
+      <HomePageProductSlider/>
+      <ComponentHeader/>
+     <FilterComponent/>
+      {/* <LandingPageHero/>
+      <HomePageProductSlider/>
       <HomeCarousel />
-
-      {/* <SignIn/> */}
+      // <HomePageProductSlider/>
+      <CategoryCarousel/>
+      <HomePageProductSlider2/>
+      <HomePageProductSlider/>
+{/*  */}
+    
       {/* <SignUp/> */}
 
       {/* <div className="">
@@ -49,7 +59,7 @@ const HomePage = () => {
     <div className='text-center'>
     <h2 className='text-4xl font-extrabold text-gray-900 mb-8'>New Arrivals</h2>
     </div> 
-     <HomePageProductSlider2/>
+    //  <HomePageProductSlider2/>
     <HomePageProductSlider/>
     <HomePageProductSlider/>
     
@@ -60,6 +70,7 @@ const HomePage = () => {
  
     </div>
    <Footer/> */}
+    <Footer/>
     </div>
   );
 };

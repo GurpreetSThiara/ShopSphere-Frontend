@@ -3,6 +3,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
 import ProductCard from '../HomePageComponents/ProductCard';
 import './HomePageProductSlider.css'
+import { dressPage1 } from '../../../products/dress/page1';
 
 
 const HomePageProductSlider = () => {
@@ -14,18 +15,19 @@ const HomePageProductSlider = () => {
    const [data,setData]=useState();
     useEffect(() => {
       const fetchData = async () => {
-        try {
-          const response = await fetch("https://dummyjson.com/products");
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const data = await response.json();
-          setData(data.products);
+        setData(dressPage1);
+        // try {
+        //   const response = await fetch("https://dummyjson.com/products");
+        //   if (!response.ok) {
+        //     throw new Error(`HTTP error! Status: ${response.status}`);
+        //   }
+        //   const data = await response.json();
+        //   setData(data.products);
          
-          console.log(data);
-        } catch (error) {
-          console.log('Error fetching categories:', error);
-        }
+        //   console.log(data);
+        // } catch (error) {
+        //   console.log('Error fetching categories:', error);
+        // }
       };
   
       fetchData();

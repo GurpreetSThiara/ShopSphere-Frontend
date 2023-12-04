@@ -3,6 +3,10 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './HomePageSSingleCarousel.css';
+import istImage from './../../../images/HomePageCarousal/1.jpg'
+import secondImage from './../../../images/HomePageCarousal/2.jpg'
+import thirdImage from './../../../images/HomePageCarousal/3.jpg'
+import fourthImage from './../../../images/HomePageCarousal/4.jpg'
 
 const Carousel = () => {
   const sliderSettings = {
@@ -16,30 +20,37 @@ const Carousel = () => {
   };
 
   const carouselItems = [
+
     {
       id: 1,
-      image: 'https://img.freepik.com/premium-photo/usa-pawn-chess-alone-standing-chessboard-with-dark-background-memorial-day-4th-july-united-america-is-main-country-economic-power-military-by-3d-render_50039-4288.jpg?w=1380',
+      image: istImage,
       title: 'Stylish Product',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     },
     {
       id: 2,
-      image: 'https://via.placeholder.com/1500x600',
+      image: secondImage,
       title: 'Elegant Item',
       description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
     {
       id: 3,
-      image: 'https://via.placeholder.com/1500x600',
+      image: thirdImage,
       title: 'Modern Design',
       description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
     },
-    // Add more items as needed
+    {
+      id: 3,
+      image: fourthImage,
+      title: 'Modern Design',
+      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    },
+    
   ];
 
   return (
     <div className="carousel-container">
-      <Slider {...sliderSettings}>
+      <Slider {...sliderSettings} adaptiveHeight>
         {carouselItems.map((item) => (
           <div key={item.id} className="carousel-item">
             <img src={item.image} alt={item.title} />
