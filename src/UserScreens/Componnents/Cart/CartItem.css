@@ -16,8 +16,9 @@
 }
 
 .inline-container{
-    display: inline-flex;
-    align-items: center;
+ 
+    align-items: flex-start;
+    display: flex;
 }
 .product-type{
     color: gray;
@@ -45,14 +46,21 @@
     align-items: center;
 }
 
-.product-price {
+.total-price-container{
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+   
+
+  }
+.discount-price {
     font-weight: bold;
     font-size: medium;
     padding-left: 10px;
     color: #707070;
 }
 
-.discount {
+.product-price {
     font-weight:500;
     font-size: medium;
     padding-left: 10px;
@@ -67,13 +75,23 @@
     color: green; 
 
 }
-.delete-button{
+.delete-button {
     color: black;
     cursor: pointer;
     margin-left: 20px;
-    margin-bottom: 110px;
+    
    
-}
+
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+  }
+  
+  .delete-button:hover {
+   
+    color: gray; 
+
+  }
+  
 .arrow-button-box{
     display: inline-flex;
     margin-left: 10px;
@@ -91,12 +109,10 @@
     margin-left: 20px;
 }
 .remove-button{
- 
+
   color:white;
   align-self: center;
-  font-size:"small";
-    
-    
+  font-size:"small"; 
     
 }
 

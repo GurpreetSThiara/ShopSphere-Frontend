@@ -5,7 +5,8 @@ import ReviewCard from "./ReviewCard";
 import { useLocation } from "react-router";
 import HomePageProductSlider from "../../CarouselSliders/HomePageProductSlider";
 import './ProductDetailsPage.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions } from "../../../../store/cart-slice";
 
 
 const sizes = [
@@ -60,6 +61,7 @@ const comments = [
 ];
 
 const ProductDetailsPage = () => {
+  const dispatch = useDispatch();
   const product= useSelector((state)=>state.product.productDetails);
   // const location = useLocation();
   // const { state } = location;
@@ -72,6 +74,13 @@ const ProductDetailsPage = () => {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const [showDescription, setShowDescription] = useState(true);
   const [newComment, setNewComment] = useState("");
+
+  const handleAddToCart = ()=>{
+    console.log("producttttttttttttttttttttt adddddeedddeddddddddddddddddd");
+
+    dispatch(cartActions.addToCart({product:product,quantity:1}));
+    console.log("producttttttttttttttttttttt adddddeedddeddddddddddddddddd");
+  }
 
   const handleCommentSubmit = () => {
     // Add your logic to handle comment submission
@@ -219,7 +228,8 @@ const ProductDetailsPage = () => {
           {/* Add to Cart Button */}
           <button
             className="bg-indigo-500 text-white px-6 py-3 rounded-md hover:bg-indigo-600 focus:outline-none"
-            disabled={!selectedColor.inStock || !selectedSize.inStock}
+            onClick={handleAddToCart}
+            // disabled={!selectedColor.inStock || !selectedSize.inStock}
           >
             Add to Cart
           </button>

@@ -5,10 +5,13 @@ import ProductDetailsPage from "./UserScreens/Componnents/ProductPages/ProductDe
 import ResponsiveAppBar from "./UserScreens/Componnents/NavigationBar/ResponsiveAppBar";
 import Cart from "./UserScreens/Componnents/Cart/Cart";
 import {useSelector} from 'react-redux'
+import NavigationBar from "./UserScreens/Componnents/NavigationBar/NavigationBar";
 function App() {
   const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
   return (
     <div>
+      <NavigationBar/><br/>
+      <>hello</>
       <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
