@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const productDetailsSlice=createSlice({
-    name:'product',
+    name:'productD',
     initialState:{ productDetails:{} },
     reducers:{
         updateProduct(state,action){

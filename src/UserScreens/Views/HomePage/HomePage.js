@@ -17,6 +17,9 @@ import LandingPageHero from "../../Componnents/HomePageComponents/LandingPageHer
 import CategoryCarousel from "../../Componnents/CarouselSliders/CategoryCarousal/CategoryCarousal.js";
 import FilterComponent from "../../Componnents/ProductPages/CategoriesComponent/FilterComponent.js";
 import ComponentHeader from "../../Componnents/ProductPages/CategoriesComponent/ComponentHeader/ComponentHeader.js";
+import ProductViews from "../../Componnents/NavigationBar/NavigationItemsPages/ProductViews.js";
+import NavigationBar from "../../Componnents/NavigationBar/NavigationBar.js";
+import ProductPage from "../../Componnents/ProductPages/ProductPage.js";
 
 const HomePage = () => {
   // const [data, setData] = useState([]);
@@ -36,17 +39,21 @@ const HomePage = () => {
   // }, []);
   return (
     <div>
-      <HomePageProductSlider/>
+      <ProductPage/>
+     
+
+      {/* <ProductViews/> */}
+      {/* <HomePageProductSlider/>
       <ComponentHeader/>
-     <FilterComponent/>
+     <FilterComponent/> */}
       {/* <LandingPageHero/>
       <HomePageProductSlider/>
       <HomeCarousel />
-      // <HomePageProductSlider/>
+     <HomePageProductSlider/>
       <CategoryCarousel/>
       <HomePageProductSlider2/>
-      <HomePageProductSlider/>
-{/*  */}
+      <HomePageProductSlider/> */}
+{/* 
     
       {/* <SignUp/> */}
 
@@ -70,7 +77,7 @@ const HomePage = () => {
  
     </div>
    <Footer/> */}
-    <Footer/>
+ 
     </div>
   );
 };

@@ -59,7 +59,7 @@ const FilterComponent = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={8}>
+      <Grid item xs={12}>
         <Paper style={{ padding: '16px', position: 'sticky', top: 0 }}>
           
 

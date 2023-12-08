@@ -1,4 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { API_BASE_URL } from "../config/apiConfig";
+import { selectUser } from "./auth-slice";
+
+export const addToCart = createAsyncThunk('', async (userData, { rejectWithValue }) => {
+
+    try {
+     const userData =  localStorage.getItem(selectUser.jwt);
+      const response = await axios.post(`${API_BASE_URL}/api/cart/add`, userData);
+      const user = response.data;
+      console.log(user);
+      console.log(user);
+    
+      return user;
+      
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  });
+
+  export const getCartItems = createAsyncThunk('', async (userData, { rejectWithValue }) => {
+
+    try {
+     const userData =  localStorage.getItem(selectUser.jwt);
+      const response = await axios.post(`${API_BASE_URL}/api/cart/add`, userData);
+      const user = response.data;
+    
+      return user;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  });
 
 
 const cartSlice = createSlice({
