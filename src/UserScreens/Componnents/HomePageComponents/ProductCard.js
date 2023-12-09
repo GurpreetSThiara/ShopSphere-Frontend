@@ -131,7 +131,7 @@ const ProductCard = ({ product }) => {
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Typography variant='h6' sx={styles.price}>
-              ${product.price}
+              ${product.discountedPrice}
             </Typography>
           </Grid>
           <Grid item>

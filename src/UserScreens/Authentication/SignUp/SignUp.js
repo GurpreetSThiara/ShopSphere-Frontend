@@ -41,7 +41,7 @@ const SignUp = () => {
     e.preventDefault();
 
     // Dispatch the login action with the form data
-    await dispatch(register(formData));
+     dispatch(register(formData));
 
     if (error) {
       // Show an error alert using window.alert

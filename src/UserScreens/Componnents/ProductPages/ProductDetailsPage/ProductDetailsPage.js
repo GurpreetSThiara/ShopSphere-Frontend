@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
-import { Box, Grid, LinearProgress, Rating, Typography } from "@mui/material";
+import { Box, Button, Grid, LinearProgress, Rating, Typography } from "@mui/material";
 import ReviewCard from "./ReviewCard";
 import { useLocation } from "react-router";
 import HomePageProductSlider from "../../CarouselSliders/HomePageProductSlider";
 import './ProductDetailsPage.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from "../../../../store/cart-slice";
+import { addItemToCart } from "../../../../store/cart-slice";
+
 
 
 const sizes = [
   { name: " S  ", inStock: true },
   { name: " L  ", inStock: true },
-  { name: "XL  ", inStock: true },
-  { name: "XXL ", inStock: true },
-  { name: "XXXL", inStock: true },
+  { name: " M  ", inStock: true },
+
 ];
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -61,6 +61,7 @@ const comments = [
 ];
 
 const ProductDetailsPage = () => {
+  const [productSize , setProductSize] = useState('L');
   const dispatch = useDispatch();
   const product= useSelector((state)=>state.product.productDetails);
   // const location = useLocation();
@@ -77,9 +78,14 @@ const ProductDetailsPage = () => {
 
   const handleAddToCart = ()=>{
     console.log("producttttttttttttttttttttt adddddeedddeddddddddddddddddd");
+   
 
-    dispatch(cartActions.addToCart({product:product,quantity:1}));
-    console.log("producttttttttttttttttttttt adddddeedddeddddddddddddddddd");
+    dispatch(addItemToCart({
+      
+      productId:`${product.id}`,
+      size:productSize,
+    }));
+   
   }
 
   const handleCommentSubmit = () => {
@@ -204,6 +210,7 @@ const ProductDetailsPage = () => {
             >
               {sizes.map((size) => (
                 <RadioGroup.Option
+                onClick={() => setProductSize(size)}
                   key={size.name}
                   value={size}
                   className={({
@@ -226,13 +233,16 @@ const ProductDetailsPage = () => {
           </div>
 
           {/* Add to Cart Button */}
-          <button
-            className="bg-indigo-500 text-white px-6 py-3 rounded-md hover:bg-indigo-600 focus:outline-none"
+          <Button
+          sx={{
+            backgroundColor:"#002244"
+          }}
+            // className="bg-indigo-500 text-white px-6 py-3 rounded-md hover:bg-indigo-600 focus:outline-none"
             onClick={handleAddToCart}
             // disabled={!selectedColor.inStock || !selectedSize.inStock}
           >
             Add to Cart
-          </button>
+          </Button>
           <div className="container mx-auto mt-8 p-8 rounded-lg shadow-lg">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-semibold text-gray-800">

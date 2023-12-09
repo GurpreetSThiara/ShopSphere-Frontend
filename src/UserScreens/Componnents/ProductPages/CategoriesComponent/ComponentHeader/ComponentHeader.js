@@ -11,8 +11,15 @@ import {
   ListItemAvatar,
   Avatar,
   Box,
+  Checkbox,
+  Chip,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import FilterComponent from "../FilterComponent";
+import { filterProductData, setData } from "../../../../../store/customerProductFilter-slice";
+import { useDispatch } from "react-redux";
+import store from "../../../../../store";
+import { findProducts } from "../../../../../store/product-slice";
 
 const headerStyles = {
   header: {
@@ -26,180 +33,200 @@ const headerStyles = {
 };
 
 const ComponentHeader = () => {
+
+  const change=({data})=>{
+    dispatch(
+      setData(data)
+    );
+    const filterData = {
+      category:filterProductData.category(store.getState()), 
+      colors: filterProductData.colors(store.getState()),
+      sizes: filterProductData.sizes(store.getState()),
+      minPrice: filterProductData.minPrice(store.getState()),
+      maxPrice: filterProductData.maxPrice(store.getState()),
+      minDiscount: filterProductData.minDiscount(store.getState()),
+      sort: filterProductData.sort(store.getState()),
+      pageNumber: filterProductData.pageNumber(store.getState()),
+      pageSize: filterProductData.pageSize(store.getState()),
+      stock: filterProductData.stock(store.getState()),
+    };
+
+    dispatch(findProducts(filterData));
+
+  }
+  const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedColorOptions, SetSelectedColorOptions] = useState([]);
+  const [selectedSizeOptions, SetSelectedSizeOptions] = useState([]);
+  const [selectedPriceOptions, SetSelectedPriceOptions] = useState(0);
+  const [selectedDiscountOption, setSelectedDiscountOption] = useState(10);
+  const [range, setRange] = useState({ lowestValue: 159, highestValue: 4999 });
+  const [selectedPriceOption, setSelectedPriceOption] = useState('');
+  const [selectedSortOption, setSelectedSortOption] = useState('Price: Low to High');
+
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
+    console.log('ccccccccccccccccccccccccccccccccccccc'+selectedOption);
     // You can add additional logic here based on the selected option
   };
  
-
+  const ColorDropDownMenu = () => {
+    useEffect(() => {
+      // Check if selectedColorOptions have actually changed
+      const hasColorOptionsChanged =
+        JSON.stringify(selectedColorOptions) !==
+        JSON.stringify(filterProductData.colors(store.getState()));
   
-const ColorDropDownMenu = () => {
-    const [selectedOption, setSelectedOption] = useState('');
+      if (hasColorOptionsChanged) {
+        change({data:{colors:selectedColorOptions}});
+      }
+    }, [selectedColorOptions]);
   
     const handleSelectChange = (event) => {
-      setSelectedOption(event.target.value);
+      SetSelectedColorOptions(event.target.value);
+      
+      
+
+      // Now 'selectedString' is a comma-separated string of the selected color values.
+   
+
+     
     };
   
     const colorOptions = [
-        { value: 'red', label: 'Red', color: '#FF0000' },
-        { value: 'blue', label: 'Blue', color: '#0000FF' },
-        { value: 'green', label: 'Green', color: '#00FF00' },
-        { value: 'orange', label: 'Orange', color: '#FFA500' },
-        { value: 'purple', label: 'Purple', color: '#800080' },
-        { value: 'yellow', label: 'Yellow', color: '#FFFF00' },
-        { value: 'pink', label: 'Pink', color: '#FFC0CB' },
-        { value: 'brown', label: 'Brown', color: '#A52A2A' },
-        { value: 'cyan', label: 'Cyan', color: '#00FFFF' },
-        { value: 'teal', label: 'Teal', color: '#008080' },
-        // Add more color options as needed
-        { value: 'darkred', label: 'Dark Red', color: '#8B0000' },
-        { value: 'navy', label: 'Navy', color: '#000080' },
-        { value: 'lime', label: 'Lime', color: '#00FF00' },
-        { value: 'magenta', label: 'Magenta', color: '#FF00FF' },
-        { value: 'indigo', label: 'Indigo', color: '#4B0082' },
-        { value: 'gold', label: 'Gold', color: '#FFD700' },
-        { value: 'silver', label: 'Silver', color: '#C0C0C0' },
-        { value: 'darkgreen', label: 'Dark Green', color: '#006400' },
-        { value: 'violet', label: 'Violet', color: '#EE82EE' },
-        { value: 'olive', label: 'Olive', color: '#808000' },
-        { value: 'darkorange', label: 'Dark Orange', color: '#FF8C00' },
-        { value: 'slateblue', label: 'Slate Blue', color: '#6A5ACD' },
-        { value: 'turquoise', label: 'Turquoise', color: '#40E0D0' },
-        { value: 'firebrick', label: 'Fire Brick', color: '#B22222' },
-        { value: 'sienna', label: 'Sienna', color: '#A0522D' },
-        { value: 'peru', label: 'Peru', color: '#CD853F' },
-        { value: 'darkcyan', label: 'Dark Cyan', color: '#008B8B' },
-        { value: 'chocolate', label: 'Chocolate', color: '#D2691E' },
-        { value: 'orchid', label: 'Orchid', color: '#DA70D6' },
-        { value: 'darkslategray', label: 'Dark Slate Gray', color: '#2F4F4F' },
-        { value: 'mediumvioletred', label: 'Medium Violet Red', color: '#C71585' },
-        { value: 'darkolivegreen', label: 'Dark Olive Green', color: '#556B2F' },
-        { value: 'steelblue', label: 'Steel Blue', color: '#4682B4' },
-        { value: 'tomato', label: 'Tomato', color: '#FF6347' },
-        { value: 'darkturquoise', label: 'Dark Turquoise', color: '#00CED1' },
-        { value: 'mediumspringgreen', label: 'Medium Spring Green', color: '#00FA9A' },
-        { value: 'darkgoldenrod', label: 'Dark Goldenrod', color: '#B8860B' },
-        { value: 'darkviolet', label: 'Dark Violet', color: '#9400D3' },
-        { value: 'darkkhaki', label: 'Dark Khaki', color: '#BDB76B' },
-        { value: 'mediumaquamarine', label: 'Medium Aquamarine', color: '#66CDAA' },
-        { value: 'darkmagenta', label: 'Dark Magenta', color: '#8B008B' },
-        { value: 'royalblue', label: 'Royal Blue', color: '#4169E1' },
-        { value: 'darkgray', label: 'Dark Gray', color: '#A9A9A9' },
-        { value: 'dimgray', label: 'Dim Gray', color: '#696969' },
-        { value: 'darkslateblue', label: 'Dark Slate Blue', color: '#483D8B' },
-        { value: 'mediumblue', label: 'Medium Blue', color: '#0000CD' },
-        { value: 'midnightblue', label: 'Midnight Blue', color: '#191970' },
-      ];
-  
-    return (
-      <div>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>Select a color</InputLabel>
-          <Select
-            value={selectedOption}
-            onChange={handleSelectChange}
-            label="Select a color"
-            IconComponent={ExpandMore}
-            renderValue={(selected) => (
-              <Box
-                component="div"
-                sx={{
-                  backgroundColor: selected,
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                }}
-              />
-            )}
-          >
-            <MenuItem value="" disabled>
-              Select an option
-            </MenuItem>
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
-                gap: 1,
-              }}
-            >
-              {colorOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  <Box
-                    component="div"
-                    sx={{
-                      backgroundColor: option.color,
-                      width: '24px',
-                      height: '24px',
-                      borderRadius: '50%',
-                      marginRight: { xs: '4px', sm: '0' },
-                    }}
-                  />
-                  <Typography variant="body2">{option.label}</Typography>
-                </MenuItem>
-              ))}
-            </Box>
-          </Select>
-        </FormControl>
-      </div>
-    );
-  };
-  
-  const SizeDropDownMenu = () => {
-    const [selectedOption, setSelectedOption] = useState('');
-  
-    const handleSelectChange = (event) => {
-      setSelectedOption(event.target.value);
-    };
-  
-    // Array of clothing sizes
-    const sizeOptions = [
-      'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL',
+      { value: 'white', label: 'White' },
+      { value: 'beige', label: 'Beige' },
+      { value: 'blue', label: 'Blue' },
+      { value: 'brown', label: 'Brown' },
+      { value: 'green', label: 'Green' },
+      { value: 'purple', label: 'Purple' },
+      { value: 'yellow', label: 'Yellow' },
     ];
   
     return (
+
       <div>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>Select a size</InputLabel>
-          <Select
-            value={selectedOption}
-            onChange={handleSelectChange}
-            label="Select a size"
-            IconComponent={ExpandMore}
-          >
-            <MenuItem value="" disabled>
-              Select an option
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Select color(s)</InputLabel>
+        <Select
+          multiple
+          value={selectedColorOptions}
+          onChange={handleSelectChange}
+          label="Select color(s)"
+          IconComponent={ExpandMore}
+          renderValue={(selected) => (
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 1,
+              }}
+            >
+              {selected.map((value) => (
+                <Box
+                  key={value}
+                  component="div"
+                  sx={{
+                    backgroundColor: colorOptions.find(
+                      (option) => option.value === value
+                    )?.value || '',
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    marginRight: '4px',
+                  }}
+                />
+              ))}
+            </Box>
+          )}
+          MenuProps={{
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'left',
+            },
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'left',
+            },
+            getContentAnchorEl: null,
+          }}
+        >
+          {colorOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              <Checkbox checked={selectedColorOptions.includes(option.value)} />
+              <Box
+                component="div"
+                sx={{
+                  backgroundColor: option.value,
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  marginRight: '8px',
+                }}
+              />
+              <Typography variant="body2">{option.label}</Typography>
             </MenuItem>
-            {sizeOptions.map((size) => (
-              <MenuItem key={size} value={size}>
-                {size}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
     );
   };
+  
+ 
+  
   const PriceDropDownMenu = () => {
-    const [selectedOption, setSelectedOption] = useState('');
+ 
+ 
+    useEffect(() => {
+      // Check if selectedColorOptions have actually changed
+   
+      const hasPriceOptionsChanged =
+  Number(range.highestValue) !== Number(filterProductData.maxPrice(store.getState())) && Number(range.lowestValue) !== Number(filterProductData.minPrice(store.getState()));
+
+
+  
+
+      if (hasPriceOptionsChanged) {
+       
+        change({data:{minPrice:range.lowestValue,maxPrice:range.highestValue} });
+      }
+    }, [range.lowestValue,range.highestValue]);
+  
   
     const handleSelectChange = (event) => {
-      setSelectedOption(event.target.value);
+      const selectedValue = event.target.value;
+      setSelectedOption(selectedValue);
+      const [start, end] = selectedValue.split('-');
+      console.log("ggggggggggggggggggggggggggggggggggggg");
+
+      // Convert the range values to integers
+      
+    
+      setRange({lowestValue:parseInt(start, 10),highestValue:parseInt(end, 10)});
+      setSelectedPriceOption(selectedValue);
+      
+
+  
+    
     };
   
     // Array of price ranges in dollars
     const priceOptions = [
-      'Under $10', '$10 - $20', '$20 - $30', '$30 - $50', '$50 - $75', '$75 - $100',
-      '$100 - $150', '$150 - $200', '$200 - $250', '$250 - $300', '$300 - $500', 'Over $500',
-    ];
+      { value: "159-399", label: "₹159 To ₹399" },
+      { value: "399-999", label: "₹399 To ₹999" },
+      { value: "999-1999", label: "₹999 To ₹1999" },
+      { value: "1999-2999", label: "₹1999 To ₹2999" },
+      { value: "3999-4999", label: "₹3999 To ₹4999" },
+    ]
   
     return (
       <div>
         <FormControl fullWidth variant="outlined">
           <InputLabel>price range</InputLabel>
           <Select
-            value={selectedOption}
+            value={selectedPriceOption}
             onChange={handleSelectChange}
             label="Select a price range"
             IconComponent={ExpandMore}
@@ -208,8 +235,8 @@ const ColorDropDownMenu = () => {
               Select an option
             </MenuItem>
             {priceOptions.map((priceRange) => (
-              <MenuItem key={priceRange} value={priceRange}>
-                {priceRange}
+              <MenuItem key={priceRange.label} value={priceRange.value}>
+                {priceRange.label}
               </MenuItem>
             ))}
           </Select>
@@ -218,22 +245,36 @@ const ColorDropDownMenu = () => {
     );
   };
   const DiscountDropDownMenu = () => {
-    const [selectedOption, setSelectedOption] = useState('');
+    
+    useEffect(() => {
+     
+      const hasselectedDiscountOption =
+     selectedDiscountOption !==
+      filterProductData.minDiscount(store.getState());
   
-    const handleSelectChange = (event) => {
-      setSelectedOption(event.target.value);
+      if (hasselectedDiscountOption) {
+        change({data:{minDiscount:selectedDiscountOption}});
+      }
+    }, [selectedDiscountOption]);
+  
+    const handleSelectDiscountChange = (event) => {
+      setSelectedDiscountOption(event.target.value);
     };
   
-    // Array of discount options
+   
     const discountOptions = [
-     
-      { value: '0-10%', label: '0% - 10%' },
-      { value: '10-20%', label: '10% - 20%' },
-      { value: '20-30%', label: '20% - 30%' },
-      { value: '30-40%', label: '30% - 40%' },
-      { value: '40-50%', label: '40% - 50%' },
-      { value: '50-60%', label: '50% - 60%' },
-      // Add more discount options as needed
+      {
+        value: "10",
+        label: "10% And Above",
+      },
+      { value: "20", label: "20% And Above" },
+      { value: "30", label: "30% And Above" },
+      { value: "40", label: "40% And Above" },
+      { value: "50", label: "50% And Above" },
+      { value: "60", label: "60% And Above" },
+      { value: "70", label: "70% And Above" },
+      { value: "80", label: "80% And Above" },
+   
     ];
   
     return (
@@ -241,8 +282,8 @@ const ColorDropDownMenu = () => {
         <FormControl fullWidth variant="outlined">
           <InputLabel>Discount</InputLabel>
           <Select
-            value={selectedOption}
-            onChange={handleSelectChange}
+            value={selectedDiscountOption}
+            onChange={handleSelectDiscountChange}
             variant="outlined"
             IconComponent={ExpandMore}
             label="Select an option"
@@ -260,7 +301,53 @@ const ColorDropDownMenu = () => {
       </div>
     );
   };
-  const RatingDropDownMenu = () => {
+  const SortOptionsDropDownMenu = () => {
+
+  
+    const handleSelectedSortChange = (event) => {
+      setSelectedSortOption(event.target.value);
+    };
+    useEffect(() => {
+      // Check if selectedColorOptions have actually changed
+      const hasColorOptionsChanged =
+        JSON.stringify(selectedSortOption) !==
+        JSON.stringify(filterProductData.sort(store.getState()));
+  
+      if (hasColorOptionsChanged) {
+        change({data:{sort:selectedSortOption}});
+      }
+    }, [selectedSortOption]);
+  
+    // Array of rating options
+    const ratingOptions = [
+      { name: "Price: Low to High", query: "price_low", current: false },
+      { name: "Price: High to Low", query: "price_high", current: false },
+    ];
+  
+    return (
+      <div>
+        <FormControl fullWidth variant="outlined">
+          <InputLabel>Select a rating</InputLabel>
+          <Select
+            value={selectedSortOption}
+            onChange={handleSelectedSortChange}
+            label="Sort Order"
+            IconComponent={ExpandMore}
+          >
+            <MenuItem value="" disabled>
+              Select an option
+            </MenuItem>
+            {ratingOptions.map((option) => (
+              <MenuItem key={option.name} value={option.name}>
+                {option.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+    );
+  };
+  const RatingDropDownMenu2 = () => {
     const [selectedOption, setSelectedOption] = useState('');
   
     const handleSelectChange = (event) => {
@@ -302,25 +389,33 @@ const ColorDropDownMenu = () => {
       <Typography variant="h3" sx={headerStyles.title}>
      
 
-        <Grid container alignItems="center" justifyContent="space-between">
-          <Grid item xs={12} sm={3}>
-          SphereElegance
-          </Grid>
-          <Grid item xs={12} sm={1.5} textAlign="center" marginTop={{ xs: 1, sm: 0, }} sx={{}}>
+        <Grid container alignItems="center" justifyContent="space-between" >
+          <Grid item xs={12}>
+            <Grid container >
+            {/* <Grid item xs={12} lg={2}>
+          Filters
+          </Grid> */}
+          <Grid item xs={12} sm={1.5} textAlign="center" margin={{ xs: 10, sm: 1, }} sx={{mx:3}}>
             <ColorDropDownMenu />
           </Grid>
-          <Grid item xs={12} sm={1.5} textAlign="center" marginTop={{ xs: 1, sm: 0 }}>
+          {/* <Grid item xs={12} sm={1.5} textAlign="center" margin={{ xs: 10, sm: 1 }}>
             <SizeDropDownMenu />
-          </Grid>
-          <Grid item xs={12} sm={1.5} textAlign="center" marginTop={{ xs: 1, sm: 0 }}>
+          </Grid> */}
+          <Grid item xs={12} sm={1.5} textAlign="center" margin={{ xs: 1, sm: 1 }}>
             <PriceDropDownMenu />
           </Grid>
-          <Grid item xs={12} sm={1.5} textAlign="center" marginTop={{ xs: 1, sm: 0 }}>
+          <Grid item xs={12} sm={1.5} textAlign="center" margin={{ xs: 1, sm: 1 }}>
             <DiscountDropDownMenu />
           </Grid>
-          <Grid item xs={12} sm={1.5} textAlign="center" marginTop={{ xs: 1, sm: 0 }}>
-            <RatingDropDownMenu />
+          <Grid item xs={12} sm={1.5} textAlign="center" margin={{ xs: 1, sm: 1 }}>
+            <SortOptionsDropDownMenu />
           </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+       
+          </Grid>
+        
    
         </Grid>
       </Typography>

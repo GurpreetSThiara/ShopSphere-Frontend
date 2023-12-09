@@ -14,10 +14,10 @@ import {
   Remove,
 } from "@mui/icons-material";
 import DeleteItemAlert from "./DeleteConfirmationModal/DeleteItemAlert";
-import { cartActions } from "../../../store/cart-slice";
+import { cartActions, removeCartItem, updateCartItem } from "../../../store/cart-slice";
 import { useDispatch, useSelector } from "react-redux";
 
-const CartItem = ({product,quantity}) => {
+const CartItem = ({item,product,quantity}) => {
   const [isDeleteAlertVisible, setDeleteAlertVisible] = useState(false);
   const totalPrice=useSelector((state)=>state.cart.totalPrice);
   const discountedPrice=useSelector((state)=>state.cart.totalDiscountedPrice);
@@ -26,7 +26,7 @@ const CartItem = ({product,quantity}) => {
     // Handle delete logic here
     // ...
     setDeleteAlertVisible(false);
-    dispatch(cartActions.deleteFromCart({product:product,quantity:quantity}));
+    dispatch(removeCartItem({cartItemId:product.id}));
   };
 
   const handleDeleteClick = () => {
@@ -38,12 +38,18 @@ const CartItem = ({product,quantity}) => {
   };
 
   const handleAddButton=()=>{
-    dispatch(cartActions.addToCart({product:product,quantity:1}));
+    console.log("producttt");
+    console.log(product);
+    dispatch(updateCartItem({data:{quantity:item.quantity+1}, cartItemId:item.id}));
   }
 
   const handleRemoveButton=()=>{
-    if(quantity>1)
-    dispatch(cartActions.removeFromCart({product:product,quantity:quantity}));
+    if(item.quantity>1){
+      console.log("producttt");
+      console.log(product);
+      dispatch(updateCartItem({data:{quantity:item.quantity-1}, cartItemId:item.id}));
+    }
+    
   }
   const handleDeleteFromCart=()=>{
     dispatch(cartActions.deleteFromCart({product:product,quantity:quantity}));

@@ -25,6 +25,7 @@ import { mens_kurta } from "../../../products/Men/men_kurta";
 import { DialogTitle } from "@mui/material/DialogTitle";
 import Autosuggest from "react-autosuggest";
 import { selectUser } from "../../../store/auth-slice";
+import { useSelector } from "react-redux";
 
 const navigation = {
   categories: [
@@ -163,6 +164,8 @@ export default function NavigationBar() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const User=useSelector((state)=>state.auth.user);
+  const cartItems=useSelector((state)=>state.cart.cartItems);
 
   const getSuggestions = (input) => {
     // Assuming you have an array of items with a 'title' property
@@ -545,7 +548,7 @@ export default function NavigationBar() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {selectUser==null ? <a
+                  {User==null ? <a
                     href="/SignIn"
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
@@ -557,7 +560,7 @@ export default function NavigationBar() {
                     href="/SignUp"
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
-                    Create account
+                    Create accountttttt
                   </a>
                 </div>
 
@@ -599,7 +602,7 @@ export default function NavigationBar() {
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
+                      {cartItems.length}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </a>

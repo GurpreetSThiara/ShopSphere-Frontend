@@ -59,8 +59,8 @@ const FilterComponent = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Paper style={{ padding: '16px', position: 'sticky', top: 0 }}>
+      <Grid item xs={4}>
+   
           
 
           <FormControl fullWidth variant="outlined" margin="normal">
@@ -72,10 +72,17 @@ const FilterComponent = () => {
               {/* Add more brand options */}
             </Select>
           </FormControl>
+   
+      </Grid>
+      <Grid item xs={7}>
+       
+          
+
+      
 
         
 
-        <Box border={0.01} padding={2} borderRadius={2} xs={10} borderColor="#d3d3d3" >
+        <Box border={0.01} padding={0.5} borderRadius={2}  borderColor="#d3d3d3" >
         <FormControl component="fieldset" margin="normal" >
          
          <RadioGroup value={availability} onChange={handleAvailabilityChange} row>
@@ -91,7 +98,7 @@ const FilterComponent = () => {
           {/* <Button variant="outlined" onClick={handleClearFilters}>
             Clear Filters
           </Button> */}
-        </Paper>
+     
       </Grid>
     </Grid>
   );

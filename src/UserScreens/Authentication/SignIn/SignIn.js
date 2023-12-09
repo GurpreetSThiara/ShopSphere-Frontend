@@ -1,12 +1,44 @@
 import { Box, Button, Grid, Paper, TextField, Typography, colors } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import './SignIn.css'
 import onlineFashionImage from './../../../images/online-fashion-shopping-collage-removebg-preview2.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../../store/auth-slice';
 
 
 
 
 const SignIn = () => {
+
+
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
+  const user = useSelector((state) => state.auth.user);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  
+
+  const handleLogin = (e)=>{
+    e.preventDefault();
+    dispatch(login(formData));
+    if (error) {
+      // Show an error alert using window.alert
+      window.alert(`Error: ${error}`);
+    } else if (user) {
+      // Show a success alert using window.alert
+      window.alert(`Welcome, ${user.username}!`);
+    }
+  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div>
       <Grid container className='login-container'>
@@ -17,7 +49,7 @@ const SignIn = () => {
           <Typography variant="h5" gutterBottom align='center' color='#002244' fontWeight='bold' my={4}>
             Login
           </Typography>
-          <Box component="form"  noValidate sx={{ mx: 1.5 }}>
+          <Box component="form" onSubmit={handleLogin}  noValidate sx={{ mx: 1.5 }}>
    
       <TextField
               margin="n"
@@ -28,6 +60,8 @@ const SignIn = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              value={formData.email}
+              onChange={handleChange}
             />
                <TextField
               margin="normal"
@@ -38,12 +72,15 @@ const SignIn = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={formData.password}
+              onChange={handleChange}
             />
              <Button
             variant="contained"
             sx={{backgroundColor:"#002244",mt:2}}
             fullWidth
             className="submitButton"
+            type="submit"
           >
             Login
           </Button>

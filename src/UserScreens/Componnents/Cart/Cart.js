@@ -2,79 +2,50 @@ import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem'
 import { Box, Button, ButtonBase, Grid } from '@mui/material'
 import './Cart.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCart } from '../../../store/cart-slice'
 
 const Cart = () => {
-    const cartItems=useSelector((state)=>state.cart.itemList);
-    const totalPrice=useSelector((state)=>state.cart.totalPrice);
-    const discountedPrice=useSelector((state)=>state.cart.totalDiscountedPrice);
+    const cartItems=useSelector((state)=>state.cart.cartItems);
+    // const totalPrice=useSelector((state)=>state.cart.totalPrice);
+    // const discountedPrice=useSelector((state)=>state.cart.totalDiscountedPrice);
+    const [totalPrice , setTotalPrice] = useState();
+    const [discountedPrice , setDiscountedPrice] = useState();
 
     console.log(cartItems);
     const items = ['Product 1', 'Product 2', 'Product 3'];
     const subtotal = 500; // Assuming the subtotal is $500
     const discount = 50; // Assuming a $50 discount
     const total = subtotal - discount;
-    // const [totalPrice, setTotalPrice] = useState(0);
-    // const [discountedTotalPrice, setDiscountedTotalPrice] = useState(0);
-  
-    // useEffect(() => {
-    //   const calculateTotalPrices = () => {
-    //     let calculatedTotalPrice = 0;
-    //     let calculatedDiscountedTotalPrice = 0;
-  
-    //     cartItems.forEach((item) => {
-     
-    //       calculatedTotalPrice += item.product.price * item.quantity;
-    //       calculatedDiscountedTotalPrice += item.product.discountedPrice * item.quantity;
-       
-    //     });
-    //     return { calculatedTotalPrice, calculatedDiscountedTotalPrice };
-    //   };
-  
-    //   const { calculatedTotalPrice, calculatedDiscountedTotalPrice } = calculateTotalPrices();
-    //   setTotalPrice(calculatedTotalPrice);
-    //   setDiscountedTotalPrice(calculatedDiscountedTotalPrice);
-    // }, [cartItems]);
-
-    // const [totals, setTotals] = useState({
-    //   totalPrice: 0,
-    //   discountedTotalPrice: 0,
-    // });
-
-    // Function to calculate the total price of products in the cart
-    // const calculateTotalPrices = () => {
-    //   let totalPrice = 0;
-    //   let discountedPrice=0;
-    //   cartItems.forEach((item) => {
-     
-    //     totalPrice += item.product.price * item.quantity;
-    //     discountedPrice += item.product.discountedPrice * item.quantity;
-     
-    //   });
-      
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem("jwt")
  
-  
-    //   return {totalPrice,discountedPrice};
-    // };
-  
-    // useEffect(() => {
+    useEffect(() => {
+      // Fetch cart items when the component mounts
+      dispatch(getCart(jwt));
+      calculatePrice();
+    }, [dispatch]);
+
+    useEffect(() => {
+      calculatePrice();
+    }, [cartItems]);
+
+  const calculatePrice = ()=>{
+    const totalPrice = cartItems.reduce((accumulator, item) => accumulator + item.price, 0);
+    const discountedPrice = cartItems.reduce((accumulator, item) => accumulator + item.discountedPrice, 0);
+    console.log(cartItems);
 
     
-    
-    //   setTotals(calculateTotalPrices());
-    //   console.log("Updated Totals:", totals);
-
-    //   console.log("yyyyyyyyyyyyyyyyyyyyyyyyy");
-    //   console.log(totals[1]);
-    // }, []);
-
+    setTotalPrice(totalPrice);
+    setDiscountedPrice(discountedPrice);
+  }
   return (
 
     <div>
     <Grid container>
         <Grid item lg={8}>
         { CartItem!=null ?cartItems.map((item)=>{
-          return  <CartItem product={item.product} quantity={item.quantity} />
+          return  <CartItem product={item.product} item={item} quantity={item.quantity} />
          }):<>nothing</>
         }
       
@@ -83,12 +54,7 @@ const Cart = () => {
         <div className="order-summary">
       <h2>Order Summary</h2>
 
-      {/* List of ordered items
-      <ul className="order-items">
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul> */}
+  
 
       {/* Pricing details */}
       <div className="price-details">

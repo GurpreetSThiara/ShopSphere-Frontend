@@ -19,7 +19,10 @@ export const login = createAsyncThunk('auth/login', async (userData, { rejectWit
   try {
     const response = await axios.post(`${API_BASE_URL}/auth/signin`, userData);
     const user = response.data;
-    if (user.jwt) localStorage.setItem('jwt', user.jwt);
+    if (user.jwt){ 
+        localStorage.setItem('jwt', user.jwt);
+        localStorage.setItem('user', user);
+}
     console.log('login:', user);
     return user;
   } catch (error) {
@@ -46,7 +49,7 @@ export const getUser = createAsyncThunk('auth/getUser', async (token, { rejectWi
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: null,
+    user: localStorage.getItem('user') || null,
     isLoading: false,
     error: null,
     

@@ -1,18 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { ImageList, Button, Stack } from '@mui/material';
+import { ImageList, Button, Stack, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ProductCard from '../../../HomePageComponents/ProductCard';
 import { findProducts } from '../../../../../store/product-slice';
+import { filterProductData, setData } from '../../../../../store/customerProductFilter-slice';
+import store from '../../../../../store';
 
 const ProductGrid = () => {
   const cat = useSelector((state) => state.customerProducts.categories.mensKurta);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.customerProducts.products);
-  const navigate = useNavigate(); // Update hook
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [currentPage, setCurrentPage] = useState(1);
+  const numPages = 8;
+
+  useEffect(() => {
+    const filterData = {
+        category:filterProductData.category(store.getState()), 
+      colors: filterProductData.colors(store.getState()),
+      sizes: filterProductData.sizes(store.getState()),
+      minPrice: filterProductData.minPrice(store.getState()),
+      maxPrice: filterProductData.maxPrice(store.getState()),
+      minDiscount: filterProductData.minDiscount(store.getState()),
+      sort: filterProductData.sort(store.getState()),
+      pageNumber: filterProductData.pageNumber(store.getState()),
+      pageSize: filterProductData.pageSize(store.getState()),
+      stock: filterProductData.stock(store.getState()),
+    };
+
+    // dispatch(findProducts(filterData));
+  }, [cat, dispatch]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -25,35 +45,17 @@ const ProductGrid = () => {
     navigate(`?${searchParams.toString()}`);
   };
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const colorValue = searchParams.get('color');
-    const sizeValue = searchParams.get('size');
-    const price = searchParams.get('price');
-    const disccount = searchParams.get('disccout');
-    const sortValue = searchParams.get('sort');
-    const stock = searchParams.get('stock');
+  // Calculate the start and end indices for the current page
+  const startIndex = (currentPage - 1) * numPages;
+  const endIndex = startIndex + numPages;
 
-    const [minPrice, maxPrice] = price === null ? [0, 0] : price.split('-').map(Number);
-    const data = {
-      category: cat,
-      colors: [],
-      sizes: [],
-      minPrice: 0,
-      maxPrice: 10000,
-      minDiscount: 0,
-      sort: 'price_low',
-      pageNumber: currentPage - 1,
-      pageSize: 8,
-      stock: '',
-    };
-    dispatch(findProducts(data));
-  }, [cat, location.search, currentPage, dispatch]);
+  // Slice the products array to get only the products for the current page
+  const currentProducts = products.slice(startIndex, endIndex);
 
   return (
     <div>
       <ImageList sx={{}} cols={4}>
-        {products.map((item) => (
+        {currentProducts.map((item) => (
           <div style={{ marginBottom: 20 }} key={item.id}>
             <ProductCard product={item} />
           </div>
@@ -69,22 +71,20 @@ const ProductGrid = () => {
         >
           Prev
         </Button>
-        {[...Array(Math.ceil(products.length / 8))].map((_, index) => (
-          <Button
+        {[...Array(Math.ceil(products.length / numPages))].map((_, index) => (
+          <IconButton
             key={index + 1}
-            variant="contained"
-            color="primary"
+            color={currentPage === index + 1 ? 'primary' : 'default'}
             onClick={() => handlePageChange(index + 1)}
-            disabled={currentPage === index + 1}
           >
             {index + 1}
-          </Button>
+          </IconButton>
         ))}
         <Button
           variant="contained"
           color="primary"
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === Math.ceil(products.length / 8)}
+          disabled={currentPage === Math.ceil(products.length / numPages)}
         >
           Next
         </Button>

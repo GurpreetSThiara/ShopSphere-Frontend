@@ -64,10 +64,8 @@ const ProductPage = () => {
     <ComponentHeader/>
     </div>
       <Grid container>
-        <Grid item lg={2}>
-          <FilterComponent />
-        </Grid>
-       <Grid item lg={10}>
+        
+       <Grid item lg={12}>
        <div>
    <ProductGrid/>
     </div>

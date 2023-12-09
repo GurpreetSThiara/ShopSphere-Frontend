@@ -60,6 +60,7 @@ const customerProductSlice = createSlice({
       lenghaCholi:'lengha_choli',
       womenTop:'Top'
   },
+
     product: null,
     loading: false,
     error: null,
