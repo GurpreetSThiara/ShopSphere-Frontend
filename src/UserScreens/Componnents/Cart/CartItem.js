@@ -26,7 +26,7 @@ const CartItem = ({item,product,quantity}) => {
     // Handle delete logic here
     // ...
     setDeleteAlertVisible(false);
-    dispatch(removeCartItem({cartItemId:product.id}));
+    dispatch(removeCartItem({cartItemId:item.id}));
   };
 
   const handleDeleteClick = () => {

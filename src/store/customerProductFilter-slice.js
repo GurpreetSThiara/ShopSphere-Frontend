@@ -45,7 +45,7 @@ export const setDataWithFunction = createAsyncThunk('productFilter/setDataWithFu
 const customerProductFilter = createSlice({
   name: 'productFilter',
   initialState: {
-    category: "Mens_Kurta",
+    category: "womenDress",
     colors: [],
     sizes: [],
     minPrice: 0,

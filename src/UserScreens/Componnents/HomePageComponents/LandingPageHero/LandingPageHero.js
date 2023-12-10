@@ -35,7 +35,7 @@ const LandingPageHero = () => {
           </Typography>
         </div>
         <div>
-          <Button
+          {/* <Button
             size="large"
             sx={{
               color: "white",
@@ -47,7 +47,7 @@ const LandingPageHero = () => {
             }}
           >
             <Typography fontSize="large">Shop Now</Typography>
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

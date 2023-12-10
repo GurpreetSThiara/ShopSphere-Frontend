@@ -9,17 +9,18 @@ import customerProductSlice, { findProducts } from './../../../store/product-sli
 import { useParams } from "react-router";
 import ProductCard from "../HomePageComponents/ProductCard";
 import ProductGrid from "./CategoriesComponent/ProductGrid/ProductGrid";
+import { filterProductData } from "../../../store/customerProductFilter-slice";
+import store from "../../../store";
 
 
 
 
 const ProductPage = () => {
-  const cat=useSelector((state)=>state.customerProducts.categories.womenTop)
+  const category =filterProductData.category(store.getState());
   const dispatch = useDispatch();
   const products = useSelector((state) => state.customerProducts.products);
   const param = useParams();
-   // Replace "yourReducer" with the name of your reducer
-  //  const decodedQueryString = decodeURIComponent(location.search);
+
    const searchParams = new URLSearchParams();
    const colorValue = searchParams.get("color");
    const sizeValue = searchParams.get("size");
@@ -31,10 +32,10 @@ const ProductPage = () => {
    const jwt = localStorage.getItem("jwt");
 
    useEffect(() => {
-    const [minPrice, maxPrice] =
-      price === null ? [0, 0] : price.split("-").map(Number);
+   
+
     const data = {
-      category: cat,
+      category:  localStorage.getItem('category'),
       colors:  [],
       sizes:  [],
       minPrice:  0,
@@ -46,16 +47,7 @@ const ProductPage = () => {
       stock: "",
     };
     dispatch(findProducts(data));
-  }, [
-    cat,
-    colorValue,
-    sizeValue,
-    price,
-    disccount,
-    sortValue,
-    pageNumber,
-    stock,
-  ]);
+  }, [dispatch]);
 
   return (
     <>
@@ -69,20 +61,7 @@ const ProductPage = () => {
        <div>
    <ProductGrid/>
     </div>
-       </Grid>
-        {/* <Grid item sx={{mx:2}}>
-            <ProductCard />
-        </Grid>
-        <Grid item sx={{mx:2}}>
-            <ProductCard/>
-        </Grid>
-        <Grid item sx={{mx:2}}>
-            <ProductCard/>
-        </Grid>
-        <Grid item sx={{mx:2}}>
-            <ProductCard/>
-        </Grid> */}
-       
+       </Grid>   
       </Grid>
     </>
   );

@@ -51,7 +51,7 @@ const ComponentHeader = () => {
       stock: filterProductData.stock(store.getState()),
     };
 
-    dispatch(findProducts(filterData));
+ //   dispatch(findProducts(filterData));
 
   }
   const dispatch = useDispatch();

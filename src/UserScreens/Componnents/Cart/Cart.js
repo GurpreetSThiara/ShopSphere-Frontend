@@ -28,6 +28,7 @@ const Cart = () => {
 
     useEffect(() => {
       calculatePrice();
+      localStorage.setItem('cartLength',cartItems.length.toString());
     }, [cartItems]);
 
   const calculatePrice = ()=>{

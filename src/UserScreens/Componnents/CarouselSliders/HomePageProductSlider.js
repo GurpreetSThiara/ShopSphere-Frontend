@@ -1,43 +1,54 @@
-import React, { useEffect, useState } from 'react'
-import 'react-alice-carousel/lib/alice-carousel.css';
-import AliceCarousel from 'react-alice-carousel';
-import ProductCard from '../HomePageComponents/ProductCard';
-import './HomePageProductSlider.css'
-import { dressPage1 } from '../../../products/dress/page1';
-
+import React, { useEffect, useState } from "react";
+import "react-alice-carousel/lib/alice-carousel.css";
+import AliceCarousel from "react-alice-carousel";
+import ProductCard from "../HomePageComponents/ProductCard";
+import "./HomePageProductSlider.css";
+import { dressPage1 } from "../../../products/dress/page1";
+import { useDispatch, useSelector } from "react-redux";
+import { filterProductData, setData } from "../../../store/customerProductFilter-slice";
+import { findProducts } from "../../../store/product-slice";
+import store from "../../../store";
 
 const HomePageProductSlider = () => {
-    const responsive = {
-        0: { items: 1 },
-        568: { items: 3 },
-        1024: { items:5 },
-    };
-   const [data,setData]=useState();
-    useEffect(() => {
-      const fetchData = async () => {
-        setData(dressPage1);
-        // try {
-        //   const response = await fetch("https://dummyjson.com/products");
-        //   if (!response.ok) {
-        //     throw new Error(`HTTP error! Status: ${response.status}`);
-        //   }
-        //   const data = await response.json();
-        //   setData(data.products);
-         
-        //   console.log(data);
-        // } catch (error) {
-        //   console.log('Error fetching categories:', error);
-        // }
-      };
-  
-      fetchData();
-    }, []); // Empty dependency array ensures the effect runs once after the initial render
-  
-            
-const items=data==null?[1,1,1,1,1,1,1,1,1,].map((i)=><img src='https://via.placeholder.com/400x400' alt=''/>):data.map((i)=><ProductCard product={i}/>);
+  const products = useSelector((state) => state.customerProducts.products);
+  const dispatch = useDispatch();
+
+  const responsive = {
+    0: { items: 1 },
+    568: { items: 3 },
+    1024: { items: 5 },
+  };
+
+  useEffect(() => {
+    const filterData = {
+      category:filterProductData.category(store.getState()), 
+    colors: filterProductData.colors(store.getState()),
+    sizes: filterProductData.sizes(store.getState()),
+    minPrice: filterProductData.minPrice(store.getState()),
+    maxPrice: filterProductData.maxPrice(store.getState()),
+    minDiscount: filterProductData.minDiscount(store.getState()),
+    sort: filterProductData.sort(store.getState()),
+    pageNumber: filterProductData.pageNumber(store.getState()),
+    pageSize: filterProductData.pageSize(store.getState()),
+    stock: filterProductData.stock(store.getState()),
+  };
+
+    const fetchData = async () => {};
+    dispatch(setData({ category: "womenDress" }));
+    dispatch(findProducts(filterData));
+
+    fetchData();
+  }, [dispatch]);
+
+  const items =
+    products == null
+      ? [1, 1, 1, 1, 1, 1, 1, 1, 1].map((i) => (
+          <img src="https://via.placeholder.com/400x400" alt="" />
+        ))
+      : products.map((i) => <ProductCard product={i} />);
   return (
-    <div className='c-container'>
-       <AliceCarousel
+    <div className="c-container">
+      <AliceCarousel
         mouseTracking
         items={items}
         responsive={responsive}
@@ -50,9 +61,9 @@ const items=data==null?[1,1,1,1,1,1,1,1,1,].map((i)=><img src='https://via.place
         touchTracking
         touchMoveDefaultEvents
         disableDotsControls
-    />
+      />
     </div>
-  )
-}
+  );
+};
 
-export default HomePageProductSlider
+export default HomePageProductSlider;

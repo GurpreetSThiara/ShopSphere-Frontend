@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux'
 import NavigationBar from "./UserScreens/Componnents/NavigationBar/NavigationBar";
 import SignIn from "./UserScreens/Authentication/SignIn/SignIn";
 import SignUp from "./UserScreens/Authentication/SignUp/SignUp";
+import ProductPage from "./UserScreens/Componnents/ProductPages/ProductPage";
 function App() {
   // const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path="/Cart" element={<Cart/>} />
         <Route path="/SignIn" element={<SignIn/>} />
         <Route path="/SignUp" element={<SignUp/>} />
+        <Route path="/ProductPage" element={ <ProductPage/>} />
+       
       </Routes>
     </div>
   );

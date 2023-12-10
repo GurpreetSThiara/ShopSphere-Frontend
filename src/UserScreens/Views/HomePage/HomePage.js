@@ -39,20 +39,20 @@ const HomePage = () => {
   // }, []);
   return (
     <div>
-      <ProductPage/>
+      
      
 
       {/* <ProductViews/> */}
       {/* <HomePageProductSlider/>
       <ComponentHeader/>
      <FilterComponent/> */}
-      {/* <LandingPageHero/>
+      <LandingPageHero/>
       <HomePageProductSlider/>
       <HomeCarousel />
      <HomePageProductSlider/>
       <CategoryCarousel/>
       <HomePageProductSlider2/>
-      <HomePageProductSlider/> */}
+      <HomePageProductSlider/>
 {/* 
     
       {/* <SignUp/> */}

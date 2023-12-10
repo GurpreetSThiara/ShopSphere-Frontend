@@ -105,10 +105,12 @@ const ProductCard = ({ product }) => {
   const dispatch= useDispatch();
 
   const handleClick = () => {
+    localStorage.setItem('product',JSON.stringify(product));
+   
     dispatch(productDetailsActions.updateProduct(product))
     
 
-    navigate(`/ProductDetailsPage`, );
+    // navigate(`/ProductDetailsPage`, );
     // { state: { product } }
   };
   const handleAddToCart= ()=>{
@@ -117,7 +119,7 @@ const ProductCard = ({ product }) => {
 
   return (
   
-     <Box sx={styles.card} onClick={handleClick} >
+     <a href='/ProductDetailsPage'><Box sx={styles.card} onClick={handleClick}  >
      <Box sx={styles.imgCard}>
      <img src={product.imageUrl} alt={product.title} style={styles.image} />
      </Box>
@@ -141,7 +143,7 @@ const ProductCard = ({ product }) => {
           </Grid>
         </Grid>
       </Box>
-    </Box>
+    </Box></a>
   
   
   );

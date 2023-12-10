@@ -1,17 +1,4 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+
 import { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
@@ -25,7 +12,9 @@ import { mens_kurta } from "../../../products/Men/men_kurta";
 import { DialogTitle } from "@mui/material/DialogTitle";
 import Autosuggest from "react-autosuggest";
 import { selectUser } from "../../../store/auth-slice";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { setData } from "../../../store/customerProductFilter-slice";
+
 
 const navigation = {
   categories: [
@@ -55,27 +44,28 @@ const navigation = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Tops", href: "#" },
-            { name: "Dresses", href: "#" },
-            { name: "Pants", href: "#" },
-            { name: "Denim", href: "#" },
-            { name: "Sweaters", href: "#" },
-            { name: "T-Shirts", href: "#" },
-            { name: "Jackets", href: "#" },
-            { name: "Activewear", href: "#" },
-            { name: "Browse All", href: "#" },
+            { name: "Tops", href: "/ProductPage" , cat:"top" },
+            { name: "Dresses", href: "/ProductPage",cat:"womenDress" },
+            { name: "Pants", href: "/ProductPage",cat:"women_jeans" },
+            { name: "Lengha", href: "/ProductPage",cat:"lengha_choli" },
+            { name: "Gowns", href: "/ProductPage", cat: "Anarkali Gowns" },
+            { name: "shoes", href: "/ProductPage",cat:"women_shoes" },
+            { name: "T-Shirts", href: "/ProductPage",cat:"womens_clothing" },
+            { name: "Jackets", href: "#",cat:"Top" },
+            { name: "Activewear", href: "#",cat:"Top" },
+            { name: "Browse All", href: "#",cat:"Top" },
           ],
         },
         {
           id: "accessories",
           name: "Accessories",
           items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
+            { name: "Watches", href: "/ProductPage", cat:"womens_watches" },
+            { name: "Bags", href: "/ProductPage", cat:"womens_bags" },
+            { name: "Jewellery", href: "/ProductPage", cat:"womens_jewellery" },
+            { name: "Sunglasses", href: "/ProductPage", cat:"sunglasses" },
+            { name: "Hats", href: "#" , cat:"womens_watches"},
+            { name: "Belts", href: "#", cat:"womens_watches" },
           ],
         },
         {
@@ -117,13 +107,13 @@ const navigation = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Tops", href: "#" },
-            { name: "Pants", href: "#" },
-            { name: "Sweaters", href: "#" },
-            { name: "T-Shirts", href: "#" },
-            { name: "Jackets", href: "#" },
-            { name: "Activewear", href: "#" },
-            { name: "Browse All", href: "#" },
+            { name: "Kurtas", href: "/ProductPage", cat: "mens_kurta"  },
+            { name: "Pants", href: "/ProductPage" , cat: "Pant" },
+            { name: "Jeans", href: "/ProductPage", cat: "men_jeans" },
+            { name: "Shirts", href: "/ProductPage", cat: "shirt" },
+         
+            { name: "Shoes", href: "/ProductPage",  cat: "mens-shoes" },
+            { name: "Browse All", href: "#",  cat: "mens_kurta" },
           ],
         },
         {
@@ -165,7 +155,8 @@ export default function NavigationBar() {
   const [value, setValue] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const User=useSelector((state)=>state.auth.user);
-  const cartItems=useSelector((state)=>state.cart.cartItems);
+  const cartItems=parseInt(localStorage.getItem('cartLength'),10) || 0;
+  const dispatch = useDispatch();
 
   const getSuggestions = (input) => {
     // Assuming you have an array of items with a 'title' property
@@ -514,6 +505,9 @@ export default function NavigationBar() {
                                               >
                                                 <a
                                                   href={item.href}
+                                                  onClick={()=>{dispatch(setData({category:item.cat}));
+                                                  localStorage.setItem('category',item.cat);
+                                                }}
                                                   className="hover:text-gray-800"
                                                 >
                                                   {item.name}
@@ -602,7 +596,7 @@ export default function NavigationBar() {
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      {cartItems.length}
+                      {cartItems}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </a>

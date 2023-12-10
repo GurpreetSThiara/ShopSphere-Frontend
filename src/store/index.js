@@ -4,6 +4,7 @@ import cartSlice from "./cart-slice";
 import productDetailsSlice from "./productDetails-slice";
 import customerProductSlice from "./product-slice";
 import customerProductFilter from "./customerProductFilter-slice";
+import rootReducer from "./rootReducer";
 
 
 
@@ -15,7 +16,8 @@ const store = configureStore({
         cart: cartSlice.reducer,
         customerProducts:customerProductSlice.reducer,
          product:productDetailsSlice.reducer,
-         productFilter:customerProductFilter.reducer
+         productFilter:customerProductFilter.reducer,
+         reducer: rootReducer,
      
         
     }
