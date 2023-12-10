@@ -1,4 +1,3 @@
-
 import { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
@@ -12,9 +11,8 @@ import { mens_kurta } from "../../../products/Men/men_kurta";
 import { DialogTitle } from "@mui/material/DialogTitle";
 import Autosuggest from "react-autosuggest";
 import { selectUser } from "../../../store/auth-slice";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setData } from "../../../store/customerProductFilter-slice";
-
 
 const navigation = {
   categories: [
@@ -44,39 +42,27 @@ const navigation = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Tops", href: "/ProductPage" , cat:"top" },
-            { name: "Dresses", href: "/ProductPage",cat:"womenDress" },
-            { name: "Pants", href: "/ProductPage",cat:"women_jeans" },
-            { name: "Lengha", href: "/ProductPage",cat:"lengha_choli" },
+            { name: "Tops", href: "/ProductPage", cat: "top" },
+            { name: "Dresses", href: "/ProductPage", cat: "womenDress" },
+            { name: "Pants", href: "/ProductPage", cat: "women_jeans" },
+            { name: "Lengha", href: "/ProductPage", cat: "lengha_choli" },
             { name: "Gowns", href: "/ProductPage", cat: "Anarkali Gowns" },
-            { name: "shoes", href: "/ProductPage",cat:"women_shoes" },
-            { name: "T-Shirts", href: "/ProductPage",cat:"womens_clothing" },
-            { name: "Jackets", href: "#",cat:"Top" },
-            { name: "Activewear", href: "#",cat:"Top" },
-            { name: "Browse All", href: "#",cat:"Top" },
+            { name: "shoes", href: "/ProductPage", cat: "women_shoes" },
+            { name: "T-Shirts", href: "/ProductPage", cat: "womens_clothing" },
           ],
         },
         {
           id: "accessories",
           name: "Accessories",
           items: [
-            { name: "Watches", href: "/ProductPage", cat:"womens_watches" },
-            { name: "Bags", href: "/ProductPage", cat:"womens_bags" },
-            { name: "Jewellery", href: "/ProductPage", cat:"womens_jewellery" },
-            { name: "Sunglasses", href: "/ProductPage", cat:"sunglasses" },
-            { name: "Hats", href: "#" , cat:"womens_watches"},
-            { name: "Belts", href: "#", cat:"womens_watches" },
-          ],
-        },
-        {
-          id: "brands",
-          name: "Brands",
-          items: [
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Significant Other", href: "#" },
+            { name: "Watches", href: "/ProductPage", cat: "womens_watches" },
+            { name: "Bags", href: "/ProductPage", cat: "womens_bags" },
+            {
+              name: "Jewellery",
+              href: "/ProductPage",
+              cat: "womens_jewellery",
+            },
+            { name: "Sunglasses", href: "/ProductPage", cat: "sunglasses" },
           ],
         },
       ],
@@ -107,35 +93,24 @@ const navigation = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Kurtas", href: "/ProductPage", cat: "mens_kurta"  },
-            { name: "Pants", href: "/ProductPage" , cat: "Pant" },
+            { name: "Kurtas", href: "/ProductPage", cat: "mens_kurta" },
+            { name: "Pants", href: "/ProductPage", cat: "Pant" },
             { name: "Jeans", href: "/ProductPage", cat: "men_jeans" },
             { name: "Shirts", href: "/ProductPage", cat: "shirt" },
-         
-            { name: "Shoes", href: "/ProductPage",  cat: "mens-shoes" },
-            { name: "Browse All", href: "#",  cat: "mens_kurta" },
+
+            { name: "Shoes", href: "/ProductPage", cat: "mens-shoes" },
           ],
         },
         {
           id: "accessories",
           name: "Accessories",
           items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
-          ],
-        },
-        {
-          id: "brands",
-          name: "Brands",
-          items: [
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
+            { name: "Watches", href: "/ProductPage", cat: "Watches" },
+            { name: "Hats", href: "/ProductPage", cat: "Hat" },
+
+            { name: "Sunglasses", href: "/ProductPage", cat: "Sunglasses" },
+
+            { name: "Belts", href: "/ProductPage", cat: "Belts" },
           ],
         },
       ],
@@ -154,8 +129,8 @@ export default function NavigationBar() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const User=useSelector((state)=>state.auth.user);
-  const cartItems=parseInt(localStorage.getItem('cartLength'),10) || 0;
+  const User = useSelector((state) => state.auth.user);
+  const cartItems = useSelector((state) => state.cart.cartLength);
   const dispatch = useDispatch();
 
   const getSuggestions = (input) => {
@@ -505,9 +480,17 @@ export default function NavigationBar() {
                                               >
                                                 <a
                                                   href={item.href}
-                                                  onClick={()=>{dispatch(setData({category:item.cat}));
-                                                  localStorage.setItem('category',item.cat);
-                                                }}
+                                                  onClick={() => {
+                                                    dispatch(
+                                                      setData({
+                                                        category: item.cat,
+                                                      })
+                                                    );
+                                                    localStorage.setItem(
+                                                      "category",
+                                                      item.cat
+                                                    );
+                                                  }}
                                                   className="hover:text-gray-800"
                                                 >
                                                   {item.name}
@@ -542,23 +525,25 @@ export default function NavigationBar() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {User==null ? <a
-                    href="/SignIn"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Sign in
-                  </a>: <Avatar>{selectUser.firstName}</Avatar>}
-               
+                  {User == null ? (
+                    <a
+                      href="/SignIn"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                    >
+                      Sign in
+                    </a>
+                  ) : (
+                    <Avatar>{selectUser.firstName}</Avatar>
+                  )}
+
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   <a
                     href="/SignUp"
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
-                    Create accountttttt
+                    Create account
                   </a>
                 </div>
-
-             
 
                 {/* Search */}
                 <div className="flex lg:ml-6">

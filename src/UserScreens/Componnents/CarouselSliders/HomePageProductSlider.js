@@ -5,7 +5,10 @@ import ProductCard from "../HomePageComponents/ProductCard";
 import "./HomePageProductSlider.css";
 import { dressPage1 } from "../../../products/dress/page1";
 import { useDispatch, useSelector } from "react-redux";
-import { filterProductData, setData } from "../../../store/customerProductFilter-slice";
+import {
+  filterProductData,
+  setData,
+} from "../../../store/customerProductFilter-slice";
 import { findProducts } from "../../../store/product-slice";
 import store from "../../../store";
 
@@ -14,27 +17,29 @@ const HomePageProductSlider = () => {
   const dispatch = useDispatch();
 
   const responsive = {
-    0: { items: 1 },
-    568: { items: 3 },
-    1024: { items: 5 },
+    0: { items: 1.3 },
+    568: { items: 2 },
+    980: { items: 3 },
+    1200: { items: 4 },
+    1350: { items: 5 },
   };
 
   useEffect(() => {
     const filterData = {
-      category:filterProductData.category(store.getState()), 
-    colors: filterProductData.colors(store.getState()),
-    sizes: filterProductData.sizes(store.getState()),
-    minPrice: filterProductData.minPrice(store.getState()),
-    maxPrice: filterProductData.maxPrice(store.getState()),
-    minDiscount: filterProductData.minDiscount(store.getState()),
-    sort: filterProductData.sort(store.getState()),
-    pageNumber: filterProductData.pageNumber(store.getState()),
-    pageSize: filterProductData.pageSize(store.getState()),
-    stock: filterProductData.stock(store.getState()),
-  };
+      category: filterProductData.category(store.getState()),
+      colors: filterProductData.colors(store.getState()),
+      sizes: filterProductData.sizes(store.getState()),
+      minPrice: filterProductData.minPrice(store.getState()),
+      maxPrice: filterProductData.maxPrice(store.getState()),
+      minDiscount: filterProductData.minDiscount(store.getState()),
+      sort: filterProductData.sort(store.getState()),
+      pageNumber: filterProductData.pageNumber(store.getState()),
+      pageSize: filterProductData.pageSize(store.getState()),
+      stock: filterProductData.stock(store.getState()),
+    };
 
     const fetchData = async () => {};
-    dispatch(setData({ category: "womenDress" }));
+    dispatch(setData({ category: "womendress" }));
     dispatch(findProducts(filterData));
 
     fetchData();

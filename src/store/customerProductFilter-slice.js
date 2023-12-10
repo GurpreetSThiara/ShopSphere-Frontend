@@ -6,44 +6,44 @@ import { findProducts } from "./product-slice";
 const serializeSort = (sort) => {
   // Convert the non-serializable sort to a serializable format
   // For example, assuming sort is a function, you might convert it to a string
-  return sort ? sort.toString() : '';
+  return sort ? sort.toString() : "";
 };
 
 const deserializeSort = (serializedSort) => {
   // Convert back to the original non-serializable sort
   // For example, assuming sort is a function, you might convert it from a string
-  return serializedSort ;
+  return serializedSort;
 };
-export const setDataWithFunction = createAsyncThunk('productFilter/setDataWithFunction', async (data, thunkAPI) => {
+export const setDataWithFunction = createAsyncThunk(
+  "productFilter/setDataWithFunction",
+  async (data, thunkAPI) => {
     // Dispatch the regular setData action
     thunkAPI.dispatch(setData(data));
 
-
     const filterData = {
-        category:filterProductData.category(thunkAPI.getState()), 
-        colors: filterProductData.colors(thunkAPI.getState()),
-        sizes: filterProductData.sizes(thunkAPI.getState()),
-        minPrice: filterProductData.minPrice(thunkAPI.getState()),
-        maxPrice: filterProductData.maxPrice(thunkAPI.getState()),
-        minDiscount: filterProductData.minDiscount(thunkAPI.getState()),
-        sort: filterProductData.sort(thunkAPI.getState()),
-        pageNumber: filterProductData.pageNumber(thunkAPI.getState()),
-        pageSize: filterProductData.pageSize(thunkAPI.getState()),
-        stock: filterProductData.stock(thunkAPI.getState()),
-      };
-      thunkAPI.dispatch( findProducts(filterData));
-     
-  
-  
+      category: filterProductData.category(thunkAPI.getState()),
+      colors: filterProductData.colors(thunkAPI.getState()),
+      sizes: filterProductData.sizes(thunkAPI.getState()),
+      minPrice: filterProductData.minPrice(thunkAPI.getState()),
+      maxPrice: filterProductData.maxPrice(thunkAPI.getState()),
+      minDiscount: filterProductData.minDiscount(thunkAPI.getState()),
+      sort: filterProductData.sort(thunkAPI.getState()),
+      pageNumber: filterProductData.pageNumber(thunkAPI.getState()),
+      pageSize: filterProductData.pageSize(thunkAPI.getState()),
+      stock: filterProductData.stock(thunkAPI.getState()),
+    };
+    thunkAPI.dispatch(findProducts(filterData));
+
     // Your function to be executed after setData
     console.log("Function after setData");
-  
+
     // You can return a value if needed
-    return 'Success';
-  });
+    return "Success";
+  }
+);
 
 const customerProductFilter = createSlice({
-  name: 'productFilter',
+  name: "productFilter",
   initialState: {
     category: "womenDress",
     colors: [],
@@ -51,14 +51,14 @@ const customerProductFilter = createSlice({
     minPrice: 0,
     maxPrice: 10000,
     minDiscount: 0,
-    sort: '', // Use a serializable string for sorting
+    sort: "", // Use a serializable string for sorting
     pageNumber: 0,
     pageSize: 100,
-    stock: '',
+    stock: "",
+    secondCategory: "womens_clothing",
   },
   reducers: {
     setData: (state, action) => {
-        
       console.log("datasetttttttttttttttttttttttt");
       const data = action.payload;
       console.log(data);
@@ -74,7 +74,6 @@ const customerProductFilter = createSlice({
       state.pageNumber = data.pageNumber || state.pageNumber;
       state.pageSize = data.pageSize || state.pageSize;
       state.stock = data.stock || state.stock;
-     
     },
   },
 });

@@ -1,29 +1,36 @@
 // reviewSlice.js
 
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../config/apiConfig';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../config/apiConfig";
 
-
-export const createReview = createAsyncThunk('reviews/createReview', async (resData, { rejectWithValue }) => {
-  try {
-    const response = await api.post('/api/reviews/create', resData);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const createReview = createAsyncThunk(
+  "reviews/createReview",
+  async (resData, { rejectWithValue }) => {
+    try {
+      const response = await api.post("/api/reviews/create", resData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const getAllReviews = createAsyncThunk('reviews/getAllReviews', async (productId, { rejectWithValue }) => {
-  try {
-    const response = await api.get(`/api/reviews/product/${productId}`);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const getAllReviews = createAsyncThunk(
+  "reviews/getAllReviews",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/api/reviews/product/${productId}`);
+      console.log("reviewwwwwwwwwwwwwwwwwwwwwwwwww");
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
 const reviewSlice = createSlice({
-  name: 'reviews',
+  name: "reviews",
   initialState: {
     reviews: [],
     error: null,
@@ -46,5 +53,5 @@ const reviewSlice = createSlice({
   },
 });
 
-export  const reviewReducer= reviewSlice.reducer;
+export const reviewReducer = reviewSlice.reducer;
 export default reviewSlice;

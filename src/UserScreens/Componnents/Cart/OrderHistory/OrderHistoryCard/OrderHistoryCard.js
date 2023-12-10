@@ -50,16 +50,23 @@ const OrderHistoryCard = () => {
             </Button>
           </div>
           <Grid container spacing={2} justify="center">
-         
             <Grid item xs={6} md={3} lg={10}>
-              <div style={{ display: "flex", alignItems: "center",alignContent:"center" }}>
-              <Typography variant="h6" className="status-of-order">
-                Status:
-              </Typography>
-                <CheckCircle
-                  style={{ marginRight: "8px", color: "green" }}
-                />
-                <Typography variant="h6" className="status-of-order-value" fontSize="medium">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  alignContent: "center",
+                }}
+              >
+                <Typography variant="h6" className="status-of-order">
+                  Status:
+                </Typography>
+                <CheckCircle style={{ marginRight: "8px", color: "green" }} />
+                <Typography
+                  variant="h6"
+                  className="status-of-order-value"
+                  fontSize="medium"
+                >
                   Out For Delivery
                 </Typography>
               </div>

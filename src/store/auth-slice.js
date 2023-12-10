@@ -1,65 +1,79 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { API_BASE_URL } from '../config/apiConfig';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { API_BASE_URL } from "../config/apiConfig";
 
 // Thunks
-export const register = createAsyncThunk('auth/register', async (userData, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/auth/signup`, userData);
-    const user = response.data;
-    if (user.jwt) localStorage.setItem('jwt', user.jwt);
-    console.log('register:', user);
-    return user;
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const register = createAsyncThunk(
+  "auth/register",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/signup`,
+        userData
+      );
+      const user = response.data;
+      if (user.jwt) localStorage.setItem("jwt", user.jwt);
+      console.log("register:", user);
+      return user;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const login = createAsyncThunk('auth/login', async (userData, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/auth/signin`, userData);
-    const user = response.data;
-    if (user.jwt){ 
-        localStorage.setItem('jwt', user.jwt);
-        localStorage.setItem('user', user);
-}
-    console.log('login:', user);
-    return user;
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const login = createAsyncThunk(
+  "auth/login",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/signin`,
+        userData
+      );
+      const user = response.data;
+      if (user.jwt) {
+        localStorage.setItem("jwt", user.jwt);
+        localStorage.setItem("user", user);
+      }
+      console.log("login:", user);
+      return user;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const getUser = createAsyncThunk('auth/getUser', async (token, { rejectWithValue }) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const user = response.data;
-    console.log('req User', user);
-    return user;
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const getUser = createAsyncThunk(
+  "auth/getUser",
+  async (token, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const user = response.data;
+      console.log("req User", user);
+      return user;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
 // Slice
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
-    user: localStorage.getItem('user') || null,
+    user: localStorage.getItem("user") || null,
     isLoading: false,
     error: null,
-    
   },
   reducers: {
     logout: (state) => {
       state.user = null;
       state.isLoading = false;
       state.error = null;
-      localStorage.removeItem('jwt');
+      localStorage.removeItem("jwt");
     },
   },
   extraReducers: (builder) => {
@@ -113,4 +127,3 @@ export const selectError = (state) => state.auth.error;
 
 // Reducer
 export default authSlice;
-

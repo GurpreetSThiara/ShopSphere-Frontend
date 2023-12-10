@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
-import { Box, Button, Grid, LinearProgress, Rating, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  LinearProgress,
+  Rating,
+  Typography,
+} from "@mui/material";
 import ReviewCard from "./ReviewCard";
 import { useLocation } from "react-router";
 import HomePageProductSlider from "../../CarouselSliders/HomePageProductSlider";
-import './ProductDetailsPage.css'
-import { useDispatch, useSelector } from 'react-redux';
+import "./ProductDetailsPage.css";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../../../store/cart-slice";
-
-
+import {
+  createReview,
+  getAllReviews,
+} from "../../../../store/productReview-slice";
+import { createRating } from "../../../../store/productRating-slice";
 
 const sizes = [
   { name: " S  ", inStock: true },
   { name: " L  ", inStock: true },
   { name: " M  ", inStock: true },
-
 ];
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -48,57 +58,57 @@ const ProgressBars = () => (
     ))}
   </Box>
 );
-const reviews = { href: "#", average: 4.5, totalCount: 85 };
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-const comments = [
-  { id: 1, author: "User1", content: "Great product!", date: "2023-01-01" },
-  { id: 2, author: "User2", content: "Love it!", date: "2023-01-02" },
-  // Add more comments as needed
-];
 
 const ProductDetailsPage = () => {
-  const [productSize , setProductSize] = useState('L');
+  const [productSize, setProductSize] = useState("L");
   const dispatch = useDispatch();
-  const product= useSelector((state)=>state.product.productDetails);
-  // const location = useLocation();
-  // const { state } = location;
-  // const { product } = state;
-  console.log("dddddddddddd");
-  console.log(product);
-  console.log("dddddddddddd");
+  const product = useSelector((state) => state.product.productDetails);
+  const reviews = useSelector((state) => state.reviews.reviews);
+  const [rating, setRating] = useState(0);
 
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
-  const [showDescription, setShowDescription] = useState(true);
+
   const [newComment, setNewComment] = useState("");
+  const error = useSelector((state) => state.cart.error);
 
-  const handleAddToCart = ()=>{
-    console.log("producttttttttttttttttttttt adddddeedddeddddddddddddddddd");
-   
+  useEffect(() => {
+    dispatch(getAllReviews(product.id));
+    console.log(product);
+  }, [dispatch]);
+ 
 
-    dispatch(addItemToCart({
-      
-      productId:`${product.id}`,
-      size:productSize,
-    }));
-   
-  }
+  const handleAddToCart = async () => {
+   await  dispatch(
+      addItemToCart({
+        productId: `${product.id}`,
+        size: productSize,
+      })
+    );
+    if (error===null) {
+      alert("product added succesfuly");
+    } else {
+      alert("product not added");
+    }
+  };
 
   const handleCommentSubmit = () => {
-    // Add your logic to handle comment submission
-    const currentDate = new Date().toISOString().split("T")[0];
-    const newCommentObj = {
-      id: comments.length + 1,
-      author: "User", // Replace with actual user information if available
-      content: newComment,
-      date: currentDate,
-    };
-    comments.push(newCommentObj);
-    setNewComment("");
+    if (newComment !== "" && newComment !== null && rating !== 0) {
+      dispatch(
+        createReview({
+          productId: product.id,
+          review: newComment,
+        })
+      );
+      dispatch(
+        createRating({
+          productId: product.id,
+          rating: rating,
+        })
+      );
+      setNewComment("");
+    } else {
+      alert("rating or review cannot be empty");
+    }
   };
   const ImageGallery = ({ images }) => {
     const [selectedImage, setSelectedImage] = useState(images[0]);
@@ -148,27 +158,17 @@ const ProductDetailsPage = () => {
             {product.title}
           </h1>
           <p className="text-xl font-semibold text-indigo-600 mb-4">
-            {product.price}
+            ${product.price}
           </p>
           <div className="price-container">
-          <h5 className="price">$500</h5>
-          <span className="discount-price">$450</span>
-           
-            <h5 className="percent-discount">45% off</h5>
-           
-          </div>
+            <h5 className="price">${product.price}</h5>
+            <span className="discount-price">${product.discountedPrice}</span>
 
-          {/* Reviews */}
-          <div className="flex items-center mb-4">
-            <Rating name="read-only" value={3.3} readOnly />
-
-            <span className="text-gray-600 ml-2">
-              {reviews.average.toFixed(1)} ({reviews.totalCount} reviews)
-            </span>
+            <h5 className="percent-discount">{product.discountPersent}% off</h5>
           </div>
 
           {/* Color Selection */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <h2 className="text-lg font-semibold text-gray-800">Color</h2>
             <RadioGroup
               value={selectedColor}
@@ -198,7 +198,7 @@ const ProductDetailsPage = () => {
                 </RadioGroup.Option>
               ))}
             </RadioGroup>
-          </div>
+          </div> */}
 
           {/* Size Selection */}
           <div className="mb-6">
@@ -210,7 +210,7 @@ const ProductDetailsPage = () => {
             >
               {sizes.map((size) => (
                 <RadioGroup.Option
-                onClick={() => setProductSize(size)}
+                  onClick={() => setProductSize(size)}
                   key={size.name}
                   value={size}
                   className={({
@@ -232,14 +232,12 @@ const ProductDetailsPage = () => {
             </RadioGroup>
           </div>
 
-          {/* Add to Cart Button */}
           <Button
-          sx={{
-            backgroundColor:"#002244"
-          }}
-            // className="bg-indigo-500 text-white px-6 py-3 rounded-md hover:bg-indigo-600 focus:outline-none"
+            sx={{
+              backgroundColor: "#002244",
+              color: "white",
+            }}
             onClick={handleAddToCart}
-            // disabled={!selectedColor.inStock || !selectedSize.inStock}
           >
             Add to Cart
           </Button>
@@ -270,6 +268,15 @@ const ProductDetailsPage = () => {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         ></textarea>
+        <Rating
+          name="simple-controlled"
+          value={rating}
+          precision={0.5}
+          onChange={(event, newValue) => {
+            setRating(newValue);
+          }}
+        />
+        <br />
         <button
           onClick={handleCommentSubmit}
           className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none"
@@ -305,13 +312,16 @@ const ProductDetailsPage = () => {
       </Grid>
 
       {/* Description and Comments */}
+      {reviews.map((item) => (
+        <ReviewCard reviewItem={item} />
+      ))}
 
+      {/* <ReviewCard />
       <ReviewCard />
       <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <HomePageProductSlider/>
-    <HomePageProductSlider/>
+      <ReviewCard /> */}
+      <HomePageProductSlider />
+      <HomePageProductSlider />
     </div>
   );
 };

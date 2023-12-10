@@ -1,32 +1,37 @@
-import { Box, Button, Grid, Paper, TextField, Typography, colors } from '@mui/material'
-import React, { useState } from 'react'
-import './SignUp.css'
-import onlineFashionImage from './../../../images/online-fashion-shopping-collage-removebg-preview2.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectLoading,selectError,selectUser,register } from '../../../store/auth-slice';
-
-
-
-
-
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+  colors,
+} from "@mui/material";
+import React, { useState } from "react";
+import "./SignUp.css";
+import onlineFashionImage from "./../../../images/online-fashion-shopping-collage-removebg-preview2.png";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectLoading,
+  selectError,
+  selectUser,
+  register,
+} from "../../../store/auth-slice";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.auth.isLoading);
   const error = useSelector((state) => state.auth.error);
   const user = useSelector((state) => state.auth.user);
-  // export const selectUser = (state) => state.auth.user;
-  // export const selectLoading = (state) => state.auth.isLoading;
-  // export const selectError = (state) => state.auth.error;
-  
+
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    dob: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    lastName: "",
+    phone: "",
+    dob: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -40,33 +45,42 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Dispatch the login action with the form data
-     dispatch(register(formData));
+    dispatch(register(formData));
 
     if (error) {
-      // Show an error alert using window.alert
       window.alert(`Error: ${error}`);
     } else if (user) {
-      // Show a success alert using window.alert
       window.alert(`Welcome, ${user.username}!`);
     }
   };
 
   return (
     <div>
-      <Grid container className='SignUp-container'>
-        <Grid item lg={7} xs={12} className='SignUp-component'>
+      <Grid container className="SignUp-container">
+        <Grid item lg={7} xs={12} className="SignUp-component">
           <div className="SignUp-feilds-container" elevation={3}>
-            <Typography variant="h5" gutterBottom align='center' color='#002244' fontWeight='bold' my={4}>
+            <Typography
+              variant="h5"
+              gutterBottom
+              align="center"
+              color="#002244"
+              fontWeight="bold"
+              my={4}
+            >
               SignUp
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mx: 1.5 }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mx: 1.5 }}
+            >
               <Grid container>
                 <Grid item xs={6}>
                   <TextField
                     margin="normal"
                     required
-                    size='medium'
+                    size="medium"
                     id="firstName"
                     label="First Name"
                     name="firstName"
@@ -80,7 +94,7 @@ const SignUp = () => {
                 <Grid item xs={6}>
                   <TextField
                     margin="normal"
-                    size='medium'
+                    size="medium"
                     required
                     fullWidth
                     id="lastName"
@@ -99,7 +113,7 @@ const SignUp = () => {
                   <TextField
                     margin="normal"
                     required
-                    size='medium'
+                    size="medium"
                     id="phone"
                     label="Phone"
                     name="phone"
@@ -113,7 +127,7 @@ const SignUp = () => {
                 <Grid item xs={6}>
                   <TextField
                     margin="normal"
-                    size='medium'
+                    size="medium"
                     required
                     fullWidth
                     id="dob"
@@ -146,7 +160,7 @@ const SignUp = () => {
                   <TextField
                     margin="normal"
                     required
-                    size='medium'
+                    size="medium"
                     id="password"
                     label="Password"
                     name="password"
@@ -161,7 +175,7 @@ const SignUp = () => {
                 <Grid item xs={6}>
                   <TextField
                     margin="normal"
-                    size='medium'
+                    size="medium"
                     required
                     fullWidth
                     id="confirmPassword"
@@ -189,12 +203,20 @@ const SignUp = () => {
             </Box>
           </div>
         </Grid>
-        <Grid className='SignUp-side-box' item lg={5} xs={12}>
-          <div className='SignUp-side-box-items-container'>
-            <Typography variant='paragraph' color="white">
-              Please log in to your account or create a new one to explore a world of curated collections, exclusive deals, and seamless shopping. Your journey into the perfect shopping experience begins here.
+        <Grid className="SignUp-side-box" item lg={5} xs={12}>
+          <div className="SignUp-side-box-items-container">
+            <Typography variant="paragraph" color="white">
+              Please log in to your account or create a new one to explore a
+              world of curated collections, exclusive deals, and seamless
+              shopping. Your journey into the perfect shopping experience begins
+              here.
             </Typography>
-            <br /><img height={200} src={onlineFashionImage} alt="Online Fashion Shopping Collage" />
+            <br />
+            <img
+              height={200}
+              src={onlineFashionImage}
+              alt="Online Fashion Shopping Collage"
+            />
           </div>
         </Grid>
       </Grid>
@@ -203,4 +225,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

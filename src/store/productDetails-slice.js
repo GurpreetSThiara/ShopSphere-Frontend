@@ -1,16 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const storedProduct = (() => {
-    try {
-       return  JSON.parse(localStorage.getItem('product')) || null;
-    } catch (error) {
-      console.error("Error parsing stored product:", error);
-      return null;
-    }
-  })();
+  try {
+    return JSON.parse(localStorage.getItem("product")) || null;
+  } catch (error) {
+    console.error("Error parsing stored product:", error);
+    return null;
+  }
+})();
 const productDetailsSlice = createSlice({
-  name: 'productD',
+  name: "productD",
   initialState: {
     productDetails: storedProduct || null, // Use null or a default value if the localStorage item is not present
   },
@@ -25,8 +24,6 @@ const productDetailsSlice = createSlice({
   },
 });
 
-export const productDetailsActions =productDetailsSlice.actions;
+export const productDetailsActions = productDetailsSlice.actions;
 
 export default productDetailsSlice;
-
-

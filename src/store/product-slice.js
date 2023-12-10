@@ -1,22 +1,50 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api, { API_BASE_URL } from '../config/apiConfig';
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api, { API_BASE_URL } from "../config/apiConfig";
 
 // Thunks
 export const findProducts = createAsyncThunk(
-  'customerProducts/findProducts',
+  "customerProducts/findProducts",
   async (reqData) => {
-    const res  = await api.get(
+    const res = await api.get(
       `/api/products?color=${reqData.colors}&size=${reqData.sizes}&minPrice=${reqData.minPrice}&maxPrice=${reqData.maxPrice}&minDiscount=${reqData.minDiscount}&category=${reqData.category}&stock=${reqData.stock}&sort=${reqData.sort}&pageNumber=${reqData.pageNumber}&pageSize=${reqData.pageSize}`
     );
-    console.log("dddddddddddddddddddd");
-    console.log(res.data.content)
+    // console.log("dddddddddddddddddddd");
+    // console.log(res.data)
+    // console.log(JSON.parse(res.data))
+
+    // if(res.status===202){
+    //   return JSON.parse(res.data);
+    // }
+    console.log(res.data.content);
+    return res.data.content;
+  }
+);
+export const findProductsSec = createAsyncThunk(
+  "ustomerProducts/findProductsSec",
+  async (reqData) => {
+    const res = await api.get(
+      `/api/products?color=${reqData.colors}&size=${reqData.sizes}&minPrice=${
+        reqData.minPrice
+      }&maxPrice=${reqData.maxPrice}&minDiscount=${
+        reqData.minDiscount
+      }&category=${"womens_clothing"}&stock=${reqData.stock}&sort=${
+        reqData.sort
+      }&pageNumber=${reqData.pageNumber}&pageSize=${reqData.pageSize}`
+    );
+    // console.log("dddddddddddddddddddd");
+    // console.log(res.data)
+    // console.log(JSON.parse(res.data))
+
+    // if(res.status===202){
+    //   return JSON.parse(res.data);
+    // }
+    console.log(res.data.content);
     return res.data.content;
   }
 );
 
 export const findProductById = createAsyncThunk(
-  'customerProducts/findProductById',
+  "customerProducts/findProductById",
   async (productId) => {
     const { data } = await api.get(`/api/products/id/${productId}`);
     return data;
@@ -24,49 +52,65 @@ export const findProductById = createAsyncThunk(
 );
 
 export const createProduct = createAsyncThunk(
-  'customerProducts/createProduct',
+  "customerProducts/createProduct",
   async (product) => {
-    const { data } = await api.post(`${API_BASE_URL}/api/admin/products/`, product.data);
+    const { data } = await api.post(
+      `${API_BASE_URL}/api/admin/products/`,
+      product.data
+    );
     return data;
   }
 );
 
 export const updateProduct = createAsyncThunk(
-  'customerProducts/updateProduct',
+  "customerProducts/updateProduct",
   async (product) => {
-    const { data } = await api.put(`${API_BASE_URL}/api/admin/products/${product.productId}`, product);
+    const { data } = await api.put(
+      `${API_BASE_URL}/api/admin/products/${product.productId}`,
+      product
+    );
     return data;
   }
 );
 
 export const deleteProduct = createAsyncThunk(
-  'customerProducts/deleteProduct',
+  "customerProducts/deleteProduct",
   async (productId) => {
-    const { data } = await api.delete(`/api/admin/products/${productId}/delete`);
+    const { data } = await api.delete(
+      `/api/admin/products/${productId}/delete`
+    );
     return data;
   }
 );
 
 // Slice
 const customerProductSlice = createSlice({
-  name: 'customerProducts',
+  name: "customerProducts",
   initialState: {
     products: [],
+    productsSecondCat: [],
 
     categories: {
-      mensKurta:'mens_kurta',
-      mensPant:'Pant',
-      WomenDress:'women_dress',
-      lenghaCholi:'lengha_choli',
-      womenTop:'Top'
-  },
+      mensKurta: "mens_kurta",
+      mensPant: "Pant",
+      WomenDress: "women_dress",
+      lenghaCholi: "lengha_choli",
+      womenTop: "Top",
+    },
 
     product: null,
     loading: false,
     error: null,
     deleteProduct: null,
   },
-  reducers: {},
+  reducers: {
+    sortProductsAssending(state) {
+      state.products.sort((a, b) => a.discountedPrice - b.discountedPrice);
+    },
+    sortProductsDescending(state) {
+      state.products.sort((a, b) => b.discountedPrice - a.discountedPrice);
+    },
+  },
   extraReducers: (builder) => {
     // Find Products
     builder.addCase(findProducts.pending, (state) => {
@@ -81,7 +125,21 @@ const customerProductSlice = createSlice({
     builder.addCase(findProducts.rejected, (state, action) => {
       state.loading = false;
       state.products = [];
-      state.error = action.error.message || 'An error occurred';
+      state.error = action.error.message || "An error occurred";
+    });
+    builder.addCase(findProductsSec.pending, (state) => {
+      // state.loading = true;
+      // state.error = null;
+      state.productsSecondCat = [];
+    });
+    builder.addCase(findProductsSec.fulfilled, (state, action) => {
+      state.productsSecondCat = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(findProductsSec.rejected, (state, action) => {
+      state.loading = false;
+      state.productsSecondCat = [];
+      // state.error = action.error.message || 'An error occurred';
     });
 
     // Find Product by Id
@@ -95,7 +153,7 @@ const customerProductSlice = createSlice({
     });
     builder.addCase(findProductById.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error.message || 'An error occurred';
+      state.error = action.error.message || "An error occurred";
     });
 
     // Create Product
@@ -109,7 +167,7 @@ const customerProductSlice = createSlice({
     });
     builder.addCase(createProduct.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error.message || 'An error occurred';
+      state.error = action.error.message || "An error occurred";
     });
 
     // Update Product
@@ -125,7 +183,7 @@ const customerProductSlice = createSlice({
     });
     builder.addCase(updateProduct.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error.message || 'An error occurred';
+      state.error = action.error.message || "An error occurred";
     });
 
     // Delete Product
@@ -139,7 +197,7 @@ const customerProductSlice = createSlice({
     });
     builder.addCase(deleteProduct.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error.message || 'An error occurred';
+      state.error = action.error.message || "An error occurred";
     });
   },
 });
@@ -151,6 +209,5 @@ const customerProductSlice = createSlice({
 //     updateProduct,
 //     deleteProduct,
 //   };
-  
 
 export default customerProductSlice;

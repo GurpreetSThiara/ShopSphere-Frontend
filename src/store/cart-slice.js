@@ -82,7 +82,7 @@ export const updateCartItem = createAsyncThunk(
       reqData.data,
       config
     );
- 
+
     return response.data;
   }
 );
@@ -92,7 +92,9 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cartItems: [],
-    totalPrice:0,
+    totalPrice: 0,
+    error: null,
+    cartLength: parseInt(localStorage.getItem("cartLength"), 10) || 0,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -102,13 +104,11 @@ const cartSlice = createSlice({
       state.error = null;
     });
     builder.addCase(addItemToCart.fulfilled, (state, action) => {
-        state.cartItems.push(action.payload.cartItems);
-        
-      
-       
-        state.loading = false;
-      });
-      
+      state.cartItems.push(action.payload.cartItems);
+
+      state.loading = false;
+    });
+
     builder.addCase(addItemToCart.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message || "Failed to add item to cart";

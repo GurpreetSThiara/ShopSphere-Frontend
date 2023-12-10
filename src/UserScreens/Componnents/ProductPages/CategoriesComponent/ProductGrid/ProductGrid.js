@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { ImageList, Button, Stack, IconButton } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import ProductCard from '../../../HomePageComponents/ProductCard';
-import { findProducts } from '../../../../../store/product-slice';
-import { filterProductData, setData } from '../../../../../store/customerProductFilter-slice';
-import store from '../../../../../store';
+import React, { useEffect, useState } from "react";
+import { ImageList, Button, Stack, IconButton } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import ProductCard from "../../../HomePageComponents/ProductCard";
+import { findProducts } from "../../../../../store/product-slice";
+import {
+  filterProductData,
+  setData,
+} from "../../../../../store/customerProductFilter-slice";
+import store from "../../../../../store";
 
 const ProductGrid = () => {
-  const cat = useSelector((state) => state.customerProducts.categories.mensKurta);
+  const cat = useSelector(
+    (state) => state.customerProducts.categories.mensKurta
+  );
   const dispatch = useDispatch();
   const products = useSelector((state) => state.customerProducts.products);
   const navigate = useNavigate();
@@ -19,7 +24,7 @@ const ProductGrid = () => {
 
   useEffect(() => {
     const filterData = {
-        category:filterProductData.category(store.getState()), 
+      category: filterProductData.category(store.getState()),
       colors: filterProductData.colors(store.getState()),
       sizes: filterProductData.sizes(store.getState()),
       minPrice: filterProductData.minPrice(store.getState()),
@@ -31,7 +36,7 @@ const ProductGrid = () => {
       stock: filterProductData.stock(store.getState()),
     };
 
-    // dispatch(findProducts(filterData));
+    //  dispatch(findProducts(filterData));
   }, [cat, dispatch]);
 
   const handlePageChange = (newPage) => {
@@ -41,7 +46,7 @@ const ProductGrid = () => {
 
   const updateUrlParams = (page) => {
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set('page', page);
+    searchParams.set("page", page);
     navigate(`?${searchParams.toString()}`);
   };
 
@@ -74,7 +79,7 @@ const ProductGrid = () => {
         {[...Array(Math.ceil(products.length / numPages))].map((_, index) => (
           <IconButton
             key={index + 1}
-            color={currentPage === index + 1 ? 'primary' : 'default'}
+            color={currentPage === index + 1 ? "primary" : "default"}
             onClick={() => handlePageChange(index + 1)}
           >
             {index + 1}
