@@ -111,7 +111,9 @@ const ProductCard = ({ product }) => {
     // navigate(`/ProductDetailsPage`, );
     // { state: { product } }
   };
-  const handleAddToCart = () => {};
+  const handleAddToCart = () => {
+    
+  };
 
   return (
     <a href="/ProductDetailsPage">

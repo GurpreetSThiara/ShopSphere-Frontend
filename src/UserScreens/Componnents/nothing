@@ -1,0 +1,112 @@
+{
+    "id": 12,
+    "orderId": null,
+    "user": {
+        "id": 1,
+        "firstName": "akash",
+        "lastName": "singh",
+        "password": "$2a$10$HjlWMNQl9YbVW7A4qaRKDu4VOxafKpkvU85B44tQPGhi/Ti/k5IVO",
+        "email": "akash@gmail.com",
+        "role": null,
+        "mobile": null,
+        "addresses": [
+         
+            {
+                "id": 12,
+                "firstName": "ddddd",
+                "lastName": "ddd",
+                "streetAddress": "dvdvfbvbsfb",
+                "city": "ddddddddd",
+                "state": "dddd",
+                "zipCode": "444444",
+                "mobile": "8888885555"
+            }
+        ],
+        "createdAt": null
+    },
+    "orderItems": [
+        {
+            "id": 89,
+            "product": {
+                "id": 85,
+                "title": "Men Woven Design Pure Cotton Straight Kurta",
+                "description": "A traditional garment embodying elegance and grace. Crafted from fine fabrics, it features intricate embroidery and a relaxed fit, providing comfort and style.",
+                "price": 1049,
+                "discountedPrice": 524,
+                "discountPersent": 50,
+                "quantity": 100,
+                "brand": "PETER ENGLAND",
+                "color": "Grey",
+                "sizes": [
+                    {
+                        "name": "M",
+                        "quantity": 30
+                    },
+                    {
+                        "name": "L",
+                        "quantity": 50
+                    },
+                    {
+                        "name": "S",
+                        "quantity": 20
+                    }
+                ],
+                "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/j/a/r/l-poch521835-peter-england-original-imag7jg47g7cxhg3-bb.jpeg?q=70",
+                "ratings": [],
+                "reviews": [],
+                "numRatings": 0,
+                "category": {
+                    "id": 7,
+                    "name": "mens_kurta",
+                    "parentCategory": {
+                        "id": 5,
+                        "name": "Clothing",
+                        "parentCategory": {
+                            "id": 4,
+                            "name": "Men",
+                            "parentCategory": null,
+                            "level": 1
+                        },
+                        "level": 2
+                    },
+                    "level": 3
+                },
+                "createdAt": "2023-12-07T20:57:27.642506"
+            },
+            "size": "L",
+            "quantity": 1,
+            "price": 1049,
+            "discountedPrice": 524,
+            "userId": 1,
+            "deliveryDate": null
+        }
+
+    ],
+    "orderDate": "2023-12-13T19:44:33.9121722",
+    "deliveryDate": null,
+    "shippingAddress": {
+        "id": 12,
+        "firstName": "ddddd",
+        "lastName": "ddd",
+        "streetAddress": "dvdvfbvbsfb",
+        "city": "ddddddddd",
+        "state": "dddd",
+        "zipCode": "444444",
+        "mobile": "8888885555"
+    },
+    "paymentDetails": {
+        "paymentMethod": null,
+        "status": "PENDING",
+        "paymentId": null,
+        "razorpayPaymentLinkId": null,
+        "razorpayPaymentLinkReferenceId": null,
+        "razorpayPaymentLinkStatus": null,
+        "razorpayPaymentId": null
+    },
+    "totalPrice": 12680,
+    "totalDiscountedPrice": 3944,
+    "discounte": 8736,
+    "orderStatus": "PENDING",
+    "totalItem": 12,
+    "createdAt": "2023-12-13T19:44:33.9121722"
+}

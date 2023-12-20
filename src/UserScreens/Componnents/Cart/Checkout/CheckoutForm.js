@@ -10,12 +10,25 @@ import { useLocation } from "react-router";
 
 const steps = ["Login", "Delivery Address Form", "Order Summary", "Payment"];
 
+// Define your step components
+const stepComponents = [
+  <Login />,
+  <DeliveryAddressForm />,
+  <OrderSummary />,
+  <Payment />,
+];
+
 export default function CheckoutForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const locaction = useLocation();
-  const querySearch = new URLSearchParams(locaction.search);
-  const step = querySearch.get("step");
+  const location = useLocation();
+  const querySearch = new URLSearchParams(location.search);
+  const step = parseInt(querySearch.get("step")) || 0;
+
+  React.useEffect(() => {
+    setActiveStep(step);
+  }, [step]);
+
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -25,7 +38,17 @@ export default function CheckoutForm() {
     return skipped.has(step);
   };
 
+  const isStepValid = () => {
+    // Add validation logic for each step if needed
+    return true;
+  };
+
   const handleNext = () => {
+    if (!isStepValid()) {
+      // Handle step validation error
+      return;
+    }
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -42,9 +65,8 @@ export default function CheckoutForm() {
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
+      // Handle non-optional step skip error
+      return;
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -60,19 +82,12 @@ export default function CheckoutForm() {
   };
 
   return (
-    <Box sx={{ width: "100%", px: 10 }}>
-      <Stepper activeStep={step}>
+    <Box sx={{ width: "100%", px: [2, 4, 6, 10] }}>
+      <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
+
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -81,18 +96,20 @@ export default function CheckoutForm() {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <React.Fragment>
+        <>
           <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={handleReset} disabled={activeStep === 0}>
+              Reset
+            </Button>
           </Box>
-        </React.Fragment>
+        </>
       ) : (
-        <React.Fragment>
-          <DeliveryAddressForm />
+        <>
+          {stepComponents[activeStep]}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
               color="inherit"
@@ -109,12 +126,26 @@ export default function CheckoutForm() {
               </Button>
             )}
 
-            <Button onClick={handleNext}>
+            <Button onClick={handleNext} disabled={!isStepValid()}>
               {activeStep === steps.length - 1 ? "Finish" : "Next"}
             </Button>
           </Box>
-        </React.Fragment>
+        </>
       )}
     </Box>
   );
+}
+
+// Placeholder components for each step
+function Login() {
+  
+  return <Typography>Login Step Content</Typography>;
+}
+
+function OrderSummary() {
+  return <Typography>Order Summary Step Content</Typography>;
+}
+
+function Payment() {
+  return <Typography>Payment Step Content</Typography>;
 }

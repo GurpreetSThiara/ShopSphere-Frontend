@@ -1,34 +1,52 @@
-import React from "react";
-import "./../DeliveryAddressForm.css";
+import React from 'react';
 
-import Button from "@mui/material/Button";
 
-import { Box, Card, CardContent, Typography } from "@mui/material";
-const AddressCard = () => {
-  const address = {
-    fullName: "Guri",
-    streetAddress: "vpo ghjkk",
-    city: "new york",
-    state: "panjab",
-    zipCode: "333333",
-    phone: "999999999",
+import { CheckCircle, Delete, Edit } from '@mui/icons-material';
+import { Button, Card, CardContent, Typography } from '@mui/material';
+
+const AddressCard = ({ }) => {
+  const dummyAddress = {
+    fullName: 'John Doe',
+    streetAddress: '123 Main St',
+    city: 'Cityville',
+    state: 'Stateville',
+    zipCode: '12345',
+    country: 'Countryland',
+    phoneNumber: '555-1234',
   };
+
   return (
-    <Box className="box">
-      <Card className="box-card">
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
-            {address.fullName}
-          </Typography>
-          <Typography variant="body1" paragraph>
-            <strong>Street Address:</strong> {address.streetAddress}
-          </Typography>
-          <Typography variant="body1" paragraph>
-            <strong>City:</strong> {address.city}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Box>
+    <Card className='m-1'>
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          Shipping Address
+        </Typography>
+
+        <Typography variant="body1" paragraph>
+          <strong>Full Name:</strong> {dummyAddress.fullName}
+        </Typography>
+
+        <Typography variant="body1" paragraph>
+          <strong>Address:</strong> {dummyAddress.streetAddress}, {dummyAddress.city}, {dummyAddress.state}, {dummyAddress.zipCode}, {dummyAddress.country}
+        </Typography>
+
+        <Typography variant="body1" paragraph>
+          <strong>Contact Number:</strong> {dummyAddress.phoneNumber}
+        </Typography>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Button startIcon={<CheckCircle />}   variant="outlined">
+            Select
+          </Button>
+          <Button startIcon={<Edit />} variant="outlined">
+            Edit
+          </Button>
+          <Button startIcon={<Delete />}  variant="outlined">
+            Delete
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

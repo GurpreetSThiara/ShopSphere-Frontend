@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Router } from "react-router-dom";
 import HomePage from "./UserScreens/Views/HomePage/HomePage";
 import ProductDetailsPage from "./UserScreens/Componnents/ProductPages/ProductDetailsPage/ProductDetailsPage";
 
@@ -9,18 +9,28 @@ import NavigationBar from "./UserScreens/Componnents/NavigationBar/NavigationBar
 import SignIn from "./UserScreens/Authentication/SignIn/SignIn";
 import SignUp from "./UserScreens/Authentication/SignUp/SignUp";
 import ProductPage from "./UserScreens/Componnents/ProductPages/ProductPage";
+import ProductManagement from "./admin/ProductManagement/Productmanagement";
+import AdminHome from "./admin/AdminHome/AdminHome";
+import CheckoutForm from "./UserScreens/Componnents/Cart/Checkout/CheckoutForm";
+import OrderSummary from "./UserScreens/Componnents/Cart/Checkout/OrderSummary/OrderSummary";
+import UserRoutes from "./UserScreens/UserRoutes";
+import AdminRoutes from "./admin/AdminRoutes";
 function App() {
   return (
     <div>
       <NavigationBar />
+    
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/ProductDetailsPage" element={<ProductDetailsPage />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/SignIn" element={<SignIn />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/ProductPage" element={<ProductPage />} />
+      <Route path="/*" element={   <UserRoutes/>} />
+   
+        
+        
+
+
+        <Route path="/Admin/*" element={<AdminRoutes />} />
+ 
+
       </Routes>
     </div>
   );

@@ -6,10 +6,18 @@ import HomePageProductSlider2 from "../../Componnents/CarouselSliders/HomePagePr
 import Footer from "../../Componnents/Footer/Footer";
 
 import LandingPageHero from "../../Componnents/HomePageComponents/LandingPageHero/LandingPageHero.js";
+import AdminHome from "../../../admin/AdminHome/AdminHome.js";
+import CheckoutForm from "../../Componnents/Cart/Checkout/CheckoutForm.js";
+import Sidebarr from "../../../admin/sidebar/SideBar.js";
+
+
+
 
 const HomePage = () => {
   return (
     <div>
+
+     
       <LandingPageHero />
       <HomePageProductSlider />
       <HomeCarousel />

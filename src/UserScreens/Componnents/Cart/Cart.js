@@ -13,14 +13,13 @@ const Cart = () => {
 
   console.log(cartItems);
   const items = ["Product 1", "Product 2", "Product 3"];
-  const subtotal = 500; 
-  const discount = 50; 
+  const subtotal = 500;
+  const discount = 50;
   const total = subtotal - discount;
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
-  
     dispatch(getCart(jwt));
     calculatePrice();
   }, [dispatch]);
@@ -92,8 +91,18 @@ const Cart = () => {
                 <span>${discountedPrice}</span>
               </div>
               <div className="button-container">
-                <Button className="order-button">
-                  <h4 className="button-text"> Order Noww</h4>
+                <Button
+                  sx={{
+                    backgroundColor: "#002244",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "#004488", // Change this color to match your preference
+                    },
+                  }}
+                  fullWidth
+                  href="/Cart/Checkout"
+                >
+                  <h4 className="button-text"> Order Now</h4>
                 </Button>
               </div>
             </div>
