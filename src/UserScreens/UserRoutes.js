@@ -8,11 +8,16 @@ import SignUp from './Authentication/SignUp/SignUp'
 import ProductPage from './Componnents/ProductPages/ProductPage'
 import CheckoutForm from './Componnents/Cart/Checkout/CheckoutForm'
 import OrderSummary from './Componnents/Cart/Checkout/OrderSummary/OrderSummary'
+import UserProfile from './Profile/UserProfile'
+import OrderHistory from './Componnents/Cart/OrderHistory/OrderHistory';
+import OrderTracker from './Componnents/Cart/OrderHistory/OrderDetails/OrderTracker/OrderTracker'
 
 const UserRoutes = () => {
   return (
     <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/Profile" element={<UserProfile />} />
+
         <Route path="/ProductDetailsPage" element={<ProductDetailsPage />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/SignIn" element={<SignIn />} />
@@ -21,6 +26,9 @@ const UserRoutes = () => {
         <Route path="/Cart/Checkout" element={<CheckoutForm />} />
         <Route path="/Cart/Checkout/OrderSummary" element={<OrderSummary />} />
         
+        <Route path="/Cart/OrderHistory" element={<OrderHistory />} />
+        <Route path="/Cart/OrderHistory/OrderTracker" element={<OrderTracker/>} />
+       
     </Routes>
   )
 }

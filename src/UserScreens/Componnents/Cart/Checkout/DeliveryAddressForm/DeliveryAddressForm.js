@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -7,10 +7,13 @@ import "./DeliveryAddressForm.css";
 import AddressCard from "./AddressCard/AddressCard";
 import { Pagination } from "@mui/material";
 import { createOrder } from "../../../../../store/checkout-slice";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router";
+import { findUserProfile } from "../../../../../store/user-profile-slice";
+import UserProfile from './../../../../Profile/UserProfile';
 
 const DeliveryAddressForm = () => {
+
   const addresses = [ <AddressCard />,
   <AddressCard />,
   <AddressCard />,
@@ -26,7 +29,10 @@ const DeliveryAddressForm = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const user = useSelector((state)=>state.userProfile.user);
+  useEffect(()=>{
+    dispatch(findUserProfile());
+  },[]);
 
   const [formErrors, setFormErrors] = useState({
     firstName: "",
@@ -121,14 +127,14 @@ const DeliveryAddressForm = () => {
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
 
-  const displayedaddresses = addresses.slice(startIndex, endIndex);
+  const displayedaddresses = user?.addresses.slice(startIndex, endIndex);
 
   return (
     <Grid container lg={12} className="grid-container">
       <Grid item lg={4.5}>
-      {displayedaddresses.map((item)=>item)}
+      {displayedaddresses?.map((item,index)=><AddressCard address={item}/>)}
         <Pagination
-          count={Math.ceil(addresses.length/3,10)}
+          count={Math.ceil(user?.addresses.length/2,10)}
           page={currentPage}
           onChange={handlePageChange}
           color="primary"

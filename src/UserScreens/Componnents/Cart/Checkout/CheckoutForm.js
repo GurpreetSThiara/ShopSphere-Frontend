@@ -12,7 +12,7 @@ const steps = ["Login", "Delivery Address Form", "Order Summary", "Payment"];
 
 // Define your step components
 const stepComponents = [
-  <Login />,
+
   <DeliveryAddressForm />,
   <OrderSummary />,
   <Payment />,
@@ -137,10 +137,7 @@ export default function CheckoutForm() {
 }
 
 // Placeholder components for each step
-function Login() {
-  
-  return <Typography>Login Step Content</Typography>;
-}
+
 
 function OrderSummary() {
   return <Typography>Order Summary Step Content</Typography>;

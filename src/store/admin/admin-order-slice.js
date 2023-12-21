@@ -29,6 +29,8 @@ export const confirmOrder = createAsyncThunk('orders/confirmOrder', async (order
 export const shipOrder = createAsyncThunk('orders/shipOrder', async (orderId) => {
   try {
     const response = await api.put(`/api/admin/orders/${orderId}/ship`);
+    console.log("shipped");
+    console.log(response.data)
     return response.data;
   } catch (error) {
     throw error;
@@ -150,3 +152,4 @@ const adminOrdersSlice = createSlice({
 
 // Export reducer
 export default adminOrdersSlice;
+

@@ -1,101 +1,123 @@
+import React, { useEffect, useState } from "react";
 import {
-    Avatar,
-    AvatarGroup,
-    Box,
-    Button,
-    Card,
-    CardHeader,
-    Chip,
-    FormControl,
-    InputLabel,
-    Menu,
-    MenuItem,
-    Pagination,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
-  } from "@mui/material";
-  
-  import React, { useEffect, useState } from "react";
-  
-  import { useNavigate } from "react-router-dom";
-  import { Grid, Select } from "@mui/material";
-  
-  import { useDispatch, useSelector } from "react-redux";
-import { confirmOrder, deleteOrder, deliveredOrder, getOrders, shipOrder } from "../../store/admin/admin-order-slice";
+  Avatar,
+  AvatarGroup,
+  Box,
+  Button,
+  Card,
+  CardHeader,
+  Chip,
+  FormControl,
+  InputLabel,
+  Menu,
+  MenuItem,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Grid,
+  Select,
+  CircularProgress,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  confirmOrder,
+  deleteOrder,
+  deliveredOrder,
+  getOrders,
+  shipOrder,
+} from "../../store/admin/admin-order-slice";
 
+const OrderManagement = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ status: "", sort: "" });
+  const [anchorElArray, setAnchorElArray] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  
-  const OrderManagement = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({ status: "", sort: "" });
-    const [orderStatus, setOrderStatus] = useState("");
-    const dispatch = useDispatch();
-    const jwt = localStorage.getItem("jwt");
-    const  adminsOrder  = useSelector((state) => state.adminOrders.orders);
-    const [anchorElArray, setAnchorElArray] = useState([]);
-  
-    useEffect(() => {
-      dispatch(getOrders({ jwt }));
-    }, [dispatch]);
-  
-    // useEffect(()=>{
-    //   dispatch(getOrders({jwt}))
-    // },[])
-  
-    const handleUpdateStatusMenuClick = (event, index) => {
-      const newAnchorElArray = [...anchorElArray];
-      newAnchorElArray[index] = event.currentTarget;
-      setAnchorElArray(newAnchorElArray);
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const adminOrders = useSelector((state) => state.adminOrders.orders);
+  const [orderStatus, setOrderStatus] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        await dispatch(getOrders({ jwt, page: currentPage }));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        setError("Error fetching orders. Please try again.");
+        setLoading(false);
+      }
     };
-  
-    const handleUpdateStatusMenuClose = (index) => {
-      const newAnchorElArray = [...anchorElArray];
-      newAnchorElArray[index] = null;
-      setAnchorElArray(newAnchorElArray);
-    };
-  
-    const handleChange = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
-  
-      setFormData({ ...formData, [name]: value });
-    };
-    function handlePaginationChange(event, value) {
-      console.log("Current page:", value);
-    }
-  
-    const handleConfirmedOrder = (orderId, index) => {
-      handleUpdateStatusMenuClose(index);
-      dispatch(confirmOrder(orderId));
-      setOrderStatus("CONFIRMED")
-    };
-  
-    const handleShippedOrder = (orderId,index) => {
-      handleUpdateStatusMenuClose(index);
-      dispatch(shipOrder(orderId))
-      setOrderStatus("ShIPPED")
-    };
-  
-    const handleDeliveredOrder = (orderId,index) => {
-      handleUpdateStatusMenuClose(index);
-      dispatch(deliveredOrder(orderId))
-      setOrderStatus("DELIVERED")
-    };
-  
-    const handleDeleteOrder = (orderId) => {
+
+    fetchOrders();
+  }, [dispatch, jwt, currentPage]);
+
+  const handleUpdateStatusMenuClick = (event, index) => {
+    const newAnchorElArray = [...anchorElArray];
+    newAnchorElArray[index] = event.currentTarget;
+    setAnchorElArray(newAnchorElArray);
+  };
+
+  const handleUpdateStatusMenuClose = (index) => {
+    const newAnchorElArray = [...anchorElArray];
+    newAnchorElArray[index] = null;
+    setAnchorElArray(newAnchorElArray);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handlePaginationChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const handleStatusChange = (status) => {
+    setOrderStatus(status);
+  };
+
+  const handleConfirmedOrder = (orderId, index) => {
+    handleUpdateStatusMenuClose(index);
+    dispatch(confirmOrder(orderId));
+    handleStatusChange("CONFIRMED");
+  };
+
+  const handleShippedOrder = (orderId, index) => {
+    handleUpdateStatusMenuClose(index);
+    dispatch(shipOrder(orderId));
+    handleStatusChange("SHIPPED");
+  };
+
+  const handleDeliveredOrder = (orderId, index) => {
+    handleUpdateStatusMenuClose(index);
+    dispatch(deliveredOrder(orderId));
+    handleStatusChange("DELIVERED");
+  };
+
+  const handleDeleteOrder = (orderId) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
       handleUpdateStatusMenuClose();
       dispatch(deleteOrder(orderId));
-    };
-  
-    //   useEffect(()=>{
-    // setUpdateOrderStatus(item.orderStatus==="PENDING"?"PENDING": item.orderStatus==="PLACED"?"CONFIRMED":item.orderStatus==="CONFIRMED"?"SHIPPED":"DELEVERED")
-    //   },[adminsOrder.orders])
-  
+    }
+  };
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <Typography variant="body1">{error}</Typography>;
+  }
     return (
       <Box>
         <Card className="p-3">
@@ -168,7 +190,7 @@ import { confirmOrder, deleteOrder, deliveredOrder, getOrders, shipOrder } from 
                 </TableRow>
               </TableHead>
               <TableBody>
-                {adminsOrder?.map((item, index) => (
+                {adminOrders?.map((item, index) => (
                   <TableRow
                     hover
                     key={item.id}
@@ -291,6 +313,7 @@ import { confirmOrder, deleteOrder, deliveredOrder, getOrders, shipOrder } from 
             size="large"
             count={10}
             color="primary"
+            currentPage={currentPage}
             onChange={handlePaginationChange}
           />
         </Card>

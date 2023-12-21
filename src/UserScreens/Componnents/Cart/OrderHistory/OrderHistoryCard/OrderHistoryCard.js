@@ -3,25 +3,23 @@ import "./OrderHistoryCard.css";
 import { Grid, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { CheckCircle, LocalShipping } from "@mui/icons-material";
-const OrderHistoryCard = () => {
+const OrderHistoryCard = ({orderItem}) => {
+  console.log(orderItem);
   return (
     <div className="order-card">
       <div className="order-container">
         <img
           className="cart-image"
           alt=""
-          src="https://buckmans.com/files/store/items/edytp03032_nomadpnt-w_gqm0_frt1.jpg"
+          src={orderItem.product.imageUrl}
         ></img>
 
         <div className="middle-cart">
           <h4 className="order-title">
-            X Curvature Legging X Curvature Legging
+            {orderItem.product.title}
           </h4>
           <Typography className="order-description" paragraph>
-            Are you tired of ordinary pens that merely put ink on paper? Enter
-            the QuantumQuill 9000, the writing instrument of the future! This
-            sleek, stylish pen is not just a pen; it's a quantum leap in the
-            world of writing tools.
+            {orderItem.product.description}
           </Typography>
           <div class="">
             <Button
