@@ -9,6 +9,7 @@ import LandingPageHero from "../../Componnents/HomePageComponents/LandingPageHer
 import AdminHome from "../../../admin/AdminHome/AdminHome.js";
 import CheckoutForm from "../../Componnents/Cart/Checkout/CheckoutForm.js";
 import Sidebarr from "../../../admin/sidebar/SideBar.js";
+import SellerSignUpForm from "../../../Seller/Authentication/SignUp/SellerSignUpForm.js";
 
 
 
@@ -16,6 +17,8 @@ import Sidebarr from "../../../admin/sidebar/SideBar.js";
 const HomePage = () => {
   return (
     <div>
+
+      {/* <SellerSignUpForm/> */}
 
      
       <LandingPageHero />

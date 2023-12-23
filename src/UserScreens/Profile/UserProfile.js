@@ -18,21 +18,17 @@ const UserProfile = () => {
   useEffect(() => {
     dispatch(findUserProfile());
   }, [dispatch]);
-  if (user !== null) {
-    return (
-        <Container>
-      <header className="headerr">
-        <Typography variant="h4" gutterBottom>
-          {user.firstName} {user.lastName}'s Profile
-        </Typography>
-      </header>
+
+  const renderUserProfile = () => (
+    <Container>
+    
       <div className="profile-container">
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <Paper className="profile-paper">
+            <Paper elevation={3} className="profile-paper">
               <Avatar className="profile-picture">{user.firstName[0]}</Avatar>
               <Typography variant="h6" gutterBottom>
-                {user.firstName} {user.lastName}
+                {`${user.firstName} ${user.lastName}`}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
                 {user.email}
@@ -40,32 +36,34 @@ const UserProfile = () => {
             </Paper>
           </Grid>
           <Grid item xs={12} md={8}>
-            {user.addresses.map((address, index) => (
-              <Paper key={index} className="profile-paper">
-                <Typography variant="h6" className="address-heading">
-                  Address {index + 1}
-                </Typography>
-                <Typography variant="body1" className="address">
-                  {address.streetAddress}, {address.city}, {address.state}{' '}
-                  {address.zipCode}
-                </Typography>
-                <Typography variant="body2" className="mobile">
-                  Mobile: {address.mobile}
-                </Typography>
-              </Paper>
-            ))}
+            {user.addresses.map(renderAddress)}
           </Grid>
         </Grid>
       </div>
     </Container>
-      );
-  } else {
-    return (
-      <>
-        <CircularProgress />
-      </>
-    );
-  }
+  );
+
+  const renderAddress = (address, index) => (
+    <Paper elevation={3} key={index} className="profile-paper">
+      <Typography variant="h6" className="address-heading">
+        {`Address ${index + 1}`}
+      </Typography>
+      <Typography variant="body1" className="address">
+        {`${address.streetAddress}, ${address.city}, ${address.state} ${address.zipCode}`}
+      </Typography>
+      <Typography variant="body2" className="mobile">
+        {`Mobile: ${address.mobile}`}
+      </Typography>
+    </Paper>
+  );
+
+  return user ? (
+    renderUserProfile()
+  ) : (
+    <div className="loading-container">
+      <CircularProgress />
+    </div>
+  );
 };
 
 export default UserProfile;

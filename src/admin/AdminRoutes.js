@@ -23,7 +23,7 @@ const AdminRoutes = () => {
           
           
 
-          {/* Add other routes as needed */}
+     
         </Routes>
       </div>
     </div>

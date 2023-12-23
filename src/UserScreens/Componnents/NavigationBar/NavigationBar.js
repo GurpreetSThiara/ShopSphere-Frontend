@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -13,6 +13,7 @@ import Autosuggest from "react-autosuggest";
 import { selectUser } from "../../../store/auth-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { setData } from "../../../store/customerProductFilter-slice";
+import { findUserProfile } from "../../../store/user-profile-slice";
 
 const navigation = {
   categories: [
@@ -124,15 +125,20 @@ function classNames(...classes) {
 }
 
 export default function NavigationBar() {
-  console.log(selectUser);
+
+
+
   const [suggestions, setSuggestions] = useState([]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const User = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.userProfile.user);
   const cartItems = useSelector((state) => state.cart.cartLength);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(findUserProfile());
+  }, [dispatch]);
   const getSuggestions = (input) => {
     // Assuming you have an array of items with a 'title' property
     const suggestions = mens_kurta.map((item) => item.title);
@@ -323,19 +329,7 @@ export default function NavigationBar() {
                   </div>
                 </div>
 
-                <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="#" className="-m-2 flex items-center p-2">
-                    <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-base font-medium text-gray-900">
-                      CAD
-                    </span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
-                </div>
+            
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -525,7 +519,7 @@ export default function NavigationBar() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {User == null ? (
+                  {user === null ? (
                     <a
                       href="/SignIn"
                       className="text-sm font-medium text-gray-700 hover:text-gray-800"
@@ -533,7 +527,7 @@ export default function NavigationBar() {
                       Sign in
                     </a>
                   ) : (
-                    <Avatar>{selectUser.firstName}</Avatar>
+                   <a href='/Profile'><Avatar >{user.firstName.charAt(0).toUpperCase()}</Avatar></a>
                   )}
 
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />

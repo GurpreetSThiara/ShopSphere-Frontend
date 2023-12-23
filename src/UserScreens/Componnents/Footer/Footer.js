@@ -5,19 +5,36 @@ const Footer = () => {
   const columnData = [
     {
       title: "Company",
-      items: ["About Us", "Services", "Contact Us"],
+      items: [
+        { label: "About Us", url: "/about-us" },
+        { label: "Services", url: "/services" },
+        { label: "Contact Us", url: "/contact-us" },
+      ],
     },
     {
       title: "Resources",
-      items: ["Blog", "Careers", "Privacy Policy"],
+      items: [
+        { label: "Blog", url: "/blog" },
+        { label: "Careers", url: "/careers" },
+        { label: "Privacy Policy", url: "/privacy-policy" },
+      ],
     },
     {
       title: "Support",
-      items: ["Terms of Service", "FAQ", "Sitemap"],
+      items: [
+        { label: "Terms of Service", url: "/terms-of-service" },
+        { label: "FAQ", url: "/faq" },
+        { label: "Sitemap", url: "/sitemap" },
+      ],
     },
     {
       title: "Connect",
-      items: ["Follow Us", "Twitter", "Facebook"],
+      items: [
+        { label: "Follow Us", url: "/follow-us" },
+        { label: "Twitter", url: "https://twitter.com" },
+        { label: "Facebook", url: "https://facebook.com" },
+        { label: "Become a Seller", url: "/SellerSignUp" },
+      ],
     },
   ];
 
@@ -45,8 +62,9 @@ const Footer = () => {
                 className="pb-2"
                 variant="text"
                 sx={{ color: "lightgray", textTransform: "none" }}
+                href={item.url}  // Add this line to make the button a link
               >
-                {item}
+                {item.label}
               </Button>
             ))}
           </Grid>

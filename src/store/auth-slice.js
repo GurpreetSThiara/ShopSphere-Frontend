@@ -32,7 +32,7 @@ export const login = createAsyncThunk(
       const user = response.data;
       if (user.jwt) {
         localStorage.setItem("jwt", user.jwt);
-        localStorage.setItem("user", user);
+        localStorage.setItem("user", JSON.stringify(user));
       }
       console.log("login:", user);
       return user;
