@@ -11,6 +11,7 @@ import checkoutSlice from "./checkout-slice";
 import adminOrdersSlice from "./admin/admin-order-slice";
 import userProfileSlice from "./user-profile-slice";
 import OrderHistorySlice from "./orderHistory-slice";
+import ShopUserViewSlice from "./shop-user-view-slice";
 
 
 
@@ -29,6 +30,7 @@ const store = configureStore({
     checkout:checkoutSlice.reducer,
     adminProductsSlice:adminProductSlice.reducer,
     adminOrders:adminOrdersSlice.reducer,
+    shops:ShopUserViewSlice.reducer
  
   },
 });

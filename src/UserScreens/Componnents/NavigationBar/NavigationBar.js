@@ -117,7 +117,7 @@ const navigation = {
       ],
     },
   ],
-  pages: [],
+  pages: [{name:"All Shops" , href:"/allShops"}],
 };
 
 function classNames(...classes) {

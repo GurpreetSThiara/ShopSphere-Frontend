@@ -11,6 +11,7 @@ import OrderSummary from './Componnents/Cart/Checkout/OrderSummary/OrderSummary'
 import UserProfile from './Profile/UserProfile'
 import OrderHistory from './Componnents/Cart/OrderHistory/OrderHistory';
 import OrderTracker from './Componnents/Cart/OrderHistory/OrderDetails/OrderTracker/OrderTracker'
+import AllShops from './Shops/AllShops/AllShops'
 
 const UserRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const UserRoutes = () => {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/allShops" element={<AllShops />} />
         <Route path="/ProductPage" element={<ProductPage />} />
         <Route path="/Cart/Checkout" element={<CheckoutForm />} />
         <Route path="/Cart/Checkout/OrderSummary" element={<OrderSummary />} />

@@ -48,6 +48,7 @@ const ProductCard = ({ product }) => {
       display: "flex",
       flexDirection: "column",
       transition: "transform 0.2s",
+      objectFit: "contain",
       "&:hover": {
         transform: "scale(1.05)",
       },
@@ -64,6 +65,7 @@ const ProductCard = ({ product }) => {
       flex: 1,
       display: "flex",
       flexDirection: "column",
+      objectFit: "contain",
     },
     title: {
       fontSize: "1.1rem",
@@ -73,6 +75,7 @@ const ProductCard = ({ product }) => {
       display: "-webkit-box",
       WebkitLineClamp: 1, // Restrict title to one line
       WebkitBoxOrient: "vertical",
+      objectFit: "contain",
     },
     description: {
       color: "#666",
@@ -81,6 +84,7 @@ const ProductCard = ({ product }) => {
       display: "-webkit-box",
       WebkitLineClamp: maxLines, // Limit the description to dynamic number of lines
       WebkitBoxOrient: "vertical",
+      objectFit: "contain",
     },
     price: {
       fontSize: "1.1rem",
@@ -91,6 +95,7 @@ const ProductCard = ({ product }) => {
     buttonContainer: {
       marginTop: "auto",
       textAlign: "center",
+      
     },
     button: {
       background: "#002244",
@@ -98,6 +103,7 @@ const ProductCard = ({ product }) => {
       padding: "8px 12px",
       borderRadius: "4px",
       cursor: "pointer",
+      
     },
   };
   const navigate = useNavigate();
