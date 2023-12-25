@@ -3,8 +3,9 @@ import { Card, Grid, Typography, Link, CircularProgress, IconButton } from '@mui
 import ProductCard from '../../Componnents/HomePageComponents/ProductCard';
 import useCustomDispatch from '../../../Constants/useCustomDispatch';
 import { useDispatch, useSelector } from 'react-redux';
-import { findAllShops } from '../../../store/shop-user-view-slice';
+import { findAllShops, setSelectedShop } from '../../../store/shop-user-view-slice';
 import { ArrowForwardIosOutlined } from '@mui/icons-material';
+import { useNavigate } from 'react-router';
 
 
 
@@ -16,11 +17,12 @@ const AllShops = () => {
     const [numItemsToShow, setNumItemsToShow] = useState(5);
     const dispatch = useDispatch();
     const shops = useSelector((state)=>state.shops.allShops);
+    const navigate = useNavigate();
     useEffect(() => {
         const handleResize = () => {
           const screenWidth = window.innerWidth;
       
-          if (screenWidth >= 1500) {
+          if (screenWidth >= 1700) {
             setNumItemsToShow(5);
           } else if (screenWidth >= 1200) {
             setNumItemsToShow(4);
@@ -47,8 +49,14 @@ const AllShops = () => {
  
 
 useEffect(()=>{
-    dispatch(findAllShops());
+    dispatch(findAllShops({pageNumber:0,pageSize:5}));
 },[dispatch]);
+
+const handleClick = (shop)=>{
+  console.log(shop);
+  dispatch(setSelectedShop(shop));
+  navigate('/allShops/Shop');
+}
 
 if(shops!=null)
   return (
@@ -83,7 +91,7 @@ if(shops!=null)
         {shop.products.slice(0, numItemsToShow).map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-      <IconButton sx={{height:50}} ><ArrowForwardIosOutlined/></IconButton>
+      <IconButton sx={{height:50}} onClick={()=>{handleClick(shop)}} ><ArrowForwardIosOutlined/></IconButton>
         </div>
       </div>
             </Card>
