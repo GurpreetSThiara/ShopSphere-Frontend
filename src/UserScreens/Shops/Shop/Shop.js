@@ -57,6 +57,7 @@ const Shop = () => {
       </ImageList>
        
       </div>
+      <div className="flex justify-center my-4">
       <Pagination
        count={10}
        page={pageNumber}
@@ -64,6 +65,7 @@ const Shop = () => {
        color='primary'
       
       />
+      </div>
             </Card>
     </div>
   )
