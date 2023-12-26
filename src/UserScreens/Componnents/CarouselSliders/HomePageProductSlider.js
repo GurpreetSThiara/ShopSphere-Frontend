@@ -6,11 +6,12 @@ import "./HomePageProductSlider.css";
 import { dressPage1 } from "../../../products/dress/page1";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  filterProductData,
+
   setData,
 } from "../../../store/customerProductFilter-slice";
 import { findProducts } from "../../../store/product-slice";
-import store from "../../../store";
+import { store } from "../../../store";
+
 
 const HomePageProductSlider = () => {
   const products = useSelector((state) => state.customerProducts.products);
@@ -26,16 +27,16 @@ const HomePageProductSlider = () => {
 
   useEffect(() => {
     const filterData = {
-      category: filterProductData.category(store.getState()),
-      colors: filterProductData.colors(store.getState()),
-      sizes: filterProductData.sizes(store.getState()),
-      minPrice: filterProductData.minPrice(store.getState()),
-      maxPrice: filterProductData.maxPrice(store.getState()),
-      minDiscount: filterProductData.minDiscount(store.getState()),
-      sort: filterProductData.sort(store.getState()),
-      pageNumber: filterProductData.pageNumber(store.getState()),
-      pageSize: filterProductData.pageSize(store.getState()),
-      stock: filterProductData.stock(store.getState()),
+      category:"womendress" ,
+      colors: [],
+      sizes: [],
+      minPrice: 0,
+      maxPrice: 999999,
+      minDiscount: 0,
+      sort: "",
+      pageNumber: 0,
+      pageSize: 100,
+      stock: "",
     };
 
     const fetchData = async () => {};

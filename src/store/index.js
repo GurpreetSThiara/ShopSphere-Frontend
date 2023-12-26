@@ -11,11 +11,12 @@ import checkoutSlice from "./checkout-slice";
 import adminOrdersSlice from "./admin/admin-order-slice";
 import userProfileSlice from "./user-profile-slice";
 import OrderHistorySlice from "./orderHistory-slice";
-import ShopUserViewSlice from "./shop-user-view-slice";
+import ShopUserViewSlice, { ShopUserViewSliceReducer } from "./shop-user-view-slice";
+import { persistStore } from "redux-persist";
 
 
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
   
     auth: authSlice.reducer,
@@ -30,9 +31,11 @@ const store = configureStore({
     checkout:checkoutSlice.reducer,
     adminProductsSlice:adminProductSlice.reducer,
     adminOrders:adminOrdersSlice.reducer,
-    shops:ShopUserViewSlice.reducer
+    shops:ShopUserViewSliceReducer
  
   },
 });
 
-export default store;
+const persistedStore = persistStore(store);
+
+export default persistedStore;

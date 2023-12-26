@@ -14,33 +14,6 @@ const deserializeSort = (serializedSort) => {
   // For example, assuming sort is a function, you might convert it from a string
   return serializedSort;
 };
-export const setDataWithFunction = createAsyncThunk(
-  "productFilter/setDataWithFunction",
-  async (data, thunkAPI) => {
-    // Dispatch the regular setData action
-    thunkAPI.dispatch(setData(data));
-
-    const filterData = {
-      category: filterProductData.category(thunkAPI.getState()),
-      colors: filterProductData.colors(thunkAPI.getState()),
-      sizes: filterProductData.sizes(thunkAPI.getState()),
-      minPrice: filterProductData.minPrice(thunkAPI.getState()),
-      maxPrice: filterProductData.maxPrice(thunkAPI.getState()),
-      minDiscount: filterProductData.minDiscount(thunkAPI.getState()),
-      sort: filterProductData.sort(thunkAPI.getState()),
-      pageNumber: filterProductData.pageNumber(thunkAPI.getState()),
-      pageSize: filterProductData.pageSize(thunkAPI.getState()),
-      stock: filterProductData.stock(thunkAPI.getState()),
-    };
-    thunkAPI.dispatch(findProducts(filterData));
-
-    // Your function to be executed after setData
-    console.log("Function after setData");
-
-    // You can return a value if needed
-    return "Success";
-  }
-);
 
 const customerProductFilter = createSlice({
   name: "productFilter",
@@ -78,18 +51,7 @@ const customerProductFilter = createSlice({
   },
 });
 
-export const filterProductData = {
-  category: (state) => state.productFilter.category,
-  colors: (state) => state.productFilter.colors,
-  sizes: (state) => state.productFilter.sizes,
-  minPrice: (state) => state.productFilter.minPrice,
-  maxPrice: (state) => state.productFilter.maxPrice,
-  minDiscount: (state) => state.productFilter.minDiscount,
-  sort: (state) => deserializeSort(state.productFilter.sort), // Deserialize the sort when accessing it
-  pageNumber: (state) => state.productFilter.pageNumber,
-  pageSize: (state) => state.productFilter.pageSize,
-  stock: (state) => state.productFilter.stock,
-};
+
 
 export const { setData } = customerProductFilter.actions;
 export default customerProductFilter;

@@ -5,7 +5,7 @@ import AliceCarousel from "react-alice-carousel";
 import ProductCard2 from "../HomePageComponents/ProductCard2";
 import "./HomePageProductSlider.css";
 import {
-  filterProductData,
+
   setData,
 } from "../../../store/customerProductFilter-slice";
 import store from "../../../store";
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { findProductsSec } from "../../../store/product-slice";
 
 const HomePageProductSlider2 = () => {
+
   const responsive = {
     0: { items: 1 },
     568: { items: 1 },
@@ -25,19 +26,29 @@ const HomePageProductSlider2 = () => {
     (state) => state.customerProducts.productsSecondCat
   );
   const dispatch = useDispatch();
+  const category = useSelector((state)=>state.productFilter.category);
+  const color = useSelector((state)=>state.productFilter.color);
+  const sizes = useSelector((state)=>state.productFilter.sizes);
+  const minPrice = useSelector((state)=>state.productFilter.minPrice);
+  const maxPrice = useSelector((state)=>state.productFilter.maxPrice);
+  const minDiscount = useSelector((state)=>state.productFilter.minDiscount);
+  const sort = useSelector((state)=>state.productFilter.sort);
+  const pageNumber = useSelector((state)=>state.productFilter.pageNumber);
+  const pageSize = useSelector((state)=>state.productFilter.pageSize);
+  const stock = useSelector((state)=>state.productFilter.stock);
   useEffect(() => {
     console.log("use effecrttttttttttttt");
     const filterData = {
-      category: filterProductData.category(store.getState()),
-      colors: filterProductData.colors(store.getState()),
-      sizes: filterProductData.sizes(store.getState()),
-      minPrice: filterProductData.minPrice(store.getState()),
-      maxPrice: filterProductData.maxPrice(store.getState()),
-      minDiscount: filterProductData.minDiscount(store.getState()),
-      sort: filterProductData.sort(store.getState()),
-      pageNumber: filterProductData.pageNumber(store.getState()),
-      pageSize: filterProductData.pageSize(store.getState()),
-      stock: filterProductData.stock(store.getState()),
+      category: category,
+      colors: color,
+      sizes: sizes,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      minDiscount: minDiscount,
+      sort: sort,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      stock: stock,
     };
 
     dispatch(findProductsSec(filterData));

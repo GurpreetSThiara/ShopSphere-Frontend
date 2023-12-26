@@ -3,41 +3,49 @@ import { ImageList, Button, Stack, IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import ProductCard from "../../../HomePageComponents/ProductCard";
-import { findProducts } from "../../../../../store/product-slice";
-import {
-  filterProductData,
-  setData,
-} from "../../../../../store/customerProductFilter-slice";
-import store from "../../../../../store";
+import { findProductsSec } from "../../../../../store/product-slice";
+
+
+
 
 const ProductGrid = () => {
-  const cat = useSelector(
-    (state) => state.customerProducts.categories.mensKurta
-  );
+
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.customerProducts.products);
+  const products = useSelector((state) => state.customerProducts.products)|| [];
   const navigate = useNavigate();
   const location = useLocation();
 
   const [currentPage, setCurrentPage] = useState(1);
   const numPages = 8;
 
+
+  const category = useSelector((state)=>state.productFilter.category);
+  const color = useSelector((state)=>state.productFilter.color);
+  const sizes = useSelector((state)=>state.productFilter.sizes);
+  const minPrice = useSelector((state)=>state.productFilter.minPrice);
+  const maxPrice = useSelector((state)=>state.productFilter.maxPrice);
+  const minDiscount = useSelector((state)=>state.productFilter.minDiscount);
+  const sort = useSelector((state)=>state.productFilter.sort);
+  const pageNumber = useSelector((state)=>state.productFilter.pageNumber);
+  const pageSize = useSelector((state)=>state.productFilter.pageSize);
+  const stock = useSelector((state)=>state.productFilter.stock);
   useEffect(() => {
+    console.log("use effecrttttttttttttt");
     const filterData = {
-      category: filterProductData.category(store.getState()),
-      colors: filterProductData.colors(store.getState()),
-      sizes: filterProductData.sizes(store.getState()),
-      minPrice: filterProductData.minPrice(store.getState()),
-      maxPrice: filterProductData.maxPrice(store.getState()),
-      minDiscount: filterProductData.minDiscount(store.getState()),
-      sort: filterProductData.sort(store.getState()),
-      pageNumber: filterProductData.pageNumber(store.getState()),
-      pageSize: filterProductData.pageSize(store.getState()),
-      stock: filterProductData.stock(store.getState()),
+      category: localStorage.getItem("category"),
+      colors: color,
+      sizes: sizes,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      minDiscount: minDiscount,
+      sort: sort,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      stock: stock,
     };
 
-    //  dispatch(findProducts(filterData));
-  }, [cat, dispatch]);
+    dispatch(findProductsSec(filterData));
+  }, [dispatch]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);

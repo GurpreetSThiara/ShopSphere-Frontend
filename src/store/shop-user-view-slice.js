@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../config/apiConfig";
+import { createPersistReducer } from "./persist/persistConfig";
 
 export const findAllShops = createAsyncThunk(
     "shops/allShops",
@@ -22,7 +23,7 @@ export const findAllShops = createAsyncThunk(
       `/api/shop/products/${data.id}?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`
       );
   
-      
+
 
       console.log(res.data);
       return res.data;
@@ -79,4 +80,5 @@ const ShopUserViewSlice = createSlice({
 });
 
 export const setSelectedShop = ShopUserViewSlice.actions.setSelectedShop;
+export const ShopUserViewSliceReducer = createPersistReducer(ShopUserViewSlice.reducer);
 export default ShopUserViewSlice;

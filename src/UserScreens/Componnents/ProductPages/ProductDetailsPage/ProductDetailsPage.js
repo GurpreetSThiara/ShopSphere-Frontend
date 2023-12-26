@@ -4,6 +4,7 @@ import {
   Alert,
   Box,
   Button,
+  Card,
   Grid,
   LinearProgress,
   Rating,
@@ -131,7 +132,8 @@ const ProductDetailsPage = () => {
         {/* Small Images */}
         <div className="grid grid-cols-8 gap-2">
           {images.map((image) => (
-            <img
+           <Card className="items-center justify-center flex p-1">
+             <img
               style={{ maxHeight: "100%", width: "auto" }}
               key={image}
               src={image}
@@ -139,6 +141,7 @@ const ProductDetailsPage = () => {
               className="w-full h-20 object-cover rounded-md cursor-pointer"
               onClick={() => setSelectedImage(image)}
             />
+           </Card>
           ))}
         </div>
         <br />
@@ -150,7 +153,8 @@ const ProductDetailsPage = () => {
     <div className="bg-gray-100 min-h-screen">
       <div className="container mx-auto py-8 flex flex-col lg:flex-row">
         {/* Product Image */}
-        <ImageGallery images={[product.imageUrl]} />
+        {product.images? <ImageGallery images={product.images} />: <ImageGallery images={[product.imageUrl]} />}
+       
 
         {/* Product Details */}
         <div className="lg:w-1/2 pl-4 lg:pl-8">
