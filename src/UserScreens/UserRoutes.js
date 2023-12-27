@@ -13,6 +13,7 @@ import OrderHistory from './Componnents/Cart/OrderHistory/OrderHistory';
 import OrderTracker from './Componnents/Cart/OrderHistory/OrderDetails/OrderTracker/OrderTracker'
 import AllShops from './Shops/AllShops/AllShops'
 import Shop from './Shops/Shop/Shop'
+import SellerSignUpForm from '../Seller/Authentication/SignUp/SellerSignUpForm'
 
 
 const UserRoutes = () => {
@@ -34,6 +35,7 @@ const UserRoutes = () => {
         
         <Route path="/Cart/OrderHistory" element={<OrderHistory />} />
         <Route path="/Cart/OrderHistory/OrderTracker" element={<OrderTracker/>} />
+        <Route path="/SellerSignUp" element={<SellerSignUpForm />} />
        
     </Routes>
   )

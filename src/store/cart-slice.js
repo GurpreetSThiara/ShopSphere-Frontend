@@ -105,6 +105,7 @@ const cartSlice = createSlice({
     });
     builder.addCase(addItemToCart.fulfilled, (state, action) => {
       state.cartItems.push(action.payload.cartItems);
+     
 
       state.loading = false;
     });
@@ -121,6 +122,7 @@ const cartSlice = createSlice({
     builder.addCase(getCart.fulfilled, (state, action) => {
       state.cartItems = action.payload.cartItems;
       state.cart = action.payload;
+      localStorage.setItem("cartLength", action.payload.length)
       state.loading = false;
     });
     builder.addCase(getCart.rejected, (state, action) => {

@@ -6,14 +6,34 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Avatar, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  DialogTitle,
+  Fade,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  Paper,
+  Popper,
+  Typography,
+} from "@mui/material";
 import { mens_kurta } from "../../../products/Men/men_kurta";
-import { DialogTitle } from "@mui/material/DialogTitle";
+
 import Autosuggest from "react-autosuggest";
 import { selectUser } from "../../../store/auth-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { setData } from "../../../store/customerProductFilter-slice";
 import { findUserProfile } from "../../../store/user-profile-slice";
+import {
+  AddIcCallOutlined,
+  PersonPinCircleOutlined,
+} from "@mui/icons-material";
+import { SwitchAccountDialog } from "./Dialog";
+import { getCart } from "../../../store/cart-slice";
 
 const navigation = {
   categories: [
@@ -117,7 +137,7 @@ const navigation = {
       ],
     },
   ],
-  pages: [{name:"All Shops" , href:"/allShops"}],
+  pages: [{ name: "All Shops", href: "/allShops" }],
 };
 
 function classNames(...classes) {
@@ -125,9 +145,6 @@ function classNames(...classes) {
 }
 
 export default function NavigationBar() {
-
-
-
   const [suggestions, setSuggestions] = useState([]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -135,10 +152,18 @@ export default function NavigationBar() {
   const user = useSelector((state) => state.userProfile.user);
   const cartItems = useSelector((state) => state.cart.cartLength);
   const dispatch = useDispatch();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const emails = ["happy@gmail.com", "a@hotmail.com"];
+
+  const canBeOpen = open && Boolean(anchorEl);
+  const id = canBeOpen ? "transition-popper" : undefined;
+  const jwt = localStorage.getItem("jwt")
 
   useEffect(() => {
     dispatch(findUserProfile());
-  }, [dispatch]);
+    dispatch(getCart())
+  }, [dispatch,jwt]);
   const getSuggestions = (input) => {
     // Assuming you have an array of items with a 'title' property
     const suggestions = mens_kurta.map((item) => item.title);
@@ -168,6 +193,11 @@ export default function NavigationBar() {
     onSuggestionsClearRequested: () => setSuggestions([]),
     getSuggestionValue: (suggestion) => suggestion,
     renderSuggestion: (suggestion) => <div>{suggestion}</div>,
+  };
+
+  const handleAccountSwitch = (event) => {
+  
+    setOpenDialog(true);
   };
 
   return (
@@ -328,8 +358,6 @@ export default function NavigationBar() {
                     </a>
                   </div>
                 </div>
-
-            
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -527,16 +555,35 @@ export default function NavigationBar() {
                       Sign in
                     </a>
                   ) : (
-                   <a href='/Profile'><Avatar >{user.firstName.charAt(0).toUpperCase()}</Avatar></a>
+                    <a href="/Profile">
+                      <Avatar>{user.firstName.charAt(0).toUpperCase()}</Avatar>
+                    </a>
                   )}
 
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a
-                    href="/SignUp"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Create account
-                  </a>
+                  {user === null ? (
+                    <a
+                      href="/SignUp"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                    >
+                      Create account
+                    </a>
+                  ) : (
+                    <>
+                     <div>
+      <Button
+      sx={{color:"black"}}
+        onClick={handleAccountSwitch}
+        className="text-sm font-medium text-gray-700 hover:text-gray-800"
+      >
+        {" "}
+        Switch Account
+      </Button>
+      <SwitchAccountDialog open={openDialog} handleClose={()=>{setOpenDialog(false)}} />
+      
+    </div>
+                    </>
+                  )}
                 </div>
 
                 {/* Search */}

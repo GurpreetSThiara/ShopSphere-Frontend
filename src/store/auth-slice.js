@@ -32,7 +32,19 @@ export const login = createAsyncThunk(
       const user = response.data;
       if (user.jwt) {
         localStorage.setItem("jwt", user.jwt);
-        localStorage.setItem("user", JSON.stringify(user));
+        let jwtArray = JSON.parse(localStorage.getItem("Profiles")) || [];
+          
+           const existingJwtIndex = jwtArray.findIndex(item => item.email === user.email);
+
+           if (existingJwtIndex !== -1) {
+             // If JWT exists, update it
+             jwtArray[existingJwtIndex] = { email: user.email, jwt: user.jwt };
+           } else {
+             // If JWT doesn't exist, add it to the array
+             jwtArray.push({ email: user.email, jwt: user.jwt });
+           }
+           localStorage.setItem("Profiles", JSON.stringify(jwtArray));
+       
       }
       console.log("login:", user);
       return user;

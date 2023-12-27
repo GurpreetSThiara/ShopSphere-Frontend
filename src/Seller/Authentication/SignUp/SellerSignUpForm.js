@@ -8,6 +8,8 @@ import {
   Typography,
 } from '@mui/material';
 import { primaryButton } from '../../../Constants/Constants';
+import { useDispatch } from 'react-redux';
+import { sellerSignUp } from '../../../store/seller/seller-auth-slice';
 
 const formContainerStyle = {
   marginTop: '16px',
@@ -18,10 +20,13 @@ const formFieldStyle = {
 };
 
 const SellerSignUpForm = () => {
+  const dispatch = useDispatch();
   const [sellerData, setSellerData] = useState({
-    name: '',
+    firstName: '',
+    lastName:'',
     email: '',
     mobile: '',
+    password:'',
     shopName: '',
     latitude: '',
     longitude: '',
@@ -54,6 +59,15 @@ const SellerSignUpForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = {
+      "firstName":sellerData.firstName,
+      "lastName":sellerData.lastName,
+      "email":sellerData.email,
+      "password":sellerData.password,
+      "description":sellerData.description,
+      "shopName":sellerData.shopName
+    }
+    dispatch(sellerSignUp(data));
    
     console.log('Seller Data:', sellerData);
    
@@ -62,18 +76,27 @@ const SellerSignUpForm = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Add New Seller
+        Create Your Online Shop
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3} style={formContainerStyle}>
           <Grid item xs={12} sm={6}>
             <TextField
               style={formFieldStyle}
-              label="Name"
+              label="First Name"
               fullWidth
               required
-              name="name"
-              value={sellerData.name}
+              name="firstName"
+              value={sellerData.firstName}
+              onChange={handleChange}
+            />
+              <TextField
+              style={formFieldStyle}
+              label="Last Name"
+              fullWidth
+              required
+              name="lastName"
+              value={sellerData.lastName}
               onChange={handleChange}
             />
             <TextField
@@ -92,6 +115,15 @@ const SellerSignUpForm = () => {
               required
               name="mobile"
               value={sellerData.mobile}
+              onChange={handleChange}
+            />
+             <TextField
+              style={formFieldStyle}
+              label="Set Password"
+              fullWidth
+              required
+              name="password"
+              value={sellerData.password}
               onChange={handleChange}
             />
             <TextField
