@@ -13,6 +13,7 @@ import userProfileSlice from "./user-profile-slice";
 import OrderHistorySlice from "./orderHistory-slice";
 import ShopUserViewSlice, { ShopUserViewSliceReducer } from "./shop-user-view-slice";
 import { persistStore } from "redux-persist";
+import sellerAuthSlice from "./seller/seller-auth-slice";
 
 
 
@@ -31,7 +32,14 @@ export const store = configureStore({
     checkout:checkoutSlice.reducer,
     adminProductsSlice:adminProductSlice.reducer,
     adminOrders:adminOrdersSlice.reducer,
-    shops:ShopUserViewSliceReducer
+    shops:ShopUserViewSliceReducer,
+
+
+
+    //seller
+    sellerAuth:sellerAuthSlice.reducer,
+
+
  
   },
 });

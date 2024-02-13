@@ -6,10 +6,15 @@ import {
   Container,
   Grid,
   Typography,
+  Alert,
+  Box,
+  Modal,
 } from '@mui/material';
 import { primaryButton } from '../../../Constants/Constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sellerSignUp } from '../../../store/seller/seller-auth-slice';
+import MapComponent from '../../MapComponent/MapComponent';
+import { useNavigate } from 'react-router-dom';
 
 const formContainerStyle = {
   marginTop: '16px',
@@ -21,6 +26,26 @@ const formFieldStyle = {
 
 const SellerSignUpForm = () => {
   const dispatch = useDispatch();
+
+  const shop = useSelector((s)=>s.sellerAuth.shop);
+  const newShopCreated = useSelector((s)=>s.sellerAuth.newShopCreated);
+  const navigate = useNavigate();
+
+  
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 4,
+    textAlign: 'center',
+    
+  };
+
   const [sellerData, setSellerData] = useState({
     firstName: '',
     lastName:'',
@@ -57,7 +82,7 @@ const SellerSignUpForm = () => {
     setSellerData({ ...sellerData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     const data = {
       "firstName":sellerData.firstName,
@@ -67,11 +92,15 @@ const SellerSignUpForm = () => {
       "description":sellerData.description,
       "shopName":sellerData.shopName
     }
-    dispatch(sellerSignUp(data));
-   
+   await dispatch(sellerSignUp(data));
+
+    
     console.log('Seller Data:', sellerData);
    
   };
+  const handleShopClick = async () => {
+    navigate('/seller')
+  }
 
   return (
     <Container>
@@ -308,11 +337,31 @@ const SellerSignUpForm = () => {
               value={sellerData.logoImageUrl}
               onChange={handleChange}
             />
+            <Typography>Shop Location</Typography>
+            <MapComponent/>
           </Grid>
         </Grid>
         <Button type="submit" variant="contained" sx={primaryButton}>
           Submit
         </Button>
+      {newShopCreated && <Modal
+  open={newShopCreated}
+  onClose={!newShopCreated}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={style} >
+    <Typography id="modal-modal-title" variant="h6" component="h2">
+      Success!!
+    </Typography>
+    <Alert sx={{margin:2}}  severity="success">Sign up successful! Lets Vistit to your Shop.
+    
+        </Alert>
+        <Button  color="inherit" onClick={handleShopClick}>
+          {'Go to shop'}
+        </Button>
+  </Box>
+</Modal> } 
       </form>
     </Container>
   );
