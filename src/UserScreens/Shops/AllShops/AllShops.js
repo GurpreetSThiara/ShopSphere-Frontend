@@ -49,7 +49,7 @@ const AllShops = () => {
  
 
 useEffect(()=>{
-    dispatch(findAllShops({pageNumber:0,pageSize:5}));
+    dispatch(findAllShops({pageNumber:0,pageSize:10}));
 },[dispatch]);
 
 const handleClick = (shop)=>{

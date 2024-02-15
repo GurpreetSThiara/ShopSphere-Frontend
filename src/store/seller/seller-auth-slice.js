@@ -58,7 +58,8 @@ const sellerAuthSlice = createSlice({
   initialState: {
     seller: null,
     shop:null,
-    newShopCreated:null
+    newShopCreated:null,
+    isLoadingShop:null,
 
   },
   reducers: {},
@@ -96,10 +97,13 @@ const sellerAuthSlice = createSlice({
       .addCase(getShop.fulfilled, (state, action) => {
         state.isLoading = false;
         state.shop = action.payload;
+        state.isLoadingShop= false;
+
       })
       .addCase(getShop.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.isLoadingShop= false;
       });
   },
 });

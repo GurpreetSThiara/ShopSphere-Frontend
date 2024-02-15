@@ -40,7 +40,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 
-const SellerSideBar = () => {
+const SellerSideBar = ({shop}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -113,7 +113,7 @@ const SellerSideBar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Ed Roh
+                  {shop.firstName+' '+shop.lastName}
                 </Typography>
                
               </Box>
@@ -123,7 +123,7 @@ const SellerSideBar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/admin/"
+              to="/seller/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
