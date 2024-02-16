@@ -46,7 +46,7 @@ const OrderSummary = () => {
       };
     
 
-    if(order!=null)
+    if(order!==null)
   return (
     <Container maxWidth="md">
       <Paper elevation={3} style={{ padding: '20px', margin: '20px 0' }}>

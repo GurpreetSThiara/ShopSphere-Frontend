@@ -14,6 +14,8 @@ import OrderHistorySlice from "./orderHistory-slice";
 import ShopUserViewSlice, { ShopUserViewSliceReducer } from "./shop-user-view-slice";
 import { persistStore } from "redux-persist";
 import sellerAuthSlice from "./seller/seller-auth-slice";
+import sellerProductsSlice from "./seller/seller-product-management";
+import sellerOrderSlice from "./seller/seller-order-slice";
 
 
 
@@ -38,6 +40,8 @@ export const store = configureStore({
 
     //seller
     sellerAuth:sellerAuthSlice.reducer,
+    sellerProducts:sellerProductsSlice.reducer,
+    sellerOrders:sellerOrderSlice.reducer
 
 
  

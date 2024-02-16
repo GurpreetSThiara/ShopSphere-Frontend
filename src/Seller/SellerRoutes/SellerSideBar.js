@@ -1,9 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ProSidebar, Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
-//  import "react-pro-sidebar/dist/css/styles.css";
-// import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -16,7 +14,6 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-
 import { ProductionQuantityLimitsOutlined } from "@mui/icons-material";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { tokens } from "../../admin/themes";
@@ -33,14 +30,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       onClick={() => setSelected(title)}
       icon={icon}
     >
-       <a href={to} > <Typography>{title}</Typography>
-    </a>
+      <a href={to}>
+        <Typography>{title}</Typography>
+      </a>
     </MenuItem>
   );
 };
 
-
-const SellerSideBar = ({shop}) => {
+const SellerSideBar = ({ shop }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -49,26 +46,15 @@ const SellerSideBar = ({shop}) => {
   return (
     <Box
       sx={{
-        "& .pro-sidebar-inner": {
-          background: `${colors.primary[400]} !important`,
-        },
-        "& .pro-icon-wrapper": {
-          backgroundColor: "transparent !important",
-        },
-        "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
-        },
-        "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
-        },
-        "& .pro-menu-item.active": {
-          color: "#6870fa !important",
+        "@media (max-width: 768px)": {
+          "& .pro-sidebar-inner": {
+            display: isCollapsed ? "none" : "block",
+          },
         },
       }}
     >
       <Sidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
@@ -84,7 +70,7 @@ const SellerSideBar = ({shop}) => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h5" color='#002244'   fontSize='medium' >
+                <Typography variant="h5" color="#002244" fontSize="medium">
                   ShopSphere Seller
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -96,7 +82,11 @@ const SellerSideBar = ({shop}) => {
 
           {!isCollapsed && (
             <Box>
-              <Box display="flex" justifyContent="center" alignItems="center">
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
                 <img
                   alt="profile-user"
                   width="100px"
@@ -109,13 +99,11 @@ const SellerSideBar = ({shop}) => {
                 <Typography
                   variant="h4"
                   color={colors.grey[100]}
-             
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {shop.firstName+' '+shop.lastName}
+                  {shop.firstName + " " + shop.lastName}
                 </Typography>
-               
               </Box>
             </Box>
           )}
@@ -128,29 +116,27 @@ const SellerSideBar = ({shop}) => {
               selected={selected}
               setSelected={setSelected}
             />
-     
-               <Item
+            <Item
               title="Products"
               to="/seller/ProductManagement"
               icon={<ProductionQuantityLimitsOutlined />}
               selected={selected}
               setSelected={setSelected}
             />
-              <Item
+            <Item
               title="Orders"
-              to="/admin/OrderManagement"
+              to="/seller/SellerOrderManagement"
               icon={<UserCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-              <Item
+            <Item
               title="Inventory"
               to="/admin/UserManagement"
               icon={<UserCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            
             <Item
               title="Users"
               to="/admin/UserManagement"
@@ -158,7 +144,6 @@ const SellerSideBar = ({shop}) => {
               selected={selected}
               setSelected={setSelected}
             />
-            
 
             <Typography
               variant="h6"

@@ -39,16 +39,16 @@ const HomePageProductSlider2 = () => {
   useEffect(() => {
     console.log("use effecrttttttttttttt");
     const filterData = {
-      category: category,
-      colors: color,
-      sizes: sizes,
-      minPrice: minPrice,
-      maxPrice: maxPrice,
-      minDiscount: minDiscount,
-      sort: sort,
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-      stock: stock,
+      category: "mens_kurta",
+      colors: [],
+      sizes: [],
+      minPrice: 0,
+      maxPrice: 999999,
+      minDiscount: 10,
+      sort: '',
+      pageNumber: 0,
+      pageSize: 10,
+      stock: '',
     };
 
     dispatch(findProductsSec(filterData));

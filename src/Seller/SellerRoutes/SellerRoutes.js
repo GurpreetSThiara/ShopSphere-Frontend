@@ -9,6 +9,7 @@ import { getShop } from '../../store/seller/seller-auth-slice'
 import { Box, Grid, Skeleton, Typography } from '@mui/material'
 import SellerLogin from '../Authentication/SellerLogin'
 import SellerProductManagement from './SellerProductManagement/SellerProductManagement'
+import SellerOrderManagement from './SellerOrderManagement/SellerOrderManagement'
 
 const SellerRoutes = () => {
 
@@ -74,10 +75,12 @@ const SellerRoutes = () => {
         <Route path="/" element={<SellerDashboard shop={shop} />} />
         <Route path="/SellerSignUp" element={<SellerSignUpForm  />} />
         
-        <Route path="/ProductManagement" element={< SellerProductManagement id={shop.sellerShopId}/>} />
+        <Route path="/ProductManagement" element={< SellerProductManagement id={shop.sellerShopId} jwt={sellerJwt}/>} />
+        <Route path="/SellerOrderManagement" element={<SellerOrderManagement jwt={sellerJwt} id={shop.sellerShopId} />} />
+
         {/* <Route path="/ProductManagement/AddNewProduct" element={< AddNewProduct/>} />
 
-        <Route path="/OrderManagement" element={<OrderManagement/>} /> */}
+         */}
         
         
         
