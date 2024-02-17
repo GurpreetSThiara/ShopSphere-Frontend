@@ -10,6 +10,7 @@ import { Box, Grid, Skeleton, Typography } from '@mui/material'
 import SellerLogin from '../Authentication/SellerLogin'
 import SellerProductManagement from './SellerProductManagement/SellerProductManagement'
 import SellerOrderManagement from './SellerOrderManagement/SellerOrderManagement'
+import ResponsiveAppBar from './ResponsiveNavigationBar/ResponsiveAppBar'
 
 const SellerRoutes = () => {
 
@@ -67,12 +68,16 @@ const SellerRoutes = () => {
     </Box>
   }
   return (
-    <div style={{ display: 'flex' }}>
+    <>
+    <ResponsiveAppBar/>
+      <div style={{display:'flex'}}>
+
+  
         <SellerSideBar shop={shop}/>
-  {/* sidebar */}
-    <div style={{ flex: 1 }}>
-      <Routes>
-        <Route path="/" element={<SellerDashboard shop={shop} />} />
+
+      
+        <Routes >
+        <Route path="/" element={<SellerDashboard shop={shop} sellerJwt={sellerJwt}  />} />
         <Route path="/SellerSignUp" element={<SellerSignUpForm  />} />
         
         <Route path="/ProductManagement" element={< SellerProductManagement id={shop.sellerShopId} jwt={sellerJwt}/>} />
@@ -87,8 +92,13 @@ const SellerRoutes = () => {
 
         {/* Add other routes as needed */}
       </Routes>
-    </div>
-  </div>
+      
+
+      </div>
+
+      </>
+      
+
   )
 }
 
