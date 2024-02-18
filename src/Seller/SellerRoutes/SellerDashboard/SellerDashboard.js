@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 
-import { Container, Typography, Grid, Paper, Button, Box } from "@mui/material";
+import { Container, Typography, Grid, Paper, Button, Box, Select, FormControl, MenuItem } from "@mui/material";
 import { Bar, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { getShopProducts } from "../../../store/seller/seller-product-management";
 import ProductTable from "../SellerProductManagement/Table/ProductTable";
-import './SellerDashboard.css';
+import "./SellerDashboard.css";
+import { primaryButton } from "../../../Constants/Constants";
 
-const SellerDashboard = ({ shop, sellerJwt }) => {
+const SellerDashboard = ({ shop, sellerJwt,isSmallScreen }) => {
   const products = useSelector((state) => state.sellerProducts.shopProducts);
-  const [openModal , setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState('');
+
+  const handleChange = (event) => {
+    setSelectedTimeFilter(event.target.value);
+  };
+
   const onClose = () => setOpenModal(false);
   const onOpen = () => setOpenModal(true);
 
@@ -17,7 +24,7 @@ const SellerDashboard = ({ shop, sellerJwt }) => {
     (state) => state.sellerProducts.isProductsLoading
   );
   const dispatch = useDispatch();
-//gjghjhhjvhfghddfhjjjk
+  //gjghjhhjvhfghddfhjjjk
   useEffect(() => {
     dispatch(
       getShopProducts({
@@ -78,66 +85,108 @@ const SellerDashboard = ({ shop, sellerJwt }) => {
   };
   useEffect(() => {}, []);
   return (
-    <div style={{width:'100vw'}}>
-  <div className="dashboard-hero" style={{padding:0}}>
-    <div  style={{padding:8 , color:'black' , zIndex:1 , position:'absolute'}} >  
-  <Typography variant="h2" gutterBottom>
-        {shop.shopName}
-      </Typography>
-    <div className="shop-description">
-    <Typography variant="body1" gutterBottom>
-        {shop.description}
-      </Typography>
-    </div><br/>
-    <Grid container spacing={3} >
-    <Grid item xs={12} md={6} lg={4}>
-              <Paper
-                elevation={3}
-                style={{
-                  padding: 20,
-                  backgroundColor: "#002244",
-                  color: "white",
-                }}
-              >
-                <Typography variant="h6">Total Sales</Typography>
-                {/* You can fetch and display data here */}
-                <Typography variant="h4">$1,000,000</Typography>
-              </Paper>
-            </Grid>
+    <div style={{ width: "100vw" }}>
+      <div className="dashboard-hero" style={{ padding: 0 }}>
+        <div
+          style={{
+            padding: 8,
+            color: "black",
+            zIndex: 1,
+            position: "absolute",
+          }}
+        >
+          <div className="hero-heading">
+            <Typography variant={isSmallScreen?"h4":"h2"} gutterBottom>
+              {shop.shopName}
+            </Typography>
+{!isSmallScreen &&             <Button sx={primaryButton}>Edit Shop Details</Button>
+}          </div>
+          {!isSmallScreen && <div className="shop-description">
+            <Typography variant="body1" gutterBottom>
+              {shop.description}
+            </Typography>
+          </div>}
+          <br />
+          <div className="filters">
+            <Grid container spacing={3}>
+              <Grid item xs={6} md={6} lg={4}>
+                <Paper
+                  elevation={3}
+                  style={{
+                    padding: 20,
+                    backgroundColor: "#002244",
+                    color: "white",
+                    display:'flex',
+                    justifyContent:'space-evenly'
+                  }}
+                >
+                  <Typography variant="h6">Total Sales</Typography>
+                  {/* You can fetch and display data here */}
+                  <Typography variant={isSmallScreen?"h6":"h4"}>$1,000,000</Typography>
+                </Paper>
+              </Grid>
 
-            {/* Total Orders */}
-            <Grid item xs={12} md={6} lg={4}>
-              <Paper
-                elevation={3}
-                style={{
-                  padding: 20,
-                  backgroundColor: "#002244",
-                  color: "white",
-                }}
-              >
-                <Typography variant="h6">Total Orders</Typography>
-                {/* You can fetch and display data here */}
-                <Typography variant="h4">1,000</Typography>
-              </Paper>
-            </Grid>
+              {/* Total Orders */}
+              <Grid item xs={6} md={6} lg={4}>
+                <Paper
+                  elevation={3}
+                  style={{
+                    padding: 20,
+                    backgroundColor: "#002244",
+                    color: "white",
+                    display:'flex',
+                    justifyContent:'space-evenly'
+                  }}
+                >
+                  <Typography variant="h6">Total Orders</Typography>
+                  {/* You can fetch and display data here */}
+                  <Typography variant={isSmallScreen?"h6":"h4"}>1,000</Typography>
+                </Paper>
+              </Grid>
 
-            {/* User Activity */}
-            <Grid item xs={12} md={6} lg={4}>
-              <Paper
-                elevation={3}
-                style={{
-                  padding: 20,
-                  backgroundColor: "#002244",
-                  color: "white",
-                }}
-              >
-                <Typography variant="h6">User Activity</Typography>
-                {/* You can fetch and display data here */}
-                <Typography variant="h4">500</Typography>
-              </Paper>
+              {/* User Activity */}
+              <Grid item xs={12} md={6} lg={4}>
+                <Paper
+                  elevation={3}
+                  style={{
+                    padding: 20,
+                    backgroundColor: "#002244",
+                    color: "white",
+                    display:'flex',
+                    justifyContent:'space-evenly'
+                  }}
+                >
+                  <Typography variant="h6">User Activity</Typography>
+                  {/* You can fetch and display data here */}
+                  <Typography variant={isSmallScreen?"h6":"h4"}>500</Typography>
+                </Paper>
+              </Grid>
             </Grid>
-    </Grid>
-{/* 
+       <div className="filters-dropdowns">
+       <FormControl className="filters-dropdown" >
+        <Select
+          value={selectedTimeFilter}
+          onChange={handleChange}
+          displayEmpty
+         
+          sx={{color:"white"}}
+
+         
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value="" disabled>
+            <Typography >Select Option</Typography>
+          </MenuItem>
+          <MenuItem value={'All time'}>All Time</MenuItem>
+          <MenuItem value={'Last year'}>Last Year</MenuItem>
+          <MenuItem value={'Last month'}>Last Month</MenuItem>
+          <MenuItem value={'Last week'}>Last Week</MenuItem>
+          <MenuItem value={'Last 24 hours'}>Last 24 hours</MenuItem>
+        </Select>
+      </FormControl>
+       </div>
+          </div>
+          {/* 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="body1">
@@ -162,72 +211,74 @@ const SellerDashboard = ({ shop, sellerJwt }) => {
 
         </Grid>
       </Grid> */}
-
-      
-  </div></div>
-  {/* <Box sx={{height:'2rem', width:'100vw' , backgroundColor:'white'} }>
+        </div>
+      </div>
+      {/* <Box sx={{height:'2rem', width:'100vw' , backgroundColor:'white'} }>
 
   </Box> */}
 
       <div className="dashboard-content">
-      <Grid container sx={{display:'flex', justifyContent:'space-around'}}>
-        <Grid item xs={12} md={5.5}>
-        <div className="box">
-      
-          <div className="box-header">
-          <div>{''}</div>
-            <Typography>
-          Recent Orders
-            </Typography>
-            <div>
-              <Button>
-                View All
-              </Button>
+        <Grid
+          container
+          sx={{ display: "flex", justifyContent: "space-around" }}
+        >
+          <Grid item xs={12} md={5.5}>
+            <div className="box">
+              <div className="box-header">
+                <div>{""}</div>
+                <Typography>Recent Orders</Typography>
+                <div>
+                  <Button>View All</Button>
+                </div>
+              </div>
+              <div className="box-body">
+                {products && (
+                  <div>
+                    <ProductTable
+                      products={products}
+                      startIndex={0}
+                      onClose={onClose}
+                      onOpen={onOpen}
+                      openModal={openModal}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </Grid>
 
+          <Grid item xs={12} md={5.5}>
+            <div className="box">
+              <div className="box-header">
+                <div>{""}</div>
+                <Typography>Recent Added Products</Typography>
+                <div>
+                  <Button>View All</Button>
+                </div>
+              </div>
+              <div className="box-body">
+                {products && (
+                  <div>
+                    <ProductTable
+                      products={products}
+                      startIndex={0}
+                      onClose={onClose}
+                      onOpen={onOpen}
+                      openModal={openModal}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-            </div>
-          <div className="box-body">
-            {products && <div>
-              <ProductTable products={products} startIndex={0} onClose={onClose} onOpen={onOpen} openModal={openModal}/>
-              </div>}
-          </div>
-        </div>
+          </Grid>
         </Grid>
 
-        <Grid item xs={12} md={5.5}>
-        <div className="box">
-      
-          <div className="box-header">
-          <div>{''}</div>
-            <Typography>
-          Recent Added Products
-            </Typography>
-            <div>
-              <Button>
-                View All
-              </Button>
-
-            </div>
-            </div>
-          <div className="box-body">
-            {products && <div>
-              <ProductTable products={products} startIndex={0} onClose={onClose} onOpen={onOpen} openModal={openModal}/>
-              </div>}
-          </div>
-        </div>
-        </Grid>
-
-      </Grid>
-
-      <Grid container >
-       
-
-      </Grid>
+        <Grid container></Grid>
         <div>
           {" "}
           <Grid container spacing={3}>
             {/* Total Sales */}
-        
+
             {/* Sales Chart */}
             <Grid item xs={12} md={12} lg={8}>
               <Paper elevation={3} style={{ padding: 20 }}>

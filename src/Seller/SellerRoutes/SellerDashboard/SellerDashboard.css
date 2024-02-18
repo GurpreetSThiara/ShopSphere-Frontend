@@ -3,7 +3,7 @@
     background-size: contain; /* Cover ensures the image fills the entire container */
     background-position: center; /* Center the background image */
     position: relative;
-    height: 35rem; /* Set a fixed height */
+    height: 25rem; /* Set a fixed height */
     overflow: hidden; /* Hide any overflow content */
     
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
@@ -33,13 +33,7 @@
 }
 
 
-/* Optional: Add hover effect to scale up the hero section */
 
-
-/* Optional: Add overlay for better readability of text */
-
-
-/* Optional: Style the content within the hero section */
 .dashboard-hero-content {
     position: absolute;
     top: 50%; /* Position the content vertically centered */
@@ -49,6 +43,12 @@
     color: black ;
    
   
+}
+
+.hero-heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 
@@ -87,10 +87,29 @@
 }
 
 .dashboard-content {
-    /* Apply a linear gradient as a background */
-    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)), 
+
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
                 url('https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148558292.jpg?w=1060&t=st=1708178430~exp=1708179030~hmac=3725901bbf8bb9bcb12b98f63e6c39a49deb5b8955707d670a4230b2f76a4894');
     background-size: contain;
     background-attachment: fixed;
     
 }
+
+.filters {
+    border-left: 5px solid rgba(128, 128, 128, 0.5); 
+    border-bottom: 5px solid rgba(128, 128, 128, 0.5); 
+    border-radius: 20px;
+    padding: 0.5rem;
+ }
+ .filters-dropdown {
+    background-color: rgba(0, 34, 68, 0.8);
+    color: white;
+    width: 10rem;
+}
+
+ .filters-dropdowns{
+    align-items: center;
+    display: flex;
+    justify-content: end;
+    padding: 0.1rem;
+ }

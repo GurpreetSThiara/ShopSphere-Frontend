@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
-import { Route, Routes } from 'react-router'
+import React, { useEffect, useState } from 'react'
+import { Route, Routes, useNavigate } from 'react-router'
 import SellerDashboard from './SellerDashboard/SellerDashboard'
 import Sidebarr from '../../admin/sidebar/SideBar'
 import SellerSideBar from './SellerSideBar'
 import SellerSignUpForm from '../Authentication/SignUp/SellerSignUpForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { getShop } from '../../store/seller/seller-auth-slice'
-import { Box, Grid, Skeleton, Typography } from '@mui/material'
+import { Box, Drawer, Grid, IconButton, Menu, Skeleton, Typography, useMediaQuery } from '@mui/material'
 import SellerLogin from '../Authentication/SellerLogin'
 import SellerProductManagement from './SellerProductManagement/SellerProductManagement'
 import SellerOrderManagement from './SellerOrderManagement/SellerOrderManagement'
@@ -20,11 +20,32 @@ const SellerRoutes = () => {
   console.log("shoppppppppppp")
   console.log(shop)
   const dispatch = useDispatch();
+  const [openDrawer , setOpenDrawer] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.matchMedia('(max-width: 735px)').matches); 
+   const navigate = useNavigate();
+
+   const handleOpendrawer = () => setOpenDrawer(true);
+   const handleClosedrawer = () => setOpenDrawer(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 735px)');
+    const handleScreenChange = (e) => {
+      setIsSmallScreen(e.matches);
+    };
+    mediaQuery.addListener(handleScreenChange);
+    return () => {
+      mediaQuery.removeListener(handleScreenChange);
+    };
+  }, []);
+
   useEffect(()=>{
     console.log(sellerJwt)
     dispatch(getShop(sellerJwt));
     console.log("useedffetcttttttt")
   },[])
+  const handleMenuButtonClick = () => {
+    navigate('/');
+  };
 
   if(!shop && isLoadingShop === false){
     return <Box>
@@ -69,15 +90,36 @@ const SellerRoutes = () => {
   }
   return (
     <>
-    <ResponsiveAppBar/>
+
+    <ResponsiveAppBar isSmallScreen={isSmallScreen} shop={shop}/>
+    <Drawer
+        anchor="left"
+        open={openDrawer}
+        onClose={() => navigate('/')}
+        variant="temporary"
+        ModalProps={{
+          keepMounted: true,
+        }}
+      >
+        <SellerSideBar shop={shop} />
+      </Drawer>
+
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={handleMenuButtonClick}
+        sx={{ display: { sm: 'block', md: 'none' } }}
+      >
+        <Menu />
+      </IconButton>
       <div style={{display:'flex'}}>
 
   
-        <SellerSideBar shop={shop}/>
-
+      {!isSmallScreen && <SellerSideBar shop={shop} />}
       
         <Routes >
-        <Route path="/" element={<SellerDashboard shop={shop} sellerJwt={sellerJwt}  />} />
+        <Route path="/" element={<SellerDashboard shop={shop} sellerJwt={sellerJwt} isSmallScreen={isSmallScreen} />} />
         <Route path="/SellerSignUp" element={<SellerSignUpForm  />} />
         
         <Route path="/ProductManagement" element={< SellerProductManagement id={shop.sellerShopId} jwt={sellerJwt}/>} />

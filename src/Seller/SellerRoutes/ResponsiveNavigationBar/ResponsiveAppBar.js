@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,18 +11,30 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { colors } from "@mui/material";
+import { Drawer, colors } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { useState } from "react";
+import SellerSideBar from "../SellerSideBar";
 // import { ColorLens } from '@mui/icons-material';
 
 const pages = ["Men", "Women", "Sports", "Children","offer"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function ResponsiveAppBar() {
-  const [selectedButton, setSelectedButton] = React.useState(null);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+function ResponsiveAppBar({isSmallScreen,shop}) {
+  const [selectedButton, setSelectedButton] = useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] =useState(null);
+  const navigate = useNavigate();
+
+  const [openDrawer , setOpenDrawer] = useState(false);
+
+
+   const handleOpendrawer = () => setOpenDrawer(true);
+   const handleClosedrawer = () => setOpenDrawer(false);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -74,12 +85,28 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="static" color="transparent" elevation={0} sx={{backgroundColor:'#002244'}}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+       
+      <div>
+        <Toolbar disableGutters sx={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingX:'1rem',width:'100vw'}}>
+        <Drawer
+        anchor="left"
+        open={openDrawer}
+        onClose={() => navigate('/')}
+        variant="temporary"
+        ModalProps={{
+          keepMounted: true,
+        }}
+      >
+        <SellerSideBar shop={shop} />
+      </Drawer>
+
+ 
+        {isSmallScreen &&  <Box paddingLeft={'0.3rem'} onClick={handleOpendrawer}>
+          <BiMenuAltLeft size={24} color="white"/>
+        </Box> }
+
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-          <IconButton onClick={handleOpenUserMenu} sx={{ marginRight:2 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
+       
           <Typography
             variant="h6"
             noWrap
@@ -97,56 +124,16 @@ function ResponsiveAppBar() {
           >
             ShopSphere
           </Typography>
+     
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" sx={{}}>
-                    {page}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-            <CartButton/>
-          </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+      
           <Typography
             variant="h5"
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
-              mr: 2,
               display: { xs: "flex", md: "none" },
-              flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
@@ -160,8 +147,11 @@ function ResponsiveAppBar() {
             
          
           </Box>
+          {/* <IconButton onClick={handleOpenUserMenu} sx={{ marginRight:2 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton> */}
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0 , display: { xs: "none", md: "flex" }}}>
             <Tooltip >
              
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } ,alignItems:"center"}}>
@@ -212,8 +202,48 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
+          
+          {isSmallScreen &&     <Box sx={{  display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <BsThreeDotsVertical size={24} color="white"  />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center" sx={{}}>
+                    {page}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>}
+
         </Toolbar>
-      </Container>
+      </div>
     </AppBar>
   );
 }
