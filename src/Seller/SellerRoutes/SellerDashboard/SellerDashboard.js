@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
 
-import { Container, Typography, Grid, Paper, Button, Box, Select, FormControl, MenuItem } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Grid,
+  Paper,
+  Button,
+  Box,
+  Select,
+  FormControl,
+  MenuItem,
+} from "@mui/material";
 import { Bar, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { getShopProducts } from "../../../store/seller/seller-product-management";
 import ProductTable from "../SellerProductManagement/Table/ProductTable";
 import "./SellerDashboard.css";
 import { primaryButton } from "../../../Constants/Constants";
+import { IoIosArrowForward } from "react-icons/io";
+import { getShopInteractions } from "../../../store/seller/seller-order-slice";
 
-const SellerDashboard = ({ shop, sellerJwt,isSmallScreen }) => {
+const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
   const products = useSelector((state) => state.sellerProducts.shopProducts);
+  const interactions = useSelector((state) => state.sellerOrders.interactions);
   const [openModal, setOpenModal] = useState(false);
-  const [selectedTimeFilter, setSelectedTimeFilter] = useState('');
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState("");
 
   const handleChange = (event) => {
     setSelectedTimeFilter(event.target.value);
@@ -32,6 +45,15 @@ const SellerDashboard = ({ shop, sellerJwt,isSmallScreen }) => {
         id: shop.sellerShopId,
         pageNumber: 0,
         pageSize: 10,
+      })
+    );
+
+    dispatch(
+      getShopInteractions({
+        id: shop.sellerShopId,
+        pageNumber: 0,
+        pageSize: 10,
+        token: sellerJwt,
       })
     );
   }, [dispatch]);
@@ -96,51 +118,59 @@ const SellerDashboard = ({ shop, sellerJwt,isSmallScreen }) => {
           }}
         >
           <div className="hero-heading">
-            <Typography variant={isSmallScreen?"h4":"h2"} gutterBottom>
+            <Typography variant={isSmallScreen ? "h4" : "h2"} gutterBottom>
               {shop.shopName}
             </Typography>
-{!isSmallScreen &&             <Button sx={primaryButton}>Edit Shop Details</Button>
-}          </div>
-          {!isSmallScreen && <div className="shop-description">
-            <Typography variant="body1" gutterBottom>
-              {shop.description}
-            </Typography>
-          </div>}
+            {!isSmallScreen && (
+              <Button sx={primaryButton}>Edit Shop Details</Button>
+            )}{" "}
+          </div>
+          {!isSmallScreen && (
+            <div className="shop-description">
+              <Typography variant="body1" gutterBottom>
+                {shop.description}
+              </Typography>
+            </div>
+          )}
           <br />
           <div className="filters">
             <Grid container spacing={3}>
-              <Grid item xs={6} md={6} lg={4}>
+              <Grid item xs={12} md={6} lg={4}>
                 <Paper
                   elevation={3}
                   style={{
                     padding: 20,
                     backgroundColor: "#002244",
                     color: "white",
-                    display:'flex',
-                    justifyContent:'space-evenly'
+                    display: "flex",
+                    justifyContent: "space-evenly",
                   }}
                 >
                   <Typography variant="h6">Total Sales</Typography>
                   {/* You can fetch and display data here */}
-                  <Typography variant={isSmallScreen?"h6":"h4"}>$1,000,000</Typography>
+                  <Typography variant={isSmallScreen ? "h6" : "h4"}>
+                    $1,000,000
+                  </Typography>
                 </Paper>
               </Grid>
 
               {/* Total Orders */}
-              <Grid item xs={6} md={6} lg={4}>
+              <Grid item xs={12} md={6} lg={4}>
                 <Paper
                   elevation={3}
                   style={{
                     padding: 20,
                     backgroundColor: "#002244",
                     color: "white",
-                    display:'flex',
-                    justifyContent:'space-evenly'
+                    display: "flex",
+                    justifyContent: "space-evenly",
                   }}
                 >
                   <Typography variant="h6">Total Orders</Typography>
                   {/* You can fetch and display data here */}
-                  <Typography variant={isSmallScreen?"h6":"h4"}>1,000</Typography>
+                  <Typography variant={isSmallScreen ? "h6" : "h4"}>
+                    1,000
+                  </Typography>
                 </Paper>
               </Grid>
 
@@ -152,39 +182,44 @@ const SellerDashboard = ({ shop, sellerJwt,isSmallScreen }) => {
                     padding: 20,
                     backgroundColor: "#002244",
                     color: "white",
-                    display:'flex',
-                    justifyContent:'space-evenly'
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    cursor: "pointer",
                   }}
                 >
                   <Typography variant="h6">User Activity</Typography>
                   {/* You can fetch and display data here */}
-                  <Typography variant={isSmallScreen?"h6":"h4"}>500</Typography>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Typography variant={isSmallScreen ? "h6" : "h4"}>
+                      {interactions ? interactions.numberOfElements : "NA"}
+                    </Typography>
+                    <Box>
+                      <IoIosArrowForward size={24} />
+                    </Box>
+                  </Box>
                 </Paper>
               </Grid>
             </Grid>
-       <div className="filters-dropdowns">
-       <FormControl className="filters-dropdown" >
-        <Select
-          value={selectedTimeFilter}
-          onChange={handleChange}
-          displayEmpty
-         
-          sx={{color:"white"}}
-
-         
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value="" disabled>
-            <Typography >Select Option</Typography>
-          </MenuItem>
-          <MenuItem value={'All time'}>All Time</MenuItem>
-          <MenuItem value={'Last year'}>Last Year</MenuItem>
-          <MenuItem value={'Last month'}>Last Month</MenuItem>
-          <MenuItem value={'Last week'}>Last Week</MenuItem>
-          <MenuItem value={'Last 24 hours'}>Last 24 hours</MenuItem>
-        </Select>
-      </FormControl>
-       </div>
+            <div className="filters-dropdowns">
+              <FormControl className="filters-dropdown">
+                <Select
+                  value={selectedTimeFilter}
+                  onChange={handleChange}
+                  displayEmpty
+                  sx={{ color: "white" }}
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="" disabled>
+                    <Typography>Select Option</Typography>
+                  </MenuItem>
+                  <MenuItem value={"All time"}>All Time</MenuItem>
+                  <MenuItem value={"Last year"}>Last Year</MenuItem>
+                  <MenuItem value={"Last month"}>Last Month</MenuItem>
+                  <MenuItem value={"Last week"}>Last Week</MenuItem>
+                  <MenuItem value={"Last 24 hours"}>Last 24 hours</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
           </div>
           {/* 
       <Grid container spacing={2}>

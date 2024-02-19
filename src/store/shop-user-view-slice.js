@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import api from "../config/apiConfig";
+import api, { API_BASE_URL } from "../config/apiConfig";
 import { createPersistReducer } from "./persist/persistConfig";
+import axios from "axios";
 
 export const findAllShops = createAsyncThunk(
     "shops/allShops",
@@ -31,6 +32,31 @@ export const findAllShops = createAsyncThunk(
     }
   );
 
+  export const saveInteractions = createAsyncThunk(
+    "shop/interactions",
+    async ({shopId, userId}) => {
+      const jwt = localStorage.getItem('jwt')
+
+      console.log("interactionnnnnnnnnnnnnnnnnnnnnnnnnn")
+   
+      const res = await axios.post(`${API_BASE_URL}/api/interactions/visit`,{
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+          "Content-Type": "application/json",
+        },
+        params:{
+          shopId:shopId,
+         
+        }
+        
+      })
+
+
+      console.log(res.data);
+      return res.data;
+      
+    }
+  );
 
 const ShopUserViewSlice = createSlice({
         name:'shops',

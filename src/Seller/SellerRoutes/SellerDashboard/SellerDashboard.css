@@ -4,8 +4,8 @@
     background-position: center; /* Center the background image */
     position: relative;
     height: 25rem; /* Set a fixed height */
-    overflow: hidden; /* Hide any overflow content */
-    
+    overflow: hidden;
+    overflow-y: auto;    
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
     background-color: rgba(255, 255, 255, 0.4); /* Adjust the opacity as needed */
 

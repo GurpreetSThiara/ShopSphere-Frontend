@@ -123,7 +123,7 @@ const SellerOrderManagement = ({jwt ,id}) => {
     </Typography>;
   }
     return (
-      <Box>
+      <div style={{width:'100vw'}}>
         <Card className="p-3">
           <CardHeader
             title="Sort"
@@ -318,7 +318,7 @@ const SellerOrderManagement = ({jwt ,id}) => {
             onChange={handlePaginationChange}
           />
         </Card>
-      </Box>
+      </div>
     );
   };
   
