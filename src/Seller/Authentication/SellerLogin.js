@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button, Fade, Link, Grid, Divider, IconButton, CircularProgress } from '@mui/material';
 import { Facebook, Twitter, Google } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
+import { sellerSignIn } from '../../store/seller/seller-auth-slice';
 
 const SellerLogin = ({ open, handleClose }) => {
     const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const SellerLogin = ({ open, handleClose }) => {
 
     if (isValid) {
       setLoading(true);
+      dispatch(sellerSignIn({userData:formData}))
       // Call external function for login
     //   handleLogin(formData)
     //     .then(() => {

@@ -194,7 +194,7 @@ const SellerOrderManagement = ({jwt ,id}) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orders?.map((order, index) => (
+                {orders?.content?.map((order, index) => (
                   <TableRow
                     hover
                     key={order.id}

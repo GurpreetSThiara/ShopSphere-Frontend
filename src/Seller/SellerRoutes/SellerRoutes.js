@@ -11,6 +11,7 @@ import SellerLogin from '../Authentication/SellerLogin'
 import SellerProductManagement from './SellerProductManagement/SellerProductManagement'
 import SellerOrderManagement from './SellerOrderManagement/SellerOrderManagement'
 import ResponsiveAppBar from './ResponsiveNavigationBar/ResponsiveAppBar'
+import UserInteractions from './UserInteractions/UserInteractions'
 
 const SellerRoutes = () => {
 
@@ -124,6 +125,7 @@ const SellerRoutes = () => {
         
         <Route path="/ProductManagement" element={< SellerProductManagement id={shop.sellerShopId} jwt={sellerJwt}/>} />
         <Route path="/SellerOrderManagement" element={<SellerOrderManagement jwt={sellerJwt} id={shop.sellerShopId} />} />
+        <Route path="/UserInteractions" element={<UserInteractions/>} />
 
         {/* <Route path="/ProductManagement/AddNewProduct" element={< AddNewProduct/>} />
 

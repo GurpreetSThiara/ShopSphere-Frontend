@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Paper, Table, TableContainer, TableHead, TableBody, TableRow, TableCell, TablePagination, Button, CircularProgress } from '@mui/material';
 import axios from 'axios';
+import Interaction from './Interaction/Interaction';
+import { useSelector } from 'react-redux';
+import SkeletonBody from './Skelton/Skelton';
+import './UserInteractions.css';
+
 
 const UserInteractions = () => {
-  const [interactions, setInteractions] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [loading, setLoading] = useState(false);
+  const interactions = useSelector((s)=>s.sellerOrders.interactions)
 
 
 
@@ -21,11 +26,18 @@ const UserInteractions = () => {
     setPage(0);
   };
 
+  if(!interactions){
+    return <SkeletonBody/>
+  }
+
   return (
     <div style={{ padding: '2rem' }}>
+      <div className='interactions-hero'>
       <Typography variant="h4" gutterBottom>
         User Interactions
       </Typography>
+      </div>
+   
       {loading ? (
         <CircularProgress />
       ) : (
@@ -40,12 +52,8 @@ const UserInteractions = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {interactions.map(interaction => (
-                  <TableRow key={interaction.interactionId}>
-                    <TableCell>{interaction.action}</TableCell>
-                    <TableCell>{interaction.productId}</TableCell>
-                    <TableCell>{new Date(interaction.timestamp).toLocaleString()}</TableCell>
-                  </TableRow>
+                {interactions.content.map(interaction => (
+                 <Interaction interaction={interaction}/>
                 ))}
               </TableBody>
             </Table>

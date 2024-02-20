@@ -18,13 +18,16 @@ import ProductTable from "../SellerProductManagement/Table/ProductTable";
 import "./SellerDashboard.css";
 import { primaryButton } from "../../../Constants/Constants";
 import { IoIosArrowForward } from "react-icons/io";
-import { getShopInteractions } from "../../../store/seller/seller-order-slice";
+import { getOrders, getShopInteractions } from "../../../store/seller/seller-order-slice";
+import { useNavigate } from "react-router";
+import OrdersTable from "./OrdersTable/OrdersTable";
 
 const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
   const products = useSelector((state) => state.sellerProducts.shopProducts);
   const interactions = useSelector((state) => state.sellerOrders.interactions);
   const [openModal, setOpenModal] = useState(false);
   const [selectedTimeFilter, setSelectedTimeFilter] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setSelectedTimeFilter(event.target.value);
@@ -37,6 +40,22 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
     (state) => state.sellerProducts.isProductsLoading
   );
   const dispatch = useDispatch();
+  const orders = useSelector((state) => state.sellerOrders.orders);
+
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+         dispatch(getOrders({token:sellerJwt ,id:shop.sellerShopId, pageNumber:0,pageSize:5 }));
+      
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        
+      }
+    };
+
+    fetchOrders();
+  }, [dispatch]);
   //gjghjhhjvhfghddfhjjjk
   useEffect(() => {
     dispatch(
@@ -169,7 +188,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                   <Typography variant="h6">Total Orders</Typography>
                   {/* You can fetch and display data here */}
                   <Typography variant={isSmallScreen ? "h6" : "h4"}>
-                    1,000
+                    {orders?orders.totalElements:""}
                   </Typography>
                 </Paper>
               </Grid>
@@ -178,6 +197,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
               <Grid item xs={12} md={6} lg={4}>
                 <Paper
                   elevation={3}
+                  onClick={()=>{navigate('/seller/UserInteractions')}}
                   style={{
                     padding: 20,
                     backgroundColor: "#002244",
@@ -185,11 +205,12 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                     display: "flex",
                     justifyContent: "space-evenly",
                     cursor: "pointer",
+                    
                   }}
                 >
                   <Typography variant="h6">User Activity</Typography>
                   {/* You can fetch and display data here */}
-                  <Box display={"flex"} alignItems={"center"}>
+                  <Box display={"flex"} alignItems={"center"} >
                     <Typography variant={isSmallScreen ? "h6" : "h4"}>
                       {interactions ? interactions.numberOfElements : "NA"}
                     </Typography>
@@ -263,19 +284,13 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                 <div>{""}</div>
                 <Typography>Recent Orders</Typography>
                 <div>
-                  <Button>View All</Button>
+                  <Button onClick={()=>navigate('/seller/SellerOrderManagement')}>View All</Button>
                 </div>
               </div>
               <div className="box-body">
                 {products && (
                   <div>
-                    <ProductTable
-                      products={products}
-                      startIndex={0}
-                      onClose={onClose}
-                      onOpen={onOpen}
-                      openModal={openModal}
-                    />
+                  <OrdersTable orders={orders.content}/>
                   </div>
                 )}
               </div>
@@ -288,7 +303,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                 <div>{""}</div>
                 <Typography>Recent Added Products</Typography>
                 <div>
-                  <Button>View All</Button>
+                  <Button  onClick={()=>navigate('/seller/ProductManagement')}>View All</Button>
                 </div>
               </div>
               <div className="box-body">

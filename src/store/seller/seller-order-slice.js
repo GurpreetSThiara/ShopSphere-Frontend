@@ -94,7 +94,7 @@ const sellerOrderSlice = createSlice({
         .addCase(getOrders.fulfilled, (state, action) => {
           state.isOrdersLoading = false;
          let data = action.payload;
-         state.orders = data.content;
+         state.orders = data;
           state.totalPages= data.totalPages;
         })
         .addCase(getOrders.rejected, (state, action) => {

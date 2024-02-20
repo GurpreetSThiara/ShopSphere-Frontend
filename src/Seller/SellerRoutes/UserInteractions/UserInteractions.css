@@ -1,0 +1,16 @@
+.interactions-hero{
+ 
+    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.9)), 
+    url('https://img.freepik.com/free-vector/isometric-sales-representative-illustration_52683-83013.jpg?w=1380&t=st=1708411786~exp=1708412386~hmac=fbea958b2380b59c59aa4e90bc6d290c62c7f113f5823f68a0eb0234ad655906');
+    width: 70vw;
+    height: 10rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    
+}
+@media (max-width: 768px) {
+    .interactions-hero {
+        width: auto; /* Set width to auto on mobile screens */
+    }
+}

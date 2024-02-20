@@ -20,7 +20,7 @@ export const sellerSignUp = createAsyncThunk(
 );
 export const sellerSignIn = createAsyncThunk(
   "seller_auth/login",
-  async (userData, { rejectWithValue }) => {
+  async ({userData}, { rejectWithValue }) => {
     try {
       const response = await api.post(`/seller/auth/signin`, userData);
       const seller = response.data;
