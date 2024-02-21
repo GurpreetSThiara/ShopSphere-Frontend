@@ -17,6 +17,7 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { ProductionQuantityLimitsOutlined } from "@mui/icons-material";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { tokens } from "../../admin/themes";
+import { IoMdSettings } from "react-icons/io";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -141,6 +142,14 @@ const SellerSideBar = ({ shop }) => {
               title="Users"
               to="/admin/UserManagement"
               icon={<UserCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+<Item
+              title="Settings"
+              to="/seller/settings"
+              icon={<IoMdSettings size={24} />}
               selected={selected}
               setSelected={setSelected}
             />

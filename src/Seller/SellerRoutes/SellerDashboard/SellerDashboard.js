@@ -18,11 +18,15 @@ import ProductTable from "../SellerProductManagement/Table/ProductTable";
 import "./SellerDashboard.css";
 import { primaryButton } from "../../../Constants/Constants";
 import { IoIosArrowForward } from "react-icons/io";
-import { getOrders, getShopInteractions } from "../../../store/seller/seller-order-slice";
+import { getOrders, getOrdersForAllTime, getOrdersForLast24Hours, getOrdersForLastMonth, getOrdersForLastWeek, getOrdersForLastYear, getShopInteractions } from "../../../store/seller/seller-order-slice";
 import { useNavigate } from "react-router";
 import OrdersTable from "./OrdersTable/OrdersTable";
+import { Calculate } from "@mui/icons-material";
+import worker from './salesCalculator.worker';
+import WebWorker from "../../../WebWorker";
 
 const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
+  const [totalSales , setTotalSales] = useState(null);
   const products = useSelector((state) => state.sellerProducts.shopProducts);
   const interactions = useSelector((state) => state.sellerOrders.interactions);
   const [openModal, setOpenModal] = useState(false);
@@ -43,19 +47,101 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
   const orders = useSelector((state) => state.sellerOrders.orders);
 
 
+  const salesCalculatorWorker = new WebWorker(worker);
+
+// Define a function to handle messages received from the worker
+// salesCalculatorWorker.onmessage = function(event) {
+//   const totalSales = event.data;
+//   setTotalSales(totalSales)
+//   console.log('Total sales:', totalSales);
+// };
+
+  useEffect(()=>{
+    if(orders){
+      console.log('karrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
+    salesCalculatorWorker.postMessage(orders);
+    salesCalculatorWorker.addEventListener('message',(event)=>{
+      const c = event.data;
+      setTotalSales(c);
+
+
+    })
+    }
+
+
+  },[orders])
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-         dispatch(getOrders({token:sellerJwt ,id:shop.sellerShopId, pageNumber:0,pageSize:5 }));
-      
+        switch (selectedTimeFilter) {
+          case "All time":
+            dispatch(
+              getOrdersForAllTime({
+                token: sellerJwt,
+                id: shop.sellerShopId,
+                pageNumber: 0,
+                pageSize: 5,
+              })
+            );
+            break;
+          case "Last year":
+            dispatch(
+              getOrdersForLastYear({
+                token: sellerJwt,
+                id: shop.sellerShopId,
+                pageNumber: 0,
+                pageSize: 5,
+              })
+            );
+            break;
+          case "Last month":
+            dispatch(
+              getOrdersForLastMonth({
+                token: sellerJwt,
+                id: shop.sellerShopId,
+                pageNumber: 0,
+                pageSize: 5,
+              })
+            );
+            break;
+          case "Last week":
+            dispatch(
+              getOrdersForLastWeek({
+                token: sellerJwt,
+                id: shop.sellerShopId,
+                pageNumber: 0,
+                pageSize: 5,
+              })
+            );
+            break;
+          case "Last 24 hours":
+            dispatch(
+              getOrdersForLast24Hours({
+                token: sellerJwt,
+                id: shop.sellerShopId,
+                pageNumber: 0,
+                pageSize: 5,
+              })
+            );
+            break;
+          default:
+            dispatch(
+              getOrders({
+                token: sellerJwt,
+                id: shop.sellerShopId,
+                pageNumber: 0,
+                pageSize: 5,
+              })
+            );
+        }
       } catch (error) {
         console.error("Error fetching orders:", error);
-        
       }
     };
 
     fetchOrders();
-  }, [dispatch]);
+  }, [dispatch, selectedTimeFilter, sellerJwt, shop.sellerShopId]);
   //gjghjhhjvhfghddfhjjjk
   useEffect(() => {
     dispatch(
@@ -168,7 +254,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                   <Typography variant="h6">Total Sales</Typography>
                   {/* You can fetch and display data here */}
                   <Typography variant={isSmallScreen ? "h6" : "h4"}>
-                    $1,000,000
+                   {totalSales?totalSales:"0"}
                   </Typography>
                 </Paper>
               </Grid>

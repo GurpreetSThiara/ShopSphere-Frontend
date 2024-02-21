@@ -1,0 +1,19 @@
+.editshop{
+    width: 100%;
+    padding: 2rem;
+}
+
+.editshop-header{
+    padding:0 1rem;
+}
+.editshop-body{
+    padding: 1rem;
+}
+
+.editshop-feild-background{
+    padding: 0.6rem;
+    background-color : #2185e955;
+    border-radius: 1rem;
+
+    
+}

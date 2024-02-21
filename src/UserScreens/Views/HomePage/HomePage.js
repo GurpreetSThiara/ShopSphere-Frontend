@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HomeCarousel from "../../Componnents/CarouselSliders/HomePageSSingleCarousel";
+import HomeCarousel from "../../Componnents/CarouselSliders/HomePageCarousal/HomePageSSingleCarousel.js";
 import HomePageProductSlider from "../../Componnents/CarouselSliders/HomePageProductSlider";
 import HomePageProductSlider2 from "../../Componnents/CarouselSliders/HomePageProductSliderSecond";
 

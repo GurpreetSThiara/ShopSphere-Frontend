@@ -44,7 +44,7 @@ const OrdersTable = ({orders}) => {
 
   return (
     <TableContainer>
-    <Table sx={{ minWidth: 800 }} aria-label="table in dashboard">
+    <Table  aria-label="table in dashboard">
       <TableHead>
         <TableRow>
           <TableCell>Image</TableCell>

@@ -12,6 +12,9 @@ import SellerProductManagement from './SellerProductManagement/SellerProductMana
 import SellerOrderManagement from './SellerOrderManagement/SellerOrderManagement'
 import ResponsiveAppBar from './ResponsiveNavigationBar/ResponsiveAppBar'
 import UserInteractions from './UserInteractions/UserInteractions'
+import { Settings } from '@mui/icons-material'
+import SellerSettings from '../Settings/SellerSettings'
+import EditShopInfo from '../Settings/EditShopInfo/EditShopInfo'
 
 const SellerRoutes = () => {
 
@@ -126,6 +129,8 @@ const SellerRoutes = () => {
         <Route path="/ProductManagement" element={< SellerProductManagement id={shop.sellerShopId} jwt={sellerJwt}/>} />
         <Route path="/SellerOrderManagement" element={<SellerOrderManagement jwt={sellerJwt} id={shop.sellerShopId} />} />
         <Route path="/UserInteractions" element={<UserInteractions/>} />
+        <Route path="/settings" element={<SellerSettings shop={shop}/>} />
+        <Route path="/settings/EditShopInfo" element={<EditShopInfo shop={shop}/>} />
 
         {/* <Route path="/ProductManagement/AddNewProduct" element={< AddNewProduct/>} />
 

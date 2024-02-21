@@ -1,0 +1,20 @@
+
+.settings-tile{
+    border: 1px solid gray;
+    padding: 0.6rem;
+    border-radius: 10px;
+    margin: 0.6rem;
+
+}
+
+.settings-subtitle{
+    
+}
+
+.settings-tile-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Main container */

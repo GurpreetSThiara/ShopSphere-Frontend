@@ -151,7 +151,7 @@ function ResponsiveAppBar({isSmallScreen,shop}) {
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton> */}
 
-          <Box sx={{ flexGrow: 0 , display: { xs: "none", md: "flex" }}}>
+          {/* <Box sx={{ flexGrow: 0 , display: { xs: "none", md: "flex" }}}>
             <Tooltip >
              
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } ,alignItems:"center"}}>
@@ -201,7 +201,7 @@ function ResponsiveAppBar({isSmallScreen,shop}) {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
           
           {isSmallScreen &&     <Box sx={{  display: { xs: "flex", md: "none" } }}>
             <IconButton
