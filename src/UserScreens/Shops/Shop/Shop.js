@@ -15,9 +15,9 @@ const Shop = React.memo(() => {
     const [called , setcalled] = useState(false)
 
     useEffect(()=>{
-        dispatch(findAllShopProducts({id:shop.id,pageNumber:pageNumber-1,pageSize:12}));
+        dispatch(findAllShopProducts({id:shop.id?shop.id:shop.sellerShopId,pageNumber:pageNumber-1,pageSize:12}));
 
-    },[dispatch,pageNumber])
+    },[dispatch,pageNumber]);
 
 
     // useEffect(()=>{
@@ -59,7 +59,7 @@ const Shop = React.memo(() => {
                         </Grid>
                     </Grid>
                     <ImageList sx={{}} cols={4}>
-                    {shopProducts.map((item) => (
+                    {shopProducts && shopProducts.map((item) => (
                         <div style={{ marginBottom: 20 }} key={item.id}>
                             <ProductCard product={item} />
                         </div>

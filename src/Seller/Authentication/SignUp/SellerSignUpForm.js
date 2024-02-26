@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sellerSignUp } from '../../../store/seller/seller-auth-slice';
 import MapComponent from '../../MapComponent/MapComponent';
 import { useNavigate } from 'react-router-dom';
+import Map from './../../Map/Map';
 
 const formContainerStyle = {
   marginTop: '16px',
@@ -92,7 +93,7 @@ const SellerSignUpForm = () => {
       "description":sellerData.description,
       "shopName":sellerData.shopName
     }
-   await dispatch(sellerSignUp(data));
+   await dispatch(sellerSignUp(sellerData));
 
     
     console.log('Seller Data:', sellerData);
@@ -101,6 +102,24 @@ const SellerSignUpForm = () => {
   const handleShopClick = async () => {
     navigate('/seller')
   }
+
+  const handleMapMarkerSet = (latitude, longitude) => {
+    setSellerData((prevShop) => ({
+      ...prevShop,
+      latitude,
+      longitude,
+    }));
+
+  };
+
+  const setStreetAddress = (address) => {
+    // streetAddress
+    setSellerData((prevShop) => ({
+      ...prevShop,
+      streetAddress:address
+    }));
+  }
+
 
   return (
     <Container>
@@ -338,7 +357,8 @@ const SellerSignUpForm = () => {
               onChange={handleChange}
             />
             <Typography>Shop Location</Typography>
-            <MapComponent/>
+            <Map onMarkerSet={handleMapMarkerSet} setStreetAddress={setStreetAddress} />
+
           </Grid>
         </Grid>
         <Button type="submit" variant="contained" sx={primaryButton}>

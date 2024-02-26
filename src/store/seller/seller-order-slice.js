@@ -122,6 +122,26 @@ export const getOrdersForLast24Hours = createAsyncThunk(
   }
 );
 
+export const fetchShopOrdersByMonth = createAsyncThunk(
+  'orders/fetchShopOrdersByMonth',
+  async ({ shopId, lastYear, pageable }) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/seller/shop/orders/graph`, {
+        params: {
+          shopId,
+          lastYear,
+        }
+      });
+      console.log('recievedddddddddddddddddddddddddddddddddddddddddddddd')
+      console.log(response)
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
 export const getOrdersForLastYear = createAsyncThunk(
   "seller/orders/lastYear",
   async ({ token, id, pageNumber, pageSize }, { rejectWithValue }) => {
@@ -181,6 +201,9 @@ const sellerOrderSlice = createSlice({
     interactions: null,
     isInteractionsLoading: false,
     error: null,
+    ordersByMonth:null,
+    isOrdersByMonthLoading:false
+
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -274,6 +297,18 @@ const sellerOrderSlice = createSlice({
       .addCase(getShopInteractions.rejected, (state, action) => {
         state.isInteractionsLoading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchShopOrdersByMonth.pending, (state) => {
+        state.isOrdersByMonthLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchShopOrdersByMonth.fulfilled, (state, action) => {
+        state.isOrdersByMonthLoading = false;
+        state.ordersByMonth = action.payload;
+      })
+      .addCase(fetchShopOrdersByMonth.rejected, (state, action) => {
+        state.isOrdersByMonthLoading = false;
+        state.error = action.error.message;
       });
   },
 });

@@ -64,21 +64,24 @@ const sellerProductsSlice = createSlice({
     product: null,
     shopProducts: null,
     isProductsLoading: false,
+    isCreateProductLoading:false,
+    error:null
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
 
       .addCase(createProduct.pending, (state) => {
-        state.isLoading = true;
+        state.isCreateProductLoading = true;
         state.error = null;
       })
       .addCase(createProduct.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isCreateProductLoading = false;
         state.product = action.payload;
+        state.shopProducts?state.shopProducts.push(action.payload):state.shopProducts = [action.payload];
       })
       .addCase(createProduct.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isCreateProductLoading = false;
         state.error = action.payload;
       })
       .addCase(getShopProducts.pending, (state) => {

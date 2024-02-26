@@ -49,7 +49,7 @@ export const login = createAsyncThunk(
       console.log("login:", user);
       return user;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error);
     }
   }
 );

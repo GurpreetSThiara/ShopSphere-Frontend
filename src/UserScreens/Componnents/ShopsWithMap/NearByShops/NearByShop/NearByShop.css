@@ -1,0 +1,39 @@
+.shop-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    overflow: hidden;
+    width: 300px;
+  }
+  
+  .shop-card__image img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .shop-card__details {
+    padding: 20px;
+  }
+  
+  .shop-card__name {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .shop-card__description {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .shop-card__address {
+    margin-bottom: 10px;
+  }
+  
+  .shop-card__contact {
+    margin-bottom: 0;
+  }
+  

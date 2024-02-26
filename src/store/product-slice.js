@@ -8,8 +8,10 @@ export const findProducts = createAsyncThunk(
     const res = await api.get(
       `/api/products?color=${reqData.colors}&size=${reqData.sizes}&minPrice=${reqData.minPrice}&maxPrice=${reqData.maxPrice}&minDiscount=${reqData.minDiscount}&category=${reqData.category}&stock=${reqData.stock}&sort=${reqData.sort}&pageNumber=${reqData.pageNumber}&pageSize=${reqData.pageSize}`
     );
-    // console.log("dddddddddddddddddddd");
-    // console.log(res.data)
+    console.log("=================================================================");
+    console.log(res.data)
+    console.log("pardes")
+
     // console.log(JSON.parse(res.data))
 
     // if(res.status===202){

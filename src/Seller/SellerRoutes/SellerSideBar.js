@@ -90,10 +90,10 @@ const SellerSideBar = ({ shop }) => {
               >
                 <img
                   alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={`https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png`}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
+                  width="200px"
+                  height="200px"
+                  src={shop.logoImageUrl?shop.logoImageUrl:`https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png`}
+                  style={{ cursor: "pointer", borderRadius: "10%" }}
                 />
               </Box>
               <Box textAlign="center">

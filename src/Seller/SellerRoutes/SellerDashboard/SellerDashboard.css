@@ -3,7 +3,7 @@
     background-size: contain; /* Cover ensures the image fills the entire container */
     background-position: center; /* Center the background image */
     position: relative;
-    height: 25rem; /* Set a fixed height */
+    height: 22rem; /* Set a fixed height */
     overflow: hidden;
     overflow-y: auto;    
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
@@ -49,6 +49,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 
@@ -100,11 +101,13 @@
     border-bottom: 5px solid rgba(128, 128, 128, 0.5); 
     border-radius: 20px;
     padding: 0.5rem;
+    width: 100%;
  }
  .filters-dropdown {
     background-color: rgba(0, 34, 68, 0.8);
     color: white;
     width: 10rem;
+    
 }
 
  .filters-dropdowns{

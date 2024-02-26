@@ -2,6 +2,7 @@ import { Add, Delete, DeleteOutline } from "@mui/icons-material";
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -19,10 +20,11 @@ import {
 import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdAdd } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../../../store/seller/seller-product-management";
 
 const CreateNewProduct = ({ open, handleClose , id }) => {
+  const {isCreateProductLoading,error ,product} = useSelector((s)=>s.sellerProducts);
   const jwt = localStorage.getItem('sellerJwt')
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -42,6 +44,9 @@ const CreateNewProduct = ({ open, handleClose , id }) => {
     sellerShopId:id,
   });
 
+  const [openLoadingDialog ,setOpenLoadingDialog] = useState(false);
+  const handleLoadingDialogOpen = ()=> setOpenLoadingDialog(true);
+  const handleLoadingDialogClose = () => setOpenLoadingDialog(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -69,9 +74,11 @@ const CreateNewProduct = ({ open, handleClose , id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleLoadingDialogOpen();
     // Submit formData to backend API
     console.log(formData);
     dispatch(createProduct({ token:jwt , data:formData}));
+
     handleClose();
   };
 
@@ -374,6 +381,37 @@ const CreateNewProduct = ({ open, handleClose , id }) => {
             </Container>
           </Grid>
         </form>
+        <Dialog open={openLoadingDialog} onClose={handleLoadingDialogClose} maxWidth="xs">
+        <DialogContent sx={{ textAlign: 'center', padding: '2rem' }}>
+          {isCreateProductLoading && !error && !product &&    <>
+            <CircularProgress color="primary" size={60} thickness={4} />
+          <Typography variant="h6" mt={2}>Creating Product...</Typography></>
+          }
+          {
+            !isCreateProductLoading && !error && product && <>
+            <Typography>Product Created Successfully</Typography>
+            </>
+          }
+          {!isCreateProductLoading && !product && error && <>
+          <Typography>
+            Some Error Occured Try again later
+          </Typography>
+          </>}
+          
+        </DialogContent>
+        <DialogActions>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          sx={{ backgroundColor: "#002244", color: "white" }}
+          onClick={handleLoadingDialogClose}
+        >
+          Done
+        </Button>
+        </DialogActions>
+      </Dialog>
+
       </DialogContent>
       {/* <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

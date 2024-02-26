@@ -2,9 +2,13 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Grid } from '@mui/material';
 import './EditShopInfo.css'; // Import external CSS file
+import { useDispatch } from 'react-redux';
+import { updateShop } from '../../../store/seller/seller-settings-slice';
+import Map from '../../Map/Map';
 
-const EditShopInfo = ({ shop }) => {
+const EditShopInfo = ({ shop , jwt }) => {
   const [editedShop, setEditedShop] = useState(shop);
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -14,8 +18,34 @@ const EditShopInfo = ({ shop }) => {
     }));
   };
 
+  const handleMapButtonClick = () => {
+    // setShowMap(true); // Show the map when the button is clicked
+  };
+
+  const handleMapMarkerSet = (latitude, longitude) => {
+    // Update editedShop with latitude and longitude
+    setEditedShop((prevShop) => ({
+      ...prevShop,
+      latitude,
+      longitude,
+    }));
+    // Hide the map after setting the marker
+    // setShowMap(false);
+  };
+
+  const setStreetAddress = (address) => {
+    // streetAddress
+    setEditedShop((prevShop) => ({
+      ...prevShop,
+      streetAddress:address
+    }));
+  }
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+     dispatch(updateShop({token:jwt , data:editedShop}));
+
     // Send editedShop to your API or perform necessary actions
     console.log('Edited Shop:', editedShop);
     // You can add further logic here, like redirecting or displaying a success message
@@ -263,6 +293,10 @@ const EditShopInfo = ({ shop }) => {
               />
             </Grid>
           </Grid>
+          <div>
+          <Map onMarkerSet={handleMapMarkerSet} setStreetAddress={setStreetAddress} />
+
+          </div>
           <Button type="submit" variant="contained" color="primary" className="save-button">
             Save Changes
           </Button>

@@ -1,0 +1,49 @@
+
+.mapbox{
+    height: 500px;
+    width: 90vw;
+    padding: 1rem;
+}
+
+/* Style the container */
+.slidecontainer {
+  width: 50%; /* Adjust the width as needed */
+  margin: auto; /* Center the container */
+}
+
+/* Style the slider */
+.slider {
+  -webkit-appearance: none; /* Remove default styling */
+  width: 100%; /* Full width */
+  height: 15px; /* Height of the slider */
+  border-radius: 10px; /* Round the corners */
+  background: #002244; /* New color background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (you can adjust this) */
+  -webkit-transition: .2s; /* 0.2 second transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully visible on hover */
+}
+
+/* Style the slider thumb */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default styling */
+  appearance: none;
+  width: 25px; /* Set thumb width */
+  height: 25px; /* Set thumb height */
+  border-radius: 50%; /* Round the thumb */
+  background: #ffffff; /* White thumb */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set thumb width */
+  height: 25px; /* Set thumb height */
+  border-radius: 50%; /* Round the thumb */
+  background: #ffffff; /* White thumb */
+  cursor: pointer; /* Cursor on hover */
+}

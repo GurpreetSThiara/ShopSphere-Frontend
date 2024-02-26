@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route ,Routes  } from 'react-router-dom'
 import HomePage from './Views/HomePage/HomePage'
 import ProductDetailsPage from './Componnents/ProductPages/ProductDetailsPage/ProductDetailsPage'
@@ -14,14 +14,50 @@ import OrderTracker from './Componnents/Cart/OrderHistory/OrderDetails/OrderTrac
 import AllShops from './Shops/AllShops/AllShops'
 import Shop from './Shops/Shop/Shop'
 import SellerSignUpForm from '../Seller/Authentication/SignUp/SellerSignUpForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { findUserProfile } from '../store/user-profile-slice'
+import { Container, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 
+const Auth = () => {
+  return <Routes>
+         <Route path="/" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
+  </Routes>
+}
 
 const UserRoutes = () => {
+  const dispatch = useDispatch();
+  const {loading,error,user} = useSelector((s)=>s.userProfile)
+
+  
+
+  useEffect(()=>{
+    dispatch(findUserProfile());
+  },[dispatch])
+
+  if(!user && loading){
+    return     <Container maxWidth="md" style={{alignItems:'center', display:'flex',justifyContent:'center' }}>
+    <Grid container spacing={2} justifyContent="center">
+      <Grid item xs={12}>
+        <Typography variant="h2" fontSize={35} align="center" gutterBottom>
+          ShopSphere
+        </Typography>
+      </Grid>
+      <Grid item xs={12} align="center">
+        <LinearProgress style={{ width: '80%' }} />
+      </Grid>
+ 
+    </Grid>
+  </Container>
+  }
+  if(!user && !loading){
+    return <Auth />
+  }
   return (
     <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/Profile" element={<UserProfile />} />
-
+        
         <Route path="/ProductDetailsPage" element={<ProductDetailsPage />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/SignIn" element={<SignIn />} />

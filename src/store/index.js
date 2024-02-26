@@ -16,6 +16,7 @@ import { persistStore } from "redux-persist";
 import sellerAuthSlice from "./seller/seller-auth-slice";
 import sellerProductsSlice from "./seller/seller-product-management";
 import sellerOrderSlice from "./seller/seller-order-slice";
+import nearByShopsSlice from "./nearBy-shops-slice";
 
 
 
@@ -35,6 +36,8 @@ export const store = configureStore({
     adminProductsSlice:adminProductSlice.reducer,
     adminOrders:adminOrdersSlice.reducer,
     shops:ShopUserViewSliceReducer,
+
+    nearByShops:nearByShopsSlice.reducer,
 
 
 

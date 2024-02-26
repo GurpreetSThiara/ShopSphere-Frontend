@@ -93,19 +93,19 @@ const ProductDetailsPage = () => {
   };
 
   const handleCommentSubmit = () => {
-    if (newComment !== "" && newComment !== null && rating !== 0) {
+    if (newComment !== "" && newComment !== null) {
       dispatch(
         createReview({
           productId: product.id,
           review: newComment,
         })
       );
-      dispatch(
-        createRating({
-          productId: product.id,
-          rating: rating,
-        })
-      );
+      // dispatch(
+      //   createRating({
+      //     productId: product.id,
+      //     rating: rating,
+      //   })
+      // );
       setNewComment("");
     } else {
       alert("rating or review cannot be empty");
@@ -153,7 +153,7 @@ const ProductDetailsPage = () => {
     <div className="bg-gray-100 min-h-screen">
       <div className="container mx-auto py-8 flex flex-col lg:flex-row">
         {/* Product Image */}
-        {product.images? <ImageGallery images={product.images} />: <ImageGallery images={[product.imageUrl]} />}
+        {product.images? product.images.length !==0? <ImageGallery images={product.images} />:<ImageGallery images={[product.imageUrl]} />: <ImageGallery images={[product.imageUrl]} />}
        
 
         {/* Product Details */}
@@ -259,7 +259,7 @@ const ProductDetailsPage = () => {
         </div>
       </div>
 
-      <div className="mt-8  pr-16 pl-10 ">
+      <div className="mt-4  pr-16 pl-10 ">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">
           Leave a Review
         </h3>
@@ -288,18 +288,21 @@ const ProductDetailsPage = () => {
           Submit Comment
         </button>
       </div>
-      <Typography
+   <div className="mt-4">
+   <Typography
         variant="h5"
         noWrap
         component="a"
         href="#app-bar-with-responsive-menu"
         sx={{
-          px: 4,
+          p: 4,
+          mt:2,
           mr: 2,
           // display: { xs: "flex", md: "none" },
           flexGrow: 1,
           fontFamily: "monospace",
           fontWeight: 300,
+
 
           color: "black",
           textDecoration: "none",
@@ -307,10 +310,11 @@ const ProductDetailsPage = () => {
       >
         Ratings and Reviews
       </Typography>
+   </div>
 
       <Grid container alignItems="center">
         <Grid item xs={12} lg={6}>
-          <ProgressBars />
+          {/* <ProgressBars /> */}
         </Grid>
         <Grid item xs={12} lg={6}></Grid>
       </Grid>

@@ -130,7 +130,7 @@ const SellerRoutes = () => {
         <Route path="/SellerOrderManagement" element={<SellerOrderManagement jwt={sellerJwt} id={shop.sellerShopId} />} />
         <Route path="/UserInteractions" element={<UserInteractions/>} />
         <Route path="/settings" element={<SellerSettings shop={shop}/>} />
-        <Route path="/settings/EditShopInfo" element={<EditShopInfo shop={shop}/>} />
+        <Route path="/settings/EditShopInfo" element={<EditShopInfo shop={shop} jwt={sellerJwt}/>} />
 
         {/* <Route path="/ProductManagement/AddNewProduct" element={< AddNewProduct/>} />
 

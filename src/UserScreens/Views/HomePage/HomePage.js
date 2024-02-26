@@ -10,11 +10,16 @@ import AdminHome from "../../../admin/AdminHome/AdminHome.js";
 import CheckoutForm from "../../Componnents/Cart/Checkout/CheckoutForm.js";
 import Sidebarr from "../../../admin/sidebar/SideBar.js";
 import SellerSignUpForm from "../../../Seller/Authentication/SignUp/SellerSignUpForm.js";
+import ShopMap from "../../Componnents/ShopsWithMap/ShopMap/ShopMap.js";
+import { useSelector } from "react-redux";
+import NearByShops from "../../Componnents/ShopsWithMap/NearByShops/NearByShops.js";
 
 
 
 
 const HomePage = () => {
+  const { isNearByShopsLoading, shops, error } = useSelector((s) => s.nearByShops);
+
   return (
     <div>
 
@@ -23,6 +28,8 @@ const HomePage = () => {
      
       <LandingPageHero />
       <HomePageProductSlider />
+      <ShopMap/>
+      {shops && <NearByShops shops={shops}/>}
       <HomeCarousel />
       <HomePageProductSlider />
 

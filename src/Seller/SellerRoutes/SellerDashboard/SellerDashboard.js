@@ -18,7 +18,7 @@ import ProductTable from "../SellerProductManagement/Table/ProductTable";
 import "./SellerDashboard.css";
 import { primaryButton } from "../../../Constants/Constants";
 import { IoIosArrowForward } from "react-icons/io";
-import { getOrders, getOrdersForAllTime, getOrdersForLast24Hours, getOrdersForLastMonth, getOrdersForLastWeek, getOrdersForLastYear, getShopInteractions } from "../../../store/seller/seller-order-slice";
+import { fetchShopOrdersByMonth, getOrders, getOrdersForAllTime, getOrdersForLast24Hours, getOrdersForLastMonth, getOrdersForLastWeek, getOrdersForLastYear, getShopInteractions } from "../../../store/seller/seller-order-slice";
 import { useNavigate } from "react-router";
 import OrdersTable from "./OrdersTable/OrdersTable";
 import { Calculate } from "@mui/icons-material";
@@ -45,6 +45,9 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
   );
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.sellerOrders.orders);
+  const { ordersByMonth, isOrdersByMonthLoading } = useSelector(state => state.sellerOrders);
+  const [labels , setLabels]= useState([]);
+  const [barChartData , setBarChartData]= useState([]);
 
 
   const salesCalculatorWorker = new WebWorker(worker);
@@ -55,6 +58,18 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
 //   setTotalSales(totalSales)
 //   console.log('Total sales:', totalSales);
 // };
+
+useEffect(()=>{
+  console.log("datattttttttttttttttttttttttttttttttttttttttttt")
+
+if(ordersByMonth){
+  console.log("datattttttttttttttttttttttttttttttttttttttttttt")
+  console.log( Object.keys(ordersByMonth));
+  setLabels( Object.keys(ordersByMonth));
+  console.log( Object.values(ordersByMonth))
+  setBarChartData( Object.values(ordersByMonth).map(orders => orders.length));
+}
+},[ordersByMonth])
 
   useEffect(()=>{
     if(orders){
@@ -144,6 +159,8 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
   }, [dispatch, selectedTimeFilter, sellerJwt, shop.sellerShopId]);
   //gjghjhhjvhfghddfhjjjk
   useEffect(() => {
+    dispatch(fetchShopOrdersByMonth({ shopId: shop.sellerShopId, lastYear: '2019-01-01 00:00:00', pageable: { pageNumber: 0, pageSize: 10 } }));
+
     dispatch(
       getShopProducts({
         token: sellerJwt,
@@ -151,6 +168,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
         pageNumber: 0,
         pageSize: 10,
       })
+
     );
 
     dispatch(
@@ -162,6 +180,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
       })
     );
   }, [dispatch]);
+
   const BarChart = () => {
     const data = {
       labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -175,7 +194,18 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
         },
       ],
     };
-
+    const dunnyData = {
+      labels:labels,
+      datasets: [
+        {
+          label: "Sales",
+          data: barChartData,
+          backgroundColor: "rgba(75,192,192,0.2)",
+          borderColor: "rgba(75,192,192,1)",
+          borderWidth: 1,
+        },
+      ],
+    };
     const options = {
       scales: {
         y: {
@@ -184,7 +214,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
       },
     };
 
-    return <Bar data={data} options={options} />;
+    return <Bar data={barChartData?dunnyData:data} options={options} />;
   };
   const LineChart = () => {
     const data = {
@@ -212,7 +242,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
   };
   useEffect(() => {}, []);
   return (
-    <div style={{ width: "100vw" }}>
+    <div style={{ width: "100%" }}>
       <div className="dashboard-hero" style={{ padding: 0 }}>
         <div
           style={{
@@ -220,15 +250,16 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
             color: "black",
             zIndex: 1,
             position: "absolute",
+            width:"100%"
           }}
         >
           <div className="hero-heading">
-            <Typography variant={isSmallScreen ? "h4" : "h2"} gutterBottom>
+            <Typography fontSize={35} fontWeight={'bold'} variant={isSmallScreen ? "h4" : "h2"} gutterBottom>
               {shop.shopName}
             </Typography>
-            {!isSmallScreen && (
+            {/* {!isSmallScreen && (
               <Button sx={primaryButton}>Edit Shop Details</Button>
-            )}{" "}
+            )}{" "} */}
           </div>
           {!isSmallScreen && (
             <div className="shop-description">
@@ -237,14 +268,14 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
               </Typography>
             </div>
           )}
-          <br />
-          <div className="filters">
-            <Grid container spacing={3}>
+     
+          <div className="filters" style={{width:"100%"}}>
+            <Grid container spacing={3} >
               <Grid item xs={12} md={6} lg={4}>
                 <Paper
                   elevation={3}
                   style={{
-                    padding: 20,
+                    padding: 10,
                     backgroundColor: "#002244",
                     color: "white",
                     display: "flex",
@@ -264,7 +295,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                 <Paper
                   elevation={3}
                   style={{
-                    padding: 20,
+                    padding: 10,
                     backgroundColor: "#002244",
                     color: "white",
                     display: "flex",
@@ -285,7 +316,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                   elevation={3}
                   onClick={()=>{navigate('/seller/UserInteractions')}}
                   style={{
-                    padding: 20,
+                    padding: 10,
                     backgroundColor: "#002244",
                     color: "white",
                     display: "flex",
@@ -313,7 +344,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                   value={selectedTimeFilter}
                   onChange={handleChange}
                   displayEmpty
-                  sx={{ color: "white" }}
+                  sx={{ color: "white", height:'3rem' }}
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="" disabled>
@@ -374,7 +405,7 @@ const SellerDashboard = ({ shop, sellerJwt, isSmallScreen }) => {
                 </div>
               </div>
               <div className="box-body">
-                {products && (
+                {orders && (
                   <div>
                   <OrdersTable orders={orders.content}/>
                   </div>
